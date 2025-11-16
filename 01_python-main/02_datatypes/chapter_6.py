@@ -8,6 +8,9 @@ print(f"First word: {chai_description[:8]}")
 print(f"Last word: {chai_description[12:]}")
 print(f"Last word: {chai_description[::-1]}")
 
+
+print(f"Test {chai_description[0:8:3]}")
+
 label_text = "Chai Spécial"
 ecoded_label = label_text.encode("utf-8")
 print(f"Non Encoded label: {label_text}")

@@ -3,7 +3,7 @@ from fractions import Fraction
 from decimal import Decimal
 
 ideal_temp = 95.5
-current_temp = 95.49
+current_temp = 95.499999999
 
 print(f"Ideal temp { ideal_temp }")
 print(f"Current temp { current_temp }")
