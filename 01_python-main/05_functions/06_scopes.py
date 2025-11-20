@@ -16,6 +16,6 @@ def chai_counter():
     print_order()
     print("Outer: ", chai_order)
 
-chai_order = "Tulsi" # Global
+chai_order = "Tulsi" # Global scope
 chai_counter()
 print("Global :", chai_order)
