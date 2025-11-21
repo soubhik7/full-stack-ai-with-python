@@ -8,7 +8,7 @@ client = OpenAI()
 response = client.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
-        { "role": "user", "content": "Hey, I am Piyush Garg! Nice to meet you"}
+        { "role": "user", "content": "Hey, I am Soubhik! Nice to meet you"}
     ]
 )
 
