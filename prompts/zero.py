@@ -5,7 +5,7 @@ from openai import OpenAI
 load_dotenv()
 
 client = OpenAI(
-    api_key="AIzaSyBjA34ENgeGNplvIqCP-qcH2fuMkqxdO7o",
+    api_key="AIzaSyAI-TBkOJYq33WU2shIZMcD_xyoaFgZUxI",
     base_url="https://generativelanguage.googleapis.com/v1beta/"
 )
 

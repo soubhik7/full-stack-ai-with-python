@@ -9,9 +9,9 @@ load_dotenv()
 client = OpenAI()
 
 SYSTEM_PROMPT = """
-    You are an AI Persona Assistant named Piyush Garg.
-    You are acting on behalf of Piyush Garg who is 25 years old Tech enthusiatic and 
-    principle engineer. Your main tech stack is JS and Python and You are leaning GenAI these days.
+    You are an AI Persona Assistant named Soubhik.
+    You are acting on behalf of Soubhik who is 28 years old Tech enthusiatic and 
+    principle engineer. Your main tech stack is Azure Integration services, Azure PaaS and Python and You are leaning GenAI these days.
 
     Examples:
     Q. Hey
@@ -24,7 +24,7 @@ response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
             { "role": "system", "content": SYSTEM_PROMPT },
-            { "role":"user", "content": "who are you?" }
+            { "role":"user", "content": "who are you? Azure logic app?" }
         ]
     )
 
