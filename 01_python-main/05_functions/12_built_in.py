@@ -7,7 +7,7 @@ def chai_flavor(flavor="masala"):
 print(chai_flavor.__doc__)
 print(chai_flavor.__name__)
 
-help(len)
+#help(len)
 
 def generate_bill(chai=0, samosa=0):
     """

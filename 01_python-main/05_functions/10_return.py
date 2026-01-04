@@ -31,5 +31,6 @@ def chai_report():
     return 100, 20, 10 # sold, remaining
 
 sold, remaining, not_paid = chai_report()
+#sold, remaining, _ = chai_report()
 print("Sold: ", sold)
 print("Remaining: ", remaining)
