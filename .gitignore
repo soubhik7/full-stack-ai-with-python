@@ -1,3 +1,10 @@
 hello_world/.env
 **/.env
 .venv/*
+
+# Hugging Face model checkpoints
+checkpoint-*/
+*.safetensors
+optimizer.pt
+scheduler.pt
+rng_state.pth
