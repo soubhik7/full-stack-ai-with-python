@@ -16,7 +16,7 @@ def plot_lines(M):
     b = M[:, -1::].flatten()
     d = np.linalg.det(A)
 
-    if d != 0:
+    if abs(d) > 1e-10:
         solution = np.linalg.solve(A,b) 
         ax.plot(solution[0], solution[1], '-o', mfc='none', 
             markersize=10, markeredgecolor='#ff0000', markeredgewidth=2)
