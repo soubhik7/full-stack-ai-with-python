@@ -8,3 +8,8 @@ checkpoint-*/
 optimizer.pt
 scheduler.pt
 rng_state.pth
+Scikit_ML/SelfProject/5.rag-from-scratch/venv/*
+Scikit_ML/SelfProject/6.pure retrieval question answers local/venv/*
+__pycache__/*
+Scikit_ML/SelfProject/5.rag-from-scratch/app/__pycache__/*
+Scikit_ML/SelfProject/6.pure retrieval question answers local/app/__pycache__/*
