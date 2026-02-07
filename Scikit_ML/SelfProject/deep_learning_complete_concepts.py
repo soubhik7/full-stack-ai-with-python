@@ -1,5 +1,3 @@
-# deep_learning_complete_concepts.py
-
 # =====================================================================
 # COMPLETE BEGINNER-FRIENDLY DEEP LEARNING CONCEPTS IN ONE FILE
 # =====================================================================
@@ -66,6 +64,7 @@ def sigmoid(x):
 
     Formula:
         1 / (1 + e^(-x))
+        
 
     Output range: (0, 1)
     Used for:
@@ -217,6 +216,47 @@ b2 = np.zeros((1, output_size))
 #
 # Data flows:
 #     Input → Hidden → Output
+
+# =====================================================================
+#
+# Forward propagation means:
+#   Input → Hidden Layer → Output Layer
+#
+# Mathematical flow:
+#
+#   z1 = X·W1 + b1
+#   a1 = activation(z1)
+#
+#   z2 = a1·W2 + b2
+#   y_pred = activation(z2)
+#
+# Where:
+#   X  = Input
+#   W  = Weights
+#   b  = Bias
+#   z  = Linear combination
+#   a  = Activated output
+# ==========================================================
+
+def forward_propagation(X, W1, b1, W2, b2):
+    """
+    Performs forward pass through a 2-layer neural network.
+    """
+
+    # Hidden layer linear step
+    z1 = np.dot(X, W1) + b1
+
+    # Apply activation (ReLU for hidden layer)
+    a1 = relu(z1)
+
+    # Output layer linear step
+    z2 = np.dot(a1, W2) + b2
+
+    # Apply activation (Sigmoid for binary classification)
+    y_pred = sigmoid(z2)
+
+    # Return all intermediate values (needed for backpropagation)
+    return z1, a1, z2, y_pred
 # =====================================================================
 
 
@@ -235,6 +275,67 @@ b2 = np.zeros((1, output_size))
 # 3. Update weights
 # =====================================================================
 
+#
+# Backpropagation computes gradients and updates weights.
+#
+# Core idea:
+#   Find how much each weight contributed to the error.
+#
+# Chain Rule:
+#
+#   dLoss/dW = dLoss/dOutput * dOutput/dZ * dZ/dW
+#
+# Steps:
+#   1. Compute output error
+#   2. Propagate error backward
+#   3. Compute gradients
+#   4. Update weights
+# ==========================================================
+
+def backpropagation(X, y, z1, a1, z2, y_pred, W2, learning_rate):
+    """
+    Performs backward pass and updates weights.
+    """
+
+    m = X.shape[0]  # number of samples
+
+    # -------------------------------
+    # STEP 1: Output layer gradient
+    # -------------------------------
+    #
+    # For Binary Cross Entropy + Sigmoid,
+    # derivative simplifies to:
+    #
+    #   dz2 = y_pred - y
+    #
+    dz2 = y_pred - y
+
+    dW2 = np.dot(a1.T, dz2) / m
+    db2 = np.sum(dz2, axis=0, keepdims=True) / m
+
+    # -------------------------------
+    # STEP 2: Hidden layer gradient
+    # -------------------------------
+    #
+    # Backpropagate error to hidden layer
+    #
+    dz1 = np.dot(dz2, W2.T) * relu_derivative(z1)
+
+    dW1 = np.dot(X.T, dz1) / m
+    db1 = np.sum(dz1, axis=0, keepdims=True) / m
+
+    # -------------------------------
+    # STEP 3: Update weights (SGD)
+    # -------------------------------
+    #
+    # weight = weight - learning_rate * gradient
+    #
+    W2_updated = W2 - learning_rate * dW2
+    W1_updated = W1 - learning_rate * dW1
+
+    return W1_updated, W2_updated, db1, db2
+
+# ==========================================================
 
 # =====================================================================
 # SECTION 7: OPTIMIZER - SGD
