@@ -181,6 +181,8 @@ websockets==15.0.1
 wrapt==2.0.1
 yarl==1.22.0
 zstandard==0.25.0
+tensorflow
+keras
 
 # Additional dependencies
 config==0.5.1
@@ -193,4 +195,4 @@ safetensors==0.7.0
 tokenizers==0.22.2
 langchain-huggingface
 sentence-transformers
-
+h5py
