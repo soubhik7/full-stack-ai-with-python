@@ -1,0 +1,168 @@
+import os
+from transformers import AutoTokenizer, GPT2LMHeadModel
+
+
+def clean_code(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+    clean_lines = [line for line in lines if not line.strip().startswith('#')]
+    return ''.join(clean_lines)
+
+if __name__ == "__main__":
+    model_dir = "./fine_tuned_model"
+    
+    if not os.path.exists(model_dir):
+        print(f"Warning: Model directory '{model_dir}' not found. Using pre-trained 'gpt2' instead.")
+        print("To test your fine-tuned model, make sure you run 'python 02_train.py' first.")
+        model_name_or_path = "gpt2"
+    else:
+        model_name_or_path = model_dir
+    
+    print(f"\nLoading model from '{model_name_or_path}'...")
+    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
+    model = GPT2LMHeadModel.from_pretrained(model_name_or_path)
+    
+    prompt = "Explain the following Python code:\n\n"
+    
+    example_script_path = "example_script.py"
+    if not os.path.exists(example_script_path):
+        print(f"\nCould not find '{example_script_path}'. Creating a dummy test script.")
+        with open(example_script_path, "w") as f:
+            f.write("def add(a, b):\n    return a + b\n")
+
+    print(f"Reading target file: '{example_script_path}'")
+    input_text = clean_code(example_script_path)
+    
+    final_input = prompt + input_text
+    
+    print("\nTokenizing input...")
+    inputs = tokenizer(final_input, return_tensors="pt")
+    
+    print("\nGenerating response from the model...")
+    outputs = model.generate(
+        inputs["input_ids"], 
+        max_length=150, 
+        pad_token_id=tokenizer.eos_token_id, 
+        do_sample=True,      # Introduce some generation diversity
+        temperature=0.7,     # High temperature = more random, Low = more deterministic
+        top_k=50
+    )
+    
+    print("\n--- GENERATED RESPONSE ---")
+    print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+    print("--------------------------\n")
+
+
+import os
+import glob
+
+def clean_code(file_path):
+    """
+    Step 3: Clean the data.
+    Remove unnecessary comments, logs, or other clutter from the code.
+    """
+    with open(file_path, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+    
+    clean_lines = [line for line in lines if not line.strip().startswith('#')]
+    return ''.join(clean_lines)
+
+def collect_files(directory, extensions=('.py', '.md')):
+    """
+    Step 2: Collect the relevant files.
+    Gathers specific types of files from a directory for training data.
+    """
+    collected_files = []
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith(extensions):
+                collected_files.append(os.path.join(root, file))
+    return collected_files
+
+if __name__ == "__main__":
+    current_dir = "."
+    files = collect_files(current_dir, extensions=('.py',))
+    
+    output_filename = 'cleaned_dataset.txt'
+    with open(output_filename, 'w', encoding='utf-8') as out_file:
+        for fpath in files:
+            if fpath.endswith(output_filename):
+                continue
+            
+            out_file.write(clean_code(fpath))
+            out_file.write("\n\n")
+            
+    print(f"Collected and cleaned {len(files)} scripts into '{output_filename}'")
+
+
+import os
+from transformers import AutoTokenizer, GPT2LMHeadModel, Trainer, TrainingArguments, DataCollatorForLanguageModeling
+from datasets import Dataset
+
+model_name = "gpt2"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+tokenizer.pad_token = tokenizer.eos_token
+
+def prepare_dataset(file_path):
+    """
+    Reads the cleaned text file and tokenizes the text into a Hugging Face Dataset.
+    This fixes the 'tokenized_code' format to align with the Trainer API.
+    """
+    with open(file_path, 'r', encoding='utf-8') as file:
+        text = file.read()
+        
+    tokenized_output = tokenizer(
+        text, 
+        truncation=True, 
+        max_length=512, 
+        return_overflowing_tokens=True, # splits long texts into chunks
+        return_length=True
+    )
+    
+    dataset = Dataset.from_dict({
+        "input_ids": tokenized_output["input_ids"],
+        "attention_mask": tokenized_output["attention_mask"]
+    })
+    return dataset
+
+if __name__ == "__main__":
+    dataset_path = "cleaned_dataset.txt"
+    
+    if not os.path.exists(dataset_path):
+        print(f"Please run 'python 01_collect_and_clean.py' first to generate '{dataset_path}'")
+        exit()
+        
+    print("Preparing dataset for training...")
+    train_dataset = prepare_dataset(dataset_path)
+    
+    data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
+    
+    print(f"Loading {model_name} model...")
+    model = GPT2LMHeadModel.from_pretrained(model_name)
+    
+    training_args = TrainingArguments(
+        output_dir='./results',
+        num_train_epochs=3,
+        per_device_train_batch_size=2,
+        save_steps=500, # Decreased for small datasets compared to 10_000
+        save_total_limit=2,
+        logging_steps=10
+    )
+    
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=train_dataset,
+        data_collator=data_collator,
+    )
+    
+    print("Starting training!")
+    trainer.train()
+    
+    output_model_dir = "./fine_tuned_model"
+    trainer.save_model(output_model_dir)
+    tokenizer.save_pretrained(output_model_dir)
+    print(f"Training finished. Model saved to '{output_model_dir}'")
+
+
