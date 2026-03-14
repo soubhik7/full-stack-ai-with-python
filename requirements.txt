@@ -196,3 +196,4 @@ tokenizers==0.22.2
 langchain-huggingface
 sentence-transformers
 h5py
+ray
