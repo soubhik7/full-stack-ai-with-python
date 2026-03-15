@@ -4,7 +4,7 @@ import pickle
 import base64
 from email.mime.text import MIMEText
 
-from transformers import pipeline
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 
 CLIENT_ID = os.environ["GMAIL_CLIENT_ID"]
 CLIENT_SECRET = os.environ["GMAIL_CLIENT_SECRET"]
@@ -12,7 +12,10 @@ REFRESH_TOKEN = os.environ["GMAIL_REFRESH_TOKEN"]
 
 print("Loading summarization model...")
 # Using a distilled BART model for faster extraction and lower memory usage
-model = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
+model_name = "sshleifer/distilbart-cnn-12-6"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model_hf = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+model = pipeline("summarization", model=model_hf, tokenizer=tokenizer)
 
 # get access token
 token_url = "https://oauth2.googleapis.com/token"
