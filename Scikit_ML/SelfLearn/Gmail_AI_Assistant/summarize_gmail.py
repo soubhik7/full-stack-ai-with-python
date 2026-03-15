@@ -4,19 +4,15 @@ import pickle
 import base64
 from email.mime.text import MIMEText
 
-# Import the custom summarizer (needed for pickle load)
-from extractive_summarizer import ExtractiveSummarizer
+from transformers import pipeline
 
 CLIENT_ID = os.environ["GMAIL_CLIENT_ID"]
 CLIENT_SECRET = os.environ["GMAIL_CLIENT_SECRET"]
 REFRESH_TOKEN = os.environ["GMAIL_REFRESH_TOKEN"]
 
-# Load model
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(BASE_DIR, "model.pkl")
-
-print("Loading model...")
-model = pickle.load(open(model_path, "rb"))
+print("Loading summarization model...")
+# Using a distilled BART model for faster extraction and lower memory usage
+model = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
 
 # get access token
 token_url = "https://oauth2.googleapis.com/token"
@@ -99,15 +95,30 @@ for msg in messages:
     print(f"From: {sender}")
     print(f"Subject: {subject}")
     
-    # Run the .pkl model to generate summary
+    # Run the HuggingFace model to generate summary
     print("\nGenerating summary...")
     try:
-        summary = model.predict([body])[0]
+        # Truncate body if it's too long to avoid exceeding model token limits (distilbart-cnn-12-6 max length is 1024)
+        # We'll roughly estimate tokens with character count (3000 chars ~ 750 tokens)
+        truncated_body = body[:3000] if len(body) > 3000 else body
+        
+        # If the email is very short, no need to summarize
+        if len(truncated_body.strip()) < 50:
+            summary = truncated_body
+            print("\nEmail too short to summarize, using original text.")
+        else:
+            # We enforce limits based on the actual length of the input
+            max_len = min(130, len(truncated_body) // 2)
+            min_len = min(30, len(truncated_body) // 4)
+            
+            result = model(truncated_body, max_length=max_len, min_length=min_len, do_sample=False)
+            summary = result[0]['summary_text'].strip()
+            
         print(f"\n--- SUMMARY ---\n{summary}\n---------------")
     except Exception as e:
         print(f"Error summarising email: {e}")
-        print(f"Falling back to snippet: {msg_data.get('snippet', '')}")
-        summary = msg_data.get('snippet', '')
+        print(f"Falling back to snippet or original body.")
+        summary = body[:200] + "..." if len(body) > 200 else body
     
     # Append to compiled TODOs as dictionary for HTML generation later
     clean_summary = summary.replace(chr(10), ' ')
@@ -141,63 +152,143 @@ if compiled_todos:
     profile_res = requests.get(profile_url, headers=headers).json()
     user_email = profile_res.get("emailAddress", "me")
     
-    # Build an HTML table instead of plain text
+    # Build a beautiful HTML response instead of a plain table
     html_content = """
-    <html>
+    <!DOCTYPE html>
+    <html lang="en">
       <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Your AI Email Summaries</title>
         <style>
-          table {
-            border-collapse: collapse;
-            width: 100%;
-            font-family: Arial, sans-serif;
+          body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px 0;
+            color: #333333;
           }
-          th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
           }
-          th {
-            background-color: #f2f2f2;
-          }
-          .status-col {
+          .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px 20px;
             text-align: center;
-            width: 50px;
+            color: #ffffff;
+          }
+          .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+          }
+          .header p {
+            margin: 10px 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+          }
+          .content {
+            padding: 20px 25px;
+          }
+          .email-card {
+            background-color: #ffffff;
+            border: 1px solid #e1e5eb;
+            border-left: 4px solid #667eea;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+          }
+          .email-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+          }
+          .email-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #f0f2f5;
+            padding-bottom: 8px;
+          }
+          .email-sender {
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          .email-subject {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1f2937;
+            margin: 0;
+            line-height: 1.4;
+          }
+          .email-summary {
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.6;
+            margin-top: 10px;
+          }
+          .footer {
+            background-color: #f9fafb;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #9ca3af;
+            border-top: 1px solid #e5e7eb;
           }
         </style>
       </head>
       <body>
-        <h2>Your AI Email Summaries & TODO List</h2>
-        <p>Here is your compiled reading list for your latest unread emails:</p>
-        <table>
-          <tr>
-            <th class="status-col">Done?</th>
-            <th>Sender</th>
-            <th>Subject</th>
-            <th>Summary</th>
-          </tr>
+        <div class="container">
+          <div class="header">
+            <h1>📥 AI Email Brief</h1>
+            <p>Your latest unread emails, condensed into a quick reading list.</p>
+          </div>
+          <div class="content">
     """
     
     for todo in compiled_todos:
         html_content += f"""
-          <tr>
-            <td class="status-col"><input type="checkbox"></td>
-            <td>{todo['sender']}</td>
-            <td><strong>{todo['subject']}</strong></td>
-            <td>{todo['summary']}</td>
-          </tr>
+            <div class="email-card">
+              <div class="email-header">
+                <div>
+                  <div class="email-sender">{todo['sender']}</div>
+                  <h3 class="email-subject">{todo['subject']}</h3>
+                </div>
+              </div>
+              <div class="email-summary">
+                {todo['summary']}
+              </div>
+            </div>
         """
         
-    html_content += """
-        </table>
+    html_content += f"""
+          </div>
+          <div class="footer">
+            Generated automatically by your Personal AI Assistant.<br>
+            You had {len(compiled_todos)} new items to read.
+          </div>
+        </div>
       </body>
     </html>
     """
     
-    # Set subtype to 'html' to render the table correctly
+    # Set subtype to 'html' to render the styling correctly
     message = MIMEText(html_content, 'html')
     message['to'] = user_email
-    message['from'] = user_email
-    message['subject'] = 'Your AI Email Summaries & TODO List'
+    
+    # A nicer sender name helps prevent spam classification
+    message['from'] = f"AI Assistant <{user_email}>"
+    message['subject'] = 'Your AI Email Summaries & Brief'
     
     # Encode as base64 urlsafe
     raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode('utf-8')

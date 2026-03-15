@@ -5,3 +5,5 @@ pickle-mixin
 scikit-learn
 requests
 spacy
+transformers
+torch
