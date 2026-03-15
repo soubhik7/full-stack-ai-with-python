@@ -3,7 +3,7 @@ import os
 import pickle
 import base64
 from email.mime.text import MIMEText
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
 CLIENT_ID = os.environ["GMAIL_CLIENT_ID"]
@@ -11,10 +11,12 @@ CLIENT_SECRET = os.environ["GMAIL_CLIENT_SECRET"]
 REFRESH_TOKEN = os.environ["GMAIL_REFRESH_TOKEN"]
 
 print("Loading summarization model...")
-# Using a distilled BART model for faster extraction and lower memory usage
-model_name = "sshleifer/distilbart-cnn-12-6"
+# Using Qwen 0.5B Instruct for human-like summaries and entity extraction
+model_name = "Qwen/Qwen2.5-0.5B-Instruct"
+
 tokenizer = AutoTokenizer.from_pretrained(model_name)
-model_hf = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+# Load in float16 for CPU compatibility on GitHub Actions runners to save memory
+model_hf = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
 # We avoid using pipeline() since the GitHub Actions environment appears to have issues registering it
 
 # get access token
@@ -110,20 +112,26 @@ for msg in messages:
             summary = truncated_body
             print("\nEmail too short to summarize, using original text.")
         else:
-            # We enforce limits based on the actual length of the input
-            max_len = min(130, len(truncated_body) // 2)
-            min_len = min(30, len(truncated_body) // 4)
+            messages = [
+                {"role": "system", "content": "You are a helpful AI assistant. Summarize the following email in a brief, professional, third-person narrative. Mention who contacted the user and their main points or requests. Do not include any introductory conversation (e.g., 'Here is the summary:'). Just provide the summary directly."},
+                {"role": "user", "content": f"EMAIL SENDER: {sender}\nEMAIL SUBJECT: {subject}\nEMAIL BODY:\n{truncated_body}"}
+            ]
+            text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+            model_inputs = tokenizer([text], return_tensors="pt")
             
-            # Use direct tokenization and generation
-            inputs = tokenizer(truncated_body, return_tensors="pt", max_length=1024, truncation=True)
-            summary_ids = model_hf.generate(
-                inputs["input_ids"],
-                max_length=max_len,
-                min_length=min_len,
-                num_beams=2,
-                early_stopping=True
+            # Generate response
+            generation_output = model_hf.generate(
+                **model_inputs,
+                max_new_tokens=150,
+                do_sample=False, # Use greedy decoding for consistent summaries
+                pad_token_id=tokenizer.eos_token_id
             )
-            summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True).strip()
+            
+            # Extract just the newly generated text
+            generated_ids = [
+                output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generation_output)
+            ]
+            summary = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
             
         print(f"\n--- SUMMARY ---\n{summary}\n---------------")
     except Exception as e:
