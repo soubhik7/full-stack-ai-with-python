@@ -4,6 +4,7 @@ import pickle
 import base64
 from email.mime.text import MIMEText
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from email.utils import formatdate, make_msgid
 import torch
 
 CLIENT_ID = os.environ["GMAIL_CLIENT_ID"]
@@ -300,25 +301,36 @@ if compiled_todos:
       </body>
     </html>
     """
-    
-    # Set subtype to 'html' to render the styling correctly
-    message = MIMEText(html_content, 'html')
-    message['to'] = user_email
-    
-    # A nicer sender name helps prevent spam classification
-    message['from'] = f"AI Assistant <{user_email}>"
-    message['subject'] = 'Your AI Email Summaries & Brief'
-    
-    # Encode as base64 urlsafe
-    raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode('utf-8')
-    
+
+    # Build HTML message
+    message = MIMEText(html_content, "html", "utf-8")
+
+    # Required headers
+    message["To"] = user_email
+    message["From"] = user_email
+    message["Subject"] = "Your AI Email Summaries & Brief"
+
+    # Important authentication-friendly headers
+    message["Date"] = formatdate(localtime=True)
+    message["Message-ID"] = make_msgid(domain="gmail.com")
+    message["Reply-To"] = user_email
+    message["Sender"] = user_email
+
+    # Optional but good practice for automated systems
+    message["Auto-Submitted"] = "auto-generated"
+    message["X-Mailer"] = "Personal-AI-Email-Assistant"
+
+    # Encode message
+    raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode("utf-8")
+
     send_url = "https://gmail.googleapis.com/gmail/v1/users/me/messages/send"
+
     send_data = {
         "raw": raw_message
     }
-    
+
     send_res = requests.post(send_url, headers=headers, json=send_data)
-    
+
     if send_res.status_code == 200:
         print(f"Successfully sent compiled TODO list to {user_email}. ✅")
     else:
