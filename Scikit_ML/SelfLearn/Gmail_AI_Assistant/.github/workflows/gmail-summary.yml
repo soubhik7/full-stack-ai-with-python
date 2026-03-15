@@ -23,5 +23,5 @@ jobs:
 
       - name: Run email summarizer
         env:
-          ACCESS_TOKEN: ${{ secrets.GMAIL_ACCESS_TOKEN }}
+          GMAIL_TOKEN_JSON: ${{ secrets.GMAIL_TOKEN_JSON }}
         run: python summarize.py

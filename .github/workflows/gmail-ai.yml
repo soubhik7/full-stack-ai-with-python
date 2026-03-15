@@ -1,0 +1,32 @@
+name: Gmail AI Processor
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  run-ai:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Scikit_ML/SelfLearn/Gmail_AI_Assistant
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install packages
+        run: pip install -r requirements.txt
+
+      - name: Run Gmail Script
+        env:
+          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
+          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
+          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+        run: python summarize_gmail.py

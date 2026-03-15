@@ -13,9 +13,23 @@ def summarize_email(text):
     return model.predict([text])[0]
 
 # Gmail authentication
-creds = Credentials(
-    token=os.environ["ACCESS_TOKEN"]
-)
+SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
+
+creds = None
+if os.path.exists("token.json"):
+    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+elif "GMAIL_TOKEN_JSON" in os.environ:
+    # Option for GitHub action: read from secret
+    import json
+    token_data = json.loads(os.environ["GMAIL_TOKEN_JSON"])
+    creds = Credentials.from_authorized_user_info(token_data, SCOPES)
+elif "ACCESS_TOKEN" in os.environ:
+    # Older fallback
+    creds = Credentials(token=os.environ["ACCESS_TOKEN"])
+
+if not creds or not creds.valid:
+    raise Exception("No valid credentials found. Please run auth.py to generate token.json or set GMAIL_TOKEN_JSON.")
+
 
 service = build("gmail", "v1", credentials=creds)
 
