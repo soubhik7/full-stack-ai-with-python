@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Email Summarizer</title>
+    <!-- Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Link to custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="dynamic-background">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+        <div class="blob blob3"></div>
+    </div>
+
+    <div class="container glassmorphism">
+        <header>
+            <h1>AI Email Summarizer</h1>
+            <p class="subtitle">Extract the most important sentences instantly using TF-IDF NLP Modeling.</p>
+        </header>
+
+        <main>
+            <form action="{{ url_for('predict') }}" method="post" class="summarizer-form">
+                <div class="input-group">
+                    <label for="email_text">Paste your email here:</label>
+                    <textarea id="email_text" name="email_text" rows="8" placeholder="Dear Team, I am writing to inform you that..." required>{{ original_text if original_text else '' }}</textarea>
+                </div>
+                <button type="submit" class="btn-predict">
+                    <span class="btn-text">Generate Summary</span>
+                    <span class="btn-icon">✨</span>
+                </button>
+            </form>
+
+            {% if prediction_text %}
+            <div class="result-box fade-in">
+                <h2>Summary Result</h2>
+                <div class="summary-content">
+                    <p>{{ prediction_text }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </main>
+        
+        <footer>
+            <p>Built with NLP Pipeline & Flask</p>
+        </footer>
+    </div>
+</body>
+</html>
