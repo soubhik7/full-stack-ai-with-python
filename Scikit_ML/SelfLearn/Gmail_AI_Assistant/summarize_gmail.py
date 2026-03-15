@@ -109,9 +109,13 @@ for msg in messages:
         print(f"Falling back to snippet: {msg_data.get('snippet', '')}")
         summary = msg_data.get('snippet', '')
     
-    # Append to compiled TODOs
-    todo_item = f"- [ ] Review: {subject}\n      From: {sender}\n      Summary: {summary.replace(chr(10), ' ')}"
-    compiled_todos.append(todo_item)
+    # Append to compiled TODOs as dictionary for HTML generation later
+    clean_summary = summary.replace(chr(10), ' ')
+    compiled_todos.append({
+        'sender': sender,
+        'subject': subject,
+        'summary': clean_summary
+    })
     print("\n[Added to compiled TODO list]")
     
     # Mark email as read by removing UNREAD label
@@ -137,10 +141,60 @@ if compiled_todos:
     profile_res = requests.get(profile_url, headers=headers).json()
     user_email = profile_res.get("emailAddress", "me")
     
-    todos_text = "\n\n".join(compiled_todos)
-    email_body = f"Here is your compiled reading list for your latest unread emails:\n\n{todos_text}"
+    # Build an HTML table instead of plain text
+    html_content = """
+    <html>
+      <head>
+        <style>
+          table {
+            border-collapse: collapse;
+            width: 100%;
+            font-family: Arial, sans-serif;
+          }
+          th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+          .status-col {
+            text-align: center;
+            width: 50px;
+          }
+        </style>
+      </head>
+      <body>
+        <h2>Your AI Email Summaries & TODO List</h2>
+        <p>Here is your compiled reading list for your latest unread emails:</p>
+        <table>
+          <tr>
+            <th class="status-col">Done?</th>
+            <th>Sender</th>
+            <th>Subject</th>
+            <th>Summary</th>
+          </tr>
+    """
     
-    message = MIMEText(email_body)
+    for todo in compiled_todos:
+        html_content += f"""
+          <tr>
+            <td class="status-col"><input type="checkbox"></td>
+            <td>{todo['sender']}</td>
+            <td><strong>{todo['subject']}</strong></td>
+            <td>{todo['summary']}</td>
+          </tr>
+        """
+        
+    html_content += """
+        </table>
+      </body>
+    </html>
+    """
+    
+    # Set subtype to 'html' to render the table correctly
+    message = MIMEText(html_content, 'html')
     message['to'] = user_email
     message['from'] = user_email
     message['subject'] = 'Your AI Email Summaries & TODO List'
