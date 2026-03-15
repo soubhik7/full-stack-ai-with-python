@@ -37,46 +37,6 @@ headers = {
     "Authorization": f"Bearer {access_token}"
 }
 
-print("Getting user profile...")
-profile_url = "https://gmail.googleapis.com/gmail/v1/users/me/profile"
-profile_res = requests.get(profile_url, headers=headers).json()
-user_email = profile_res.get("emailAddress", "me")
-
-print("\nChecking for delete commands...")
-delete_query = f"subject:DELETE_MAIL_ is:unread"
-delete_msgs_response = requests.get(f"https://gmail.googleapis.com/gmail/v1/users/me/messages?q={delete_query}", headers=headers).json()
-delete_msgs = delete_msgs_response.get("messages", [])
-
-if delete_msgs:
-    print(f"Found {len(delete_msgs)} delete commands.")
-    for d_msg in delete_msgs:
-        d_msg_id = d_msg["id"]
-        d_msg_url = f"https://gmail.googleapis.com/gmail/v1/users/me/messages/{d_msg_id}?format=metadata&metadataHeaders=Subject&metadataHeaders=From"
-        d_msg_data = requests.get(d_msg_url, headers=headers).json()
-        
-        subject_header = ""
-        from_header = ""
-        for header in d_msg_data.get("payload", {}).get("headers", []):
-            if header["name"] == "Subject":
-                subject_header = header["value"]
-            elif header["name"] == "From":
-                from_header = header["value"]
-                
-        # Only process if it really came from us (or our email is in the From header)
-        if subject_header.startswith("DELETE_MAIL_") and user_email in from_header:
-            target_msg_id = subject_header.replace("DELETE_MAIL_", "").strip()
-            
-            # Trash the target message
-            trash_url = f"https://gmail.googleapis.com/gmail/v1/users/me/messages/{target_msg_id}/trash"
-            trash_res = requests.post(trash_url, headers=headers)
-            if trash_res.status_code == 200:
-                print(f"Successfully trashed message {target_msg_id}.")
-            else:
-                print(f"Failed to trash message {target_msg_id}.")
-                
-        # Trash the command email itself
-        requests.post(f"https://gmail.googleapis.com/gmail/v1/users/me/messages/{d_msg_id}/trash", headers=headers)
-
 def get_email_body(payload):
     if 'parts' in payload:
         for part in payload['parts']:
@@ -180,11 +140,8 @@ for msg in messages:
         summary = body[:200] + "..." if len(body) > 200 else body
     
     # Append to compiled TODOs as dictionary for HTML generation later
-    thread_id = msg_data.get("threadId", msg_id)
     clean_summary = summary.replace(chr(10), ' ')
     compiled_todos.append({
-        'id': msg_id,
-        'thread_id': thread_id,
         'sender': sender,
         'subject': subject,
         'summary': clean_summary
@@ -208,6 +165,11 @@ for msg in messages:
 # Send the compiled TODO list via email
 if compiled_todos:
     print("\nSending compiled TODO list via email...")
+    
+    # First, get the user's email address
+    profile_url = "https://gmail.googleapis.com/gmail/v1/users/me/profile"
+    profile_res = requests.get(profile_url, headers=headers).json()
+    user_email = profile_res.get("emailAddress", "me")
     
     # Build a beautiful HTML response instead of a plain table
     html_content = """
@@ -256,64 +218,15 @@ if compiled_todos:
           .email-card {
             background-color: #ffffff;
             border: 1px solid #e1e5eb;
+            border-left: 4px solid #667eea;
             border-radius: 6px;
+            padding: 16px;
             margin-bottom: 20px;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            display: flex;
-            overflow: hidden;
           }
           .email-card:hover {
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transform: translateY(-2px);
-          }
-          .side-column {
-            background-color: #667eea;
-            width: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: white;
-            font-size: 11px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            transition: background-color 0.2s;
-          }
-          .side-column:hover {
-            background-color: #5a67d8;
-          }
-          .side-column span {
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            white-space: nowrap;
-          }
-          .card-content {
-            flex: 1;
-            padding: 16px;
-          }
-          .action-column {
-            background-color: #f9fafb;
-            border-left: 1px solid #e1e5eb;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 15px;
-          }
-          .btn-delete {
-            background-color: #fee2e2;
-            color: #ef4444;
-            text-decoration: none;
-            padding: 6px 10px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: bold;
-            transition: background-color 0.2s;
-            text-align: center;
-            border: 1px solid #fca5a5;
-          }
-          .btn-delete:hover {
-            background-color: #fca5a5;
-            color: #b91c1c;
           }
           .email-header {
             display: flex;
@@ -362,25 +275,15 @@ if compiled_todos:
           <div class="content">
     """
     
-    for todo in compiled_todos:
-        html_content += f"""
             <div class="email-card">
-              <a href="https://mail.google.com/mail/u/0/#inbox/{todo['thread_id']}" target="_blank" class="side-column" title="Open Original Email">
-                <span>OPEN MAIL</span>
-              </a>
-              <div class="card-content">
-                <div class="email-header">
-                  <div>
-                    <div class="email-sender">{todo['sender']}</div>
-                    <h3 class="email-subject">{todo['subject']}</h3>
-                  </div>
-                </div>
-                <div class="email-summary">
-                  {todo['summary']}
+              <div class="email-header">
+                <div>
+                  <div class="email-sender">{todo['sender']}</div>
+                  <h3 class="email-subject">{todo['subject']}</h3>
                 </div>
               </div>
-              <div class="action-column">
-                <a href="mailto:{user_email}?subject=DELETE_MAIL_{todo['id']}&body=Send%20this%20email%20to%20delete%20the%20original%20message." class="btn-delete" title="Delete Email">DELETE</a>
+              <div class="email-summary">
+                {todo['summary']}
               </div>
             </div>
         """
