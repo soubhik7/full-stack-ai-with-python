@@ -180,9 +180,11 @@ for msg in messages:
         summary = body[:200] + "..." if len(body) > 200 else body
     
     # Append to compiled TODOs as dictionary for HTML generation later
+    thread_id = msg_data.get("threadId", msg_id)
     clean_summary = summary.replace(chr(10), ' ')
     compiled_todos.append({
         'id': msg_id,
+        'thread_id': thread_id,
         'sender': sender,
         'subject': subject,
         'summary': clean_summary
@@ -363,7 +365,7 @@ if compiled_todos:
     for todo in compiled_todos:
         html_content += f"""
             <div class="email-card">
-              <a href="https://mail.google.com/mail/u/0/#all/{todo['id']}" target="_blank" class="side-column" title="Open Original Email">
+              <a href="https://mail.google.com/mail/u/0/#inbox/{todo['thread_id']}" target="_blank" class="side-column" title="Open Original Email">
                 <span>OPEN MAIL</span>
               </a>
               <div class="card-content">
