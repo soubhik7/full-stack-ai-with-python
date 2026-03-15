@@ -4,3 +4,4 @@ google-auth-oauthlib
 pickle-mixin
 scikit-learn
 requests
+spacy
