@@ -3,8 +3,8 @@ import os
 import pickle
 import base64
 from email.mime.text import MIMEText
-
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+import torch
 
 CLIENT_ID = os.environ["GMAIL_CLIENT_ID"]
 CLIENT_SECRET = os.environ["GMAIL_CLIENT_SECRET"]
@@ -15,7 +15,7 @@ print("Loading summarization model...")
 model_name = "sshleifer/distilbart-cnn-12-6"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model_hf = AutoModelForSeq2SeqLM.from_pretrained(model_name)
-model = pipeline("summarization", model=model_hf, tokenizer=tokenizer)
+# We avoid using pipeline() since the GitHub Actions environment appears to have issues registering it
 
 # get access token
 token_url = "https://oauth2.googleapis.com/token"
@@ -114,8 +114,16 @@ for msg in messages:
             max_len = min(130, len(truncated_body) // 2)
             min_len = min(30, len(truncated_body) // 4)
             
-            result = model(truncated_body, max_length=max_len, min_length=min_len, do_sample=False)
-            summary = result[0]['summary_text'].strip()
+            # Use direct tokenization and generation
+            inputs = tokenizer(truncated_body, return_tensors="pt", max_length=1024, truncation=True)
+            summary_ids = model_hf.generate(
+                inputs["input_ids"],
+                max_length=max_len,
+                min_length=min_len,
+                num_beams=2,
+                early_stopping=True
+            )
+            summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True).strip()
             
         print(f"\n--- SUMMARY ---\n{summary}\n---------------")
     except Exception as e:
