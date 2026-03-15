@@ -275,6 +275,8 @@ if compiled_todos:
           <div class="content">
     """
     
+    for todo in compiled_todos:
+        html_content += f"""
             <div class="email-card">
               <div class="email-header">
                 <div>
