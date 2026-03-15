@@ -2,6 +2,7 @@ import requests
 import os
 import pickle
 import base64
+from email.mime.text import MIMEText
 
 # Import the custom summarizer (needed for pickle load)
 from extractive_summarizer import ExtractiveSummarizer
@@ -64,6 +65,9 @@ messages = messages_response.get("messages", [])
 
 print(f"Found {len(messages)} unread messages.")
 
+# List to hold the compiled TODOs
+compiled_todos = []
+
 for msg in messages:
     msg_id = msg["id"]
     print(f"\n{'='*50}")
@@ -105,10 +109,10 @@ for msg in messages:
         print(f"Falling back to snippet: {msg_data.get('snippet', '')}")
         summary = msg_data.get('snippet', '')
     
-    # Create TODO list - we can just format the summary as a task list
-    print("\n[TODO List Created]")
-    print(f"- [ ] Review: {subject}")
-    print(f"      Context: {summary.replace(chr(10), ' ')}")
+    # Append to compiled TODOs
+    todo_item = f"- [ ] Review: {subject}\n      From: {sender}\n      Summary: {summary.replace(chr(10), ' ')}"
+    compiled_todos.append(todo_item)
+    print("\n[Added to compiled TODO list]")
     
     # Mark email as read by removing UNREAD label
     print("\nMarking email as read...")
@@ -123,5 +127,37 @@ for msg in messages:
     else:
         print(f"Failed to mark as read: {modify_res.text}")
     print(f"{'='*50}")
+
+# Send the compiled TODO list via email
+if compiled_todos:
+    print("\nSending compiled TODO list via email...")
+    
+    # First, get the user's email address
+    profile_url = "https://gmail.googleapis.com/gmail/v1/users/me/profile"
+    profile_res = requests.get(profile_url, headers=headers).json()
+    user_email = profile_res.get("emailAddress", "me")
+    
+    todos_text = "\n\n".join(compiled_todos)
+    email_body = f"Here is your compiled reading list for your latest unread emails:\n\n{todos_text}"
+    
+    message = MIMEText(email_body)
+    message['to'] = user_email
+    message['from'] = user_email
+    message['subject'] = 'Your AI Email Summaries & TODO List'
+    
+    # Encode as base64 urlsafe
+    raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode('utf-8')
+    
+    send_url = "https://gmail.googleapis.com/gmail/v1/users/me/messages/send"
+    send_data = {
+        "raw": raw_message
+    }
+    
+    send_res = requests.post(send_url, headers=headers, json=send_data)
+    
+    if send_res.status_code == 200:
+        print(f"Successfully sent compiled TODO list to {user_email}. ✅")
+    else:
+        print(f"Failed to send email: {send_res.text}")
 
 print("\nDone processing all unread emails.")
