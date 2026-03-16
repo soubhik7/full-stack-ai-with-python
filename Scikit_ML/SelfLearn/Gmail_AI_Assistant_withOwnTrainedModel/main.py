@@ -30,7 +30,7 @@ def train_model():
     from src.gmail_assistant.ml.trainer import ModelTrainer
     logger.info("Starting model training process...")
     trainer = ModelTrainer()
-    trainer.train(num_samples=1500)
+    trainer.train(num_samples=5000)
     logger.info("Model training completed successfully.")
 
 def run_summarize():

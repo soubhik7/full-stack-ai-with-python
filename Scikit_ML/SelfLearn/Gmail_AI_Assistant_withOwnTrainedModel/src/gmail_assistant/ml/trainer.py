@@ -41,6 +41,27 @@ class ModelTrainer:
         
         logger.info(f"Trainer initialized using device: {self.device}.")
 
+    def calculate_accuracy(self, outputs: List[torch.Tensor], labels: List[torch.Tensor]) -> float:
+        """
+        Calculates accuracy based on a 0.5 threshold.
+        
+        Args:
+            outputs: List of predicted probabilities.
+            labels: List of ground truth labels.
+            
+        Returns:
+            Mean accuracy across all sentences in the batch.
+        """
+        total_correct = 0
+        total_sentences = 0
+        
+        for out, target in zip(outputs, labels):
+            predictions = (out >= 0.5).float()
+            total_correct += (predictions == target).sum().item()
+            total_sentences += target.size(0)
+        
+        return total_correct / total_sentences if total_sentences > 0 else 0.0
+
     def prepare_data(self, num_samples: int = 1500) -> Tuple[DataLoader, DataLoader]:
         """
         Generates synthetic data, splits it into training/validation sets, and creates DataLoaders.
@@ -127,21 +148,28 @@ class ModelTrainer:
             # Validation phase
             model.eval()
             val_loss = 0
+            val_accuracy = 0
             with torch.no_grad():
                 for batch in val_loader:
                     sentences = [s.to(self.device) for s in batch['sentences']]
                     labels = [l.to(self.device) for l in batch['labels']]
                     
                     outputs = model(sentences)
+                    
+                    # Loss
                     loss = 0
                     for out, target in zip(outputs, labels):
                         loss += criterion(out, target)
                     val_loss += (loss / len(sentences)).item()
+                    
+                    # Accuracy
+                    val_accuracy += self.calculate_accuracy(outputs, labels)
             
             avg_train_loss = train_loss / len(train_loader)
             avg_val_loss = val_loss / len(val_loader)
+            avg_val_accuracy = val_accuracy / len(val_loader)
             
-            logger.info(f"Epoch {epoch+1}/{self.epochs} | Train Loss: {avg_train_loss:.4f} | Val Loss: {avg_val_loss:.4f}")
+            logger.info(f"Epoch {epoch+1}/{self.epochs} | Train Loss: {avg_train_loss:.4f} | Val Loss: {avg_val_loss:.4f} | Val Accuracy: {avg_val_accuracy:.4%}")
             
             # Save the model if validation loss improves
             if avg_val_loss < best_val_loss:
@@ -152,7 +180,7 @@ class ModelTrainer:
                     'hidden_dim': self.hidden_dim
                 }
                 save_model(model, self.vocab, self.model_path, hyperparams)
-                logger.info(f"Model checkpoint saved with Val Loss: {avg_val_loss:.4f}! ✅")
+                logger.info(f"Model checkpoint saved with Val Loss: {avg_val_loss:.4f}, Val Accuracy: {avg_val_accuracy:.4%}! ✅")
 
 if __name__ == "__main__":
     trainer = ModelTrainer()
