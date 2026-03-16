@@ -4,7 +4,9 @@ from preprocessor import CustomTokenizer, split_sentences, pad_sequence
 from model import load_model
 
 class Summarizer:
-    def __init__(self, model_path="model.pth", max_sent_len=20):
+    def __init__(self, model_path=None, max_sent_len=20):
+        if model_path is None:
+            model_path = os.path.join(os.path.dirname(__file__), "model.pth")
         self.model, self.vocab = load_model(model_path)
         self.tokenizer = CustomTokenizer()
         self.max_sent_len = max_sent_len

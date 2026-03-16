@@ -123,8 +123,9 @@ def train():
         
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
-            save_model(model, vocab, "model.pth")
-            print("Model saved! ✅")
+            model_path = os.path.join(os.path.dirname(__file__), "model.pth")
+            save_model(model, vocab, model_path)
+            print(f"Model saved to {model_path}! ✅")
 
 if __name__ == "__main__":
     train()

@@ -9,3 +9,6 @@ google-api-python-client
 pytest
 pytest-cov
 nltk
+fastapi
+uvicorn
+python-multipart
