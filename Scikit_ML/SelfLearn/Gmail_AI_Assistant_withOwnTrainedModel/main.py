@@ -33,9 +33,17 @@ def train_model():
     trainer.train(num_samples=1500)
     logger.info("Model training completed successfully.")
 
+def run_summarize():
+    """Runs the email scanning and notification workflow."""
+    from src.gmail_assistant.core.assistant import GmailAIAssistant
+    logger.info("Starting email scanning and notification...")
+    assistant = GmailAIAssistant()
+    summaries = assistant.run_scan_and_notify()
+    logger.info(f"Processed {len(summaries)} unread emails.")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Gmail AI Assistant CLI")
-    parser.add_argument("command", choices=["serve", "auth", "train"], help="Command to run")
+    parser.add_argument("command", choices=["serve", "auth", "train", "summarize"], help="Command to run")
     
     args = parser.parse_args()
     
@@ -45,3 +53,5 @@ if __name__ == "__main__":
         authenticate()
     elif args.command == "train":
         train_model()
+    elif args.command == "summarize":
+        run_summarize()

@@ -35,5 +35,5 @@ jobs:
         run: |
           # The custom model is committed to the repo (model.pth) or trained during the action.
           # If it's not present, we can uncomment the training step below.
-          # python train.py 
-          python app.py
+          # python main.py train 
+          python main.py summarize
