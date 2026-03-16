@@ -8,6 +8,9 @@ on:
 jobs:
   summarize:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Scikit_ML/SelfLearn/Gmail_AI_Assistant_withOwnTrainedModel
 
     steps:
       - name: Checkout repository
@@ -27,7 +30,7 @@ jobs:
         env:
           GMAIL_TOKEN_JSON: ${{ secrets.GMAIL_TOKEN_JSON }}
         run: |
-          # The custom model needs to be present in the repo or trained during the action.
-          # Since it's trained from scratch and relatively small, we assume it's committed to the repo (model.pth).
-          # If not, the user can run train.py first.
+          # The custom model is committed to the repo (model.pth) or trained during the action.
+          # If it's not present, we can uncomment the training step below.
+          # python train.py 
           python app.py
