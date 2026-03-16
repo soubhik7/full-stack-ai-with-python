@@ -1,0 +1,80 @@
+2026-03-16 21:20:19,985 - __main__ - [INFO] - main.py:31 - Starting model training process...
+2026-03-16 21:20:19,987 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:42 - Trainer initialized using device: cpu.
+2026-03-16 21:20:19,987 - src.gmail_assistant.ml.data - [INFO] - data.py:124 - Generating synthetic dataset with 1500 samples...
+2026-03-16 21:20:19,994 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:54 - Building vocabulary...
+2026-03-16 21:20:19,994 - src.gmail_assistant.ml.preprocessor - [INFO] - preprocessor.py:70 - Building vocabulary from provided texts...
+2026-03-16 21:20:20,005 - src.gmail_assistant.ml.preprocessor - [INFO] - preprocessor.py:88 - Vocabulary built with 49 unique tokens.
+2026-03-16 21:20:20,005 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:56 - Vocabulary built with 49 tokens.
+2026-03-16 21:20:20,760 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:103 - Starting training loop...
+2026-03-16 21:20:30,683 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 1/20 | Train Loss: 0.4475 | Val Loss: 0.3729
+2026-03-16 21:20:30,684 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:20:30,695 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:20:30,695 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.3729! ✅
+2026-03-16 21:20:40,567 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 2/20 | Train Loss: 0.3463 | Val Loss: 0.3173
+2026-03-16 21:20:40,567 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:20:40,572 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:20:40,572 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.3173! ✅
+2026-03-16 21:20:53,833 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 3/20 | Train Loss: 0.3003 | Val Loss: 0.2911
+2026-03-16 21:20:53,834 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:20:53,839 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:20:53,839 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.2911! ✅
+2026-03-16 21:21:03,884 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 4/20 | Train Loss: 0.2687 | Val Loss: 0.2595
+2026-03-16 21:21:03,885 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:21:03,889 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:21:03,889 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.2595! ✅
+2026-03-16 21:21:13,306 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 5/20 | Train Loss: 0.2386 | Val Loss: 0.2630
+2026-03-16 21:21:24,645 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 6/20 | Train Loss: 0.2275 | Val Loss: 0.2363
+2026-03-16 21:21:24,645 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:21:24,649 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:21:24,649 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.2363! ✅
+2026-03-16 21:21:34,294 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 7/20 | Train Loss: 0.2101 | Val Loss: 0.2174
+2026-03-16 21:21:34,294 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:21:34,298 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:21:34,298 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.2174! ✅
+2026-03-16 21:21:43,965 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 8/20 | Train Loss: 0.1901 | Val Loss: 0.1932
+2026-03-16 21:21:43,966 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:21:43,970 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:21:43,970 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.1932! ✅
+2026-03-16 21:21:53,773 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 9/20 | Train Loss: 0.1788 | Val Loss: 0.1921
+2026-03-16 21:21:53,773 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:21:53,778 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:21:53,778 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.1921! ✅
+2026-03-16 21:22:03,491 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 10/20 | Train Loss: 0.1678 | Val Loss: 0.1825
+2026-03-16 21:22:03,492 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:22:03,497 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:22:03,497 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.1825! ✅
+2026-03-16 21:22:13,142 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 11/20 | Train Loss: 0.1592 | Val Loss: 0.1784
+2026-03-16 21:22:13,142 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:22:13,147 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:22:13,147 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.1784! ✅
+2026-03-16 21:22:22,888 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 12/20 | Train Loss: 0.1519 | Val Loss: 0.1630
+2026-03-16 21:22:22,888 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:22:22,892 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:22:22,893 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.1630! ✅
+2026-03-16 21:22:33,106 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 13/20 | Train Loss: 0.1432 | Val Loss: 0.1705
+2026-03-16 21:22:42,756 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 14/20 | Train Loss: 0.1344 | Val Loss: 0.1567
+2026-03-16 21:22:42,756 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:22:42,761 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:22:42,761 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.1567! ✅
+2026-03-16 21:22:52,497 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 15/20 | Train Loss: 0.1289 | Val Loss: 0.1528
+2026-03-16 21:22:52,497 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:22:52,502 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:22:52,502 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.1528! ✅
+2026-03-16 21:23:02,152 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 16/20 | Train Loss: 0.1206 | Val Loss: 0.1453
+2026-03-16 21:23:02,152 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:23:02,157 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:23:02,157 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.1453! ✅
+2026-03-16 21:23:11,896 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 17/20 | Train Loss: 0.1176 | Val Loss: 0.1529
+2026-03-16 21:23:21,513 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 18/20 | Train Loss: 0.1136 | Val Loss: 0.1395
+2026-03-16 21:23:21,513 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:23:21,517 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:23:21,517 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.1395! ✅
+2026-03-16 21:23:31,231 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 19/20 | Train Loss: 0.1074 | Val Loss: 0.1364
+2026-03-16 21:23:31,231 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:23:31,235 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:23:31,235 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.1364! ✅
+2026-03-16 21:23:40,901 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:144 - Epoch 20/20 | Train Loss: 0.1025 | Val Loss: 0.1213
+2026-03-16 21:23:40,901 - src.gmail_assistant.ml.model - [INFO] - model.py:119 - Saving model checkpoint to models/model.pth...
+2026-03-16 21:23:40,905 - src.gmail_assistant.ml.model - [INFO] - model.py:129 - Model saved successfully.
+2026-03-16 21:23:40,906 - src.gmail_assistant.ml.trainer - [INFO] - trainer.py:155 - Model checkpoint saved with Val Loss: 0.1213! ✅
+2026-03-16 21:23:40,906 - __main__ - [INFO] - main.py:34 - Model training completed successfully.

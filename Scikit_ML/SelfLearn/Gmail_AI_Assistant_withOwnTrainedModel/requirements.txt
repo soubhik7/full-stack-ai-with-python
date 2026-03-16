@@ -12,3 +12,8 @@ nltk
 fastapi
 uvicorn
 python-multipart
+PyYAML
+python-dotenv
+matplotlib
+ipykernel
+jupyter
