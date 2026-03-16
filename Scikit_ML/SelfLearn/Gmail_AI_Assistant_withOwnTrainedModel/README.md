@@ -53,11 +53,12 @@ python3 -m pytest --cov=. tests/
 1.  Go to the [Google Cloud Console](https://console.cloud.google.com/).
 2.  Create a project and enable the **Gmail API**.
 3.  Configure the OAuth Consent Screen and create **OAuth 2.0 Client IDs**.
-4.  Download the JSON file and save it as `credentials.json` in the project root.
+4.  Download the JSON file and save it as `credentials.json` in the project directory (`Scikit_ML/SelfLearn/Gmail_AI_Assistant_withOwnTrainedModel/`).
 
 ### 2. Authentication
-Run the authentication script to generate `token.json`:
+Run the authentication script within the project directory to generate `token.json`:
 ```bash
+cd Scikit_ML/SelfLearn/Gmail_AI_Assistant_withOwnTrainedModel
 python3 auth.py
 ```
 
@@ -70,6 +71,11 @@ The assistant will:
 - Summarize them using the custom model.
 - Mark them as read.
 - Send a compiled summary email back to you.
+
+### 4. GitHub Actions Deployment
+- Ensure the workflow file `.github/workflows/gmail-ai-custom.yml` exists at the root of the repository.
+- Add your `GMAIL_TOKEN_JSON` (the contents of `token.json`) as a secret in your GitHub repository.
+- The action will automatically run every 3 hours and process your inbox.
 
 ## Features
 - **Zero Pre-trained Models**: No Transformers, no pre-trained embeddings (Word2Vec/GloVe).
