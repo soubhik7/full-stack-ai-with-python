@@ -99,8 +99,36 @@ def process_emails(max_emails=5):
     if os.path.exists('token.json'):
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
     elif "GMAIL_TOKEN_JSON" in os.environ:
-        token_data = json.loads(os.environ["GMAIL_TOKEN_JSON"])
-        creds = Credentials.from_authorized_user_info(token_data, SCOPES)
+        token_json = os.environ.get("GMAIL_TOKEN_JSON", "").strip()
+        if token_json:
+            try:
+                token_data = json.loads(token_json)
+                creds = Credentials.from_authorized_user_info(token_data, SCOPES)
+            except json.JSONDecodeError as e:
+                logger.error(f"Failed to decode GMAIL_TOKEN_JSON: {e}")
+    
+    # If GMAIL_TOKEN_JSON is not available or failed, check for individual secrets
+    if not creds:
+        client_id = os.environ.get("GMAIL_CLIENT_ID")
+        client_secret = os.environ.get("GMAIL_CLIENT_SECRET")
+        refresh_token = os.environ.get("GMAIL_REFRESH_TOKEN")
+        
+        if client_id and client_secret and refresh_token:
+            logger.info("Building credentials from individual GMAIL secrets.")
+            token_data = {
+                "client_id": client_id,
+                "client_secret": client_secret,
+                "refresh_token": refresh_token,
+                "token_uri": "https://oauth2.googleapis.com/token",
+            }
+            creds = Credentials.from_authorized_user_info(token_data, SCOPES)
+        else:
+            missing = []
+            if not client_id: missing.append("GMAIL_CLIENT_ID")
+            if not client_secret: missing.append("GMAIL_CLIENT_SECRET")
+            if not refresh_token: missing.append("GMAIL_REFRESH_TOKEN")
+            if missing and "GMAIL_TOKEN_JSON" not in os.environ:
+                logger.error(f"Missing required credentials: {', '.join(missing)}")
     
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
