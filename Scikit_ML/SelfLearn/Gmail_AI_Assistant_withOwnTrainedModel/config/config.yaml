@@ -1,0 +1,22 @@
+# Application Configuration
+gmail:
+  client_id: null
+  client_secret: null
+  refresh_token: null
+  token_json: null
+  scopes:
+    - 'https://www.googleapis.com/auth/gmail.modify'
+
+ml:
+  model_path: "models/model.pth"
+  max_sent_len: 20
+  embed_dim: 100
+  hidden_dim: 256
+  learning_rate: 0.001
+  epochs: 30
+  batch_size: 16
+  min_freq: 1
+
+api:
+  port: 8000
+  host: "0.0.0.0"
