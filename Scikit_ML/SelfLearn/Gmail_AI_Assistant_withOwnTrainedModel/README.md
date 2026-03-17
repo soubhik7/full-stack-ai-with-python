@@ -31,7 +31,7 @@ Gmail_AI_Assistant_withOwnTrainedModel/
 │       ├── services/
 │       └── utils/
 ├── main.py
-├── requirements.txt
+├── requirements.gmail_custom_model.txt
 └── README.md
 ```
 
@@ -44,7 +44,7 @@ Gmail_AI_Assistant_withOwnTrainedModel/
 ## Install
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.gmail_custom_model.txt
 ```
 
 ## Configuration
