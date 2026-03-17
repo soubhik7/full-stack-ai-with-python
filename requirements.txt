@@ -229,3 +229,13 @@ pytest-cov==4.0.0
 pre-commit==3.2.2
 
 # Deployment
+
+
+# Langchain
+langchain==1.1.0
+langchain-classic==1.0.0
+langchain-community==0.4.1
+langchain-core==1.1.0
+langchain-openai==1.1.0
+langchain-qdrant==1.1.0
+langchain-text-splitters==1.0.0
