@@ -93,6 +93,12 @@ pip install -r requirements.txt
 
 ---
 
+## Environment Variables
+
+Use a single `.env` file at the repository root for all local development.
+
+---
+
 ## Key Packages Installed
 
 The unified environment includes:
