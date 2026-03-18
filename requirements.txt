@@ -239,3 +239,8 @@ langchain-core==1.1.0
 langchain-openai==1.1.0
 langchain-qdrant==1.1.0
 langchain-text-splitters==1.0.0
+
+# Additional for Gmail AI Assistants
+fastapi
+uvicorn
+transformers
