@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: "3.10"
           cache: "pip"
-          cache-dependency-path: requirements.txt
+          cache-dependency-path: Scikit_ML/SelfLearn/Gmail_AI_Assistant/requirements.txt
 
       - name: Cache Hugging Face models
         uses: actions/cache@v4
@@ -34,7 +34,7 @@ jobs:
             ${{ runner.os }}-huggingface-
 
       - name: Install packages
-        run: pip install -r ../../../requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Run Gmail Script
         env:

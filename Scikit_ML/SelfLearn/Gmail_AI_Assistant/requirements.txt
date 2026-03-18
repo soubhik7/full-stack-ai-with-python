@@ -1,0 +1,9 @@
+google-api-python-client
+google-auth
+google-auth-oauthlib
+pickle-mixin
+scikit-learn
+requests
+spacy
+transformers
+torch
