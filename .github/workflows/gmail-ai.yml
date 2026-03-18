@@ -34,7 +34,7 @@ jobs:
             ${{ runner.os }}-huggingface-
 
       - name: Install packages
-        run: pip install -r ../../requirements.txt
+        run: pip install -r ../../../requirements.txt
 
       - name: Run Gmail Script
         env:
