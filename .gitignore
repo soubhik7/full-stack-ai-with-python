@@ -1,6 +1,7 @@
 hello_world/.env
 **/.env
 .venv/*
+venv/
 
 # Hugging Face model checkpoints
 checkpoint-*/

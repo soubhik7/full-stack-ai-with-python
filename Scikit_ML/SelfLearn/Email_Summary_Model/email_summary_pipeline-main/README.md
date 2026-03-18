@@ -17,7 +17,7 @@ We have designed a stunning **Glassmorphism** responsive UI using pure CSS (with
 ### 1. Install Dependencies
 Open your terminal inside this project directory and install the necessary dependencies:
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.email_summary_model.txt
 ```
 
 ### 2. Download the NLP Model

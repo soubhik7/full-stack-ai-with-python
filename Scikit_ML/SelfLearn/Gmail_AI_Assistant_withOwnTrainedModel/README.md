@@ -1,110 +1,115 @@
-# 📧 Gmail AI Assistant: Production-Ready AI Email Summarizer
+# Gmail AI Assistant (Custom Trained Model)
 
-An enterprise-grade, modular, and AI-powered assistant that fetches unread emails from Gmail, generates extractive summaries using a custom-trained PyTorch model, and sends a beautifully formatted summary brief back to your inbox.
+Fetches unread Gmail messages, generates extractive summaries using a custom PyTorch model, and emails a formatted “summary brief” back to the authenticated user. It also exposes a small FastAPI web UI + JSON endpoints to trigger scans and view the latest summaries.
 
----
+## Features
 
-## 🚀 Features
+- Modular layout: API, core orchestration, ML, and external service integrations
+- Extractive summarization: sentence scoring with a custom-trained model checkpoint
+- FastAPI app: web UI at `/` and REST endpoints for triggering scans
+- Config + secrets: YAML config with `.env`/environment variable overrides
+- Notebook included: training + exploration workflow in `notebooks/`
 
--   **Modular Architecture**: Clean separation of concerns with dedicated layers for API, core business logic, machine learning, and external services.
--   **AI-Powered Summarization**: Uses a custom **Extractive Summarizer** (LSTM-based) that identifies the most important sentences in each email.
--   **Enterprise Standards**: Includes robust logging, centralized configuration management, and strict Pydantic-based API validation.
--   **Gmail API Integration**: Secure OAuth2 flow with support for token refreshing and environment variable-based credentials.
--   **Interactive Exploration**: Comprehensive Jupyter notebooks for model training, data exploration, and visualization of AI scoring.
--   **Production API**: Built with **FastAPI**, featuring a clean web interface and RESTful JSON endpoints.
-
----
-
-## 📂 Directory Structure
+## Directory structure
 
 ```text
-Gmail_AI_Assistant/
-├── config/                  # Configuration files (YAML/JSON)
-├── logs/                    # Application logs
-├── models/                  # Saved model checkpoints (e.g., model.pth)
-├── notebooks/               # Interactive exploration and training notebooks
+Gmail_AI_Assistant_withOwnTrainedModel/
+├── config/
+│   ├── config.yaml
+│   └── logging_config.yaml
+├── logs/
+│   └── app.log
+├── models/
+│   └── model.pth
+├── notebooks/
+│   └── 01_model_training_and_exploration.ipynb
 ├── src/
-│   ├── gmail_assistant/
-│   │   ├── api/             # FastAPI layer (routes, schemas, app factory)
-│   │   ├── core/            # Core business logic and orchestrators
-│   │   ├── ml/              # Machine Learning components (model, trainer, inference)
-│   │   ├── services/        # External service integrations (Gmail, Auth)
-│   │   └── utils/           # Shared utilities (logging, config)
-├── tests/                   # Unit and integration tests
-├── main.py                  # CLI entry point for the application
-├── requirements.txt         # Project dependencies
-└── README.md                # Project documentation
+│   └── gmail_assistant/
+│       ├── api/
+│       ├── core/
+│       ├── ml/
+│       ├── services/
+│       └── utils/
+├── main.py
+├── requirements.gmail_custom_model.txt
+└── README.md
 ```
 
----
+## Prerequisites
 
-## 🛠️ Setup Instructions
+- Python 3.8+
+- A Google Cloud project with the Gmail API enabled
+- OAuth “Desktop app” client and a downloaded `credentials.json` (for the interactive auth flow)
 
-### 1. Prerequisites
-
--   Python 3.8+
--   A Google Cloud Project with the **Gmail API** enabled.
--   OAuth 2.0 Client IDs (Desktop type) from the [Google Cloud Console](https://console.cloud.google.com/).
--   Download the `credentials.json` and place it in the project root.
-
-### 2. Installation
-
-Clone the repository and install the dependencies:
+## Install
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.gmail_custom_model.txt
 ```
 
-### 3. Authentication
+## Configuration
 
-Run the interactive authentication flow to generate your `token.json`:
+Default config lives in `config/config.yaml`. Sensitive values can be provided via environment variables (including via a local `.env` file).
+
+Supported environment variables:
+
+- `CONFIG_PATH`: override the path to the YAML config (default: `config/config.yaml`)
+- `PORT`: HTTP port for the API server (default: `8000`)
+- `MODEL_PATH`: model checkpoint path (default: `models/model.pth`)
+- `GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_REFRESH_TOKEN`: credential components (optional)
+- `GMAIL_TOKEN_JSON`: full Google authorized-user JSON as a string (optional)
+
+Credential lookup order:
+
+1. Local `token.json` in the project root
+2. `GMAIL_TOKEN_JSON` (or `gmail.token_json` in YAML)
+3. `GMAIL_CLIENT_ID` + `GMAIL_CLIENT_SECRET` + `GMAIL_REFRESH_TOKEN` (or YAML equivalents)
+
+Do not commit secrets (client secret, refresh token, token JSON, or `token.json`) to source control.
+
+## Quickstart
+
+1. Place `credentials.json` in the project root.
+2. Run interactive auth (creates `token.json` in the project root):
 
 ```bash
 python main.py auth
 ```
 
-### 4. Train the AI Model (Optional)
-
-The project comes with a synthetic data generator to train the extractive summarizer from scratch:
-
-```bash
-python main.py train
-```
-
----
-
-## 🏃 Usage
-
-### Start the API Server
+3. Start the API server:
 
 ```bash
 python main.py serve
 ```
 
-Access the web interface at `http://localhost:8000`.
+Open `http://localhost:8000` and click “Scan for New Emails”.
 
-### API Endpoints
+## CLI usage
 
--   `GET /`: View the latest email summaries in a web interface.
--   `GET /trigger`: Trigger a new scan of unread emails and generate summaries.
--   `GET /api/summaries`: Retrieve the latest summaries as a JSON array.
+Run one scan and email the summary brief (without running the web server):
 
----
+```bash
+python main.py summarize
+```
 
-## 🧪 Interactive Exploration
+## API endpoints
 
-Open the Jupyter notebook located in `notebooks/01_model_training_and_exploration.ipynb` to explore the model architecture, visualize sentence importance scores, and experiment with different summarization parameters.
+- `GET /`: web UI for the latest summaries
+- `GET /trigger`: scan unread emails, generate summaries, send the brief, and return JSON
+- `GET /api/summaries`: return the latest summaries as JSON
 
----
+## Train the model (optional)
 
-## 🏗️ Architectural Decisions
+Training uses a synthetic dataset generator and saves a checkpoint to `models/model.pth` by default:
 
--   **Extractive vs. Abstractive**: Extractive summarization was chosen for its reliability and lower computational cost compared to abstractive models, making it suitable for quick email processing.
--   **LSTM-based Model**: We used a hierarchical Bi-LSTM structure to capture both word-level context within sentences and sentence-level context within the entire document.
--   **Dependency Injection**: The `GmailAIAssistant` orchestrator uses service objects (Auth, Gmail, ML) to maintain a clean and testable architecture.
+```bash
+python main.py train
+```
 
----
+To explore the training pipeline and model behavior, open:
 
-## 🛡️ License
+- `notebooks/01_model_training_and_exploration.ipynb`
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## License
+
+MIT
