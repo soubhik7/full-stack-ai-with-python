@@ -45,7 +45,8 @@ class GmailAIAssistant:
             return []
             
         # 2. Initialize Gmail service and processor
-        gmail_service = GmailService(credentials=creds)
+        excluded_subjects = self.config.get('gmail.exclude_subjects', [])
+        gmail_service = GmailService(credentials=creds, excluded_subjects=excluded_subjects)
         processor = EmailProcessor(gmail_service, self.summarizer)
         
         # 3. Process unread emails
