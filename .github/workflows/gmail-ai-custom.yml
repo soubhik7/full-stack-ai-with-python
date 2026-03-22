@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Scikit_ML/SelfLearn/Gmail_AI_Assistant_withOwnTrainedModel
+        working-directory: Scikit_ML/SelfProject/Gmail_AI_Assistant_withOwnTrainedModel
 
     steps:
       - name: Checkout repository
