@@ -6,6 +6,8 @@ gmail:
   token_json: null
   scopes:
     - 'https://www.googleapis.com/auth/gmail.modify'
+  exclude_subjects:
+    - "Your AI Email Summaries & Brief"
 
 ml:
   model_path: "models/model.pth"
