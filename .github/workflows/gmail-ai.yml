@@ -12,7 +12,7 @@ jobs:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     defaults:
       run:
-        working-directory: Scikit_ML/SelfLearn/Gmail_AI_Assistant
+        working-directory: Scikit_ML/SelfProject/Gmail_AI_Assistant_withBuilt-In_Model
 
     steps:
       - name: Checkout repo
@@ -23,13 +23,13 @@ jobs:
         with:
           python-version: "3.10"
           cache: "pip"
-          cache-dependency-path: Scikit_ML/SelfLearn/Gmail_AI_Assistant/requirements.txt
+          cache-dependency-path: Scikit_ML/SelfProject/Gmail_AI_Assistant_withBuilt-In_Model/requirements.txt
 
       - name: Cache Hugging Face models
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
-          key: ${{ runner.os }}-huggingface-${{ hashFiles('Scikit_ML/SelfLearn/Gmail_AI_Assistant/summarize_gmail.py') }}
+          key: ${{ runner.os }}-huggingface-${{ hashFiles('Scikit_ML/SelfProject/Gmail_AI_Assistant_withBuilt-In_Model/summarize_gmail.py') }}
           restore-keys: |
             ${{ runner.os }}-huggingface-
 
