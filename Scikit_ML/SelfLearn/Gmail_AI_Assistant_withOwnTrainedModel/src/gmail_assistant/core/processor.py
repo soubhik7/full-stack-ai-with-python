@@ -44,6 +44,11 @@ class EmailProcessor:
             try:
                 # 1. Fetch full message content
                 content = self.gmail_service.get_message_content(msg_id)
+
+                if self.gmail_service.is_subject_excluded(content.get('subject', '')):
+                    self.gmail_service.mark_as_read(msg_id)
+                    logger.info(f"Skipped excluded subject for message {msg_id}.")
+                    continue
                 
                 # 2. Generate summary using the ML model
                 summary = self.summarizer.summarize(content['body'], top_n=2)

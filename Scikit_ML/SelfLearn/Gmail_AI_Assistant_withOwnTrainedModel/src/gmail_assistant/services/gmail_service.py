@@ -11,19 +11,52 @@ class GmailService:
     Handles direct interaction with the Gmail API.
     Includes methods for fetching, processing, and sending emails.
     """
-    def __init__(self, credentials: Credentials):
+    def __init__(self, credentials: Credentials, excluded_subjects: Optional[List[str]] = None):
         """
         Initialize the GmailService with valid credentials.
         """
         self.service = build('gmail', 'v1', credentials=credentials)
+        self.excluded_subjects = self._normalize_subject_phrases(excluded_subjects)
         logger.info("Gmail service initialized.")
+
+    def _normalize_subject_phrases(self, phrases: Optional[List[str]]) -> List[str]:
+        if not phrases:
+            return []
+        normalized = []
+        for p in phrases:
+            if not p:
+                continue
+            s = str(p).strip()
+            if s:
+                normalized.append(s)
+        return normalized
+
+    def _gmail_quote_phrase(self, phrase: str) -> str:
+        s = phrase.replace("\\", "\\\\").replace('"', '\\"').replace("\n", " ").replace("\r", " ").strip()
+        return f'"{s}"'
+
+    def _build_unread_query(self) -> str:
+        q = "is:unread"
+        for subject in self.excluded_subjects:
+            q += f" -subject:{self._gmail_quote_phrase(subject)}"
+        return q
+
+    def is_subject_excluded(self, subject: str) -> bool:
+        if not self.excluded_subjects:
+            return False
+        s = (subject or "").strip().lower()
+        for excluded in self.excluded_subjects:
+            if excluded.strip().lower() in s:
+                return True
+        return False
 
     def get_unread_messages(self, max_results: int = 5) -> List[Dict[str, str]]:
         """
         Fetches a list of unread message summaries.
         """
         try:
-            results = self.service.users().messages().list(userId='me', q='is:unread', maxResults=max_results).execute()
+            q = self._build_unread_query()
+            results = self.service.users().messages().list(userId='me', q=q, maxResults=max_results).execute()
             messages = results.get('messages', [])
             logger.info(f"Found {len(messages)} unread messages.")
             return messages
