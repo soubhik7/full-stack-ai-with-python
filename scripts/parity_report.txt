@@ -1,0 +1,28 @@
+Parity report: Notebook headings vs. article
+Total headings in notebook: 22
+Found in article: 10
+Missing from article (or not exact match): 12
+
+Details:
+Level 1: No Libraries, No Shortcuts: LLM from Scratch with PyTorch -> FOUND
+Level 2: The no-BS guide to build, train, and fine-tune a Transformer architecture from scratch -> MISSING
+Level 2: Table of Contents -> FOUND
+Level 2: Introduction to LLMs -> MISSING
+Level 3: Tokenizer -> FOUND
+Level 3: Next-Token Predictors -> FOUND
+Level 3: A quick note on chat formatting -> MISSING
+Level 2: Transformer Intuition -> MISSING
+Level 3: The attention computation -> MISSING
+Level 2: Tokenization -> FOUND
+Level 2: Embeddings -> FOUND
+Level 2: Positional Encoding -> FOUND
+Level 2: Multi-Head Attention -> FOUND
+Level 2: Feed Forward Network -> MISSING
+Level 2: Encoder & Decoder Blocks -> MISSING
+Level 2: Full Transformer Assembly -> MISSING
+Level 2: Training Loop -> FOUND
+Level 3: Data preparation -> FOUND
+Level 2: Loss Function & Optimization -> MISSING
+Level 2: Fine-Tuning (High Level) -> MISSING
+Level 3: Instruction tuning -> MISSING
+Level 3: Parameter-efficient fine-tuning -> MISSING
