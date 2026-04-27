@@ -1,201 +1,223 @@
-# 🐍 Complete Python Programming Course
+# Python Programming — Complete Learning Curriculum
 
-**Master Python from Basics to Advanced with Real-World Projects**
-
-> **Course Link**: [hitesh.ai](https://hitesh.ai)  
-> **Instructor**: Hitesh Choudhary
+**From Zero to Production-Ready Python Developer**
 
 ---
 
-## 📚 Course Overview
+## What This Course Is
 
-This comprehensive Python course takes you from absolute beginner to advanced Python developer through hands-on projects and practical examples. Learn Python fundamentals, advanced concepts, and build real-world applications that showcase your skills.
+A structured, hands-on Python curriculum built around a single theme — a chai (tea) shop — to make abstract programming concepts feel concrete and memorable. Every module uses real business scenarios so you learn *why* a concept exists, not just *how* to use it.
 
----
-
-## 🎯 What You'll Learn
-
-### **Core Python Fundamentals**
-- **Data Types & Variables** - Master strings, numbers, lists, tuples, dictionaries, and sets
-- **Control Flow** - Conditionals, loops, and program logic
-- **Functions** - Function definition, parameters, return values, and scope
-- **Object-Oriented Programming** - Classes, inheritance, methods, and properties
-- **Error Handling** - Try-catch blocks, custom exceptions, and robust error management
-
-### **Advanced Python Concepts**
-- **Comprehensions** - List, set, and dictionary comprehensions for elegant code
-- **Generators** - Memory-efficient data processing with generators
-- **Decorators** - Function and class decorators for code enhancement
-- **Concurrency** - Threading, multiprocessing, and async programming
-- **File Handling** - Reading, writing, and managing files effectively
-
-### **Real-World Applications**
-- **Web Development** - Build a URL shortener with Flask
-- **Data Science** - Data analysis, visualization, and machine learning basics
-- **Web Scraping** - Extract data from websites and APIs
-- **Automation** - Automate repetitive tasks and file operations
-- **API Development** - Create and consume REST APIs
+**No prior programming experience required.**
 
 ---
 
-## 📁 Course Structure
+## How to Use This Repository
 
-### **01. Python Basics** (`00_python/`, `01_virtual/`, `02_datatypes/`)
-- Introduction to Python syntax and environment setup
-- Virtual environments and package management
-- Comprehensive coverage of all Python data types
-
-### **02. Control Structures** (`03_conditionals/`, `04_loops/`)
-- Conditional statements and decision making
-- Loops (for, while) with practical examples
-- Real-world scenarios like chai shop automation
-
-### **03. Functions & Modularity** (`05_functions/`, `06_chai_business/`)
-- Function definition, parameters, and return values
-- Scope, global, and nonlocal keywords
-- Building modular applications with packages
-
-### **04. Pythonic Programming** (`07_comprehensions/`, `08_generators/`)
-- List, set, and dictionary comprehensions
-- Generator functions and expressions
-- Memory-efficient data processing
-
-### **05. Advanced Features** (`09_decorators/`, `10_oop/`, `11_exceptions/`)
-- Function and class decorators
-- Object-oriented programming principles
-- Exception handling and custom exceptions
-
-### **06. Concurrency & Performance** (`12_threads_concurrency/`, `13_async_python/`)
-- Threading and multiprocessing
-- Global Interpreter Lock (GIL) understanding
-- Asynchronous programming with asyncio
+1. Work through modules **in numerical order** — each builds on the previous
+2. Read the `README.md` inside each module folder before touching any code
+3. Run every file, read the output, then modify it and run again
+4. Complete the challenges **only after** finishing the prerequisite modules
+5. Track your progress using the table below — mark `[x]` when done
 
 ---
 
-## 🚀 Hands-On Projects
+## Learning Path & Progress Tracker
 
-### **1. Utility Applications** (`challenges/01_utilities/`)
-- Self-introduction script generator
-- Personal bio and learning journal tools
-- Task management utilities
+| # | Module | What You Learn | Difficulty | Est. Time | Done |
+|---|--------|---------------|------------|-----------|------|
+| 00 | [Python Environment](00_python/) | Setup, syntax basics, Python version | Beginner | 30 min | [ ] |
+| 01 | *(Virtual Environments)* | `venv`, pip, package isolation | Beginner | 30 min | [ ] |
+| 02 | [Data Types](02_datatypes/) | Variables, strings, numbers, lists, dicts, sets | Beginner | 3–4 hrs | [ ] |
+| 03 | [Conditionals](03_conditionals/) | if/elif/else, decision logic, boolean operators | Beginner | 2 hrs | [ ] |
+| 04 | [Loops](04_loops/) | for, while, break, continue, walrus operator | Beginner | 2–3 hrs | [ ] |
+| 05 | [Functions](05_functions/) | Defining functions, scope, parameters, return | Intermediate | 3 hrs | [ ] |
+| 06 | [Chai Business App](06_chai_business/) | Modules, packages, project structure | Intermediate | 2 hrs | [ ] |
+| 07 | [Comprehensions](07_comprehensions/) | List/set/dict comprehensions, expressions | Intermediate | 2 hrs | [ ] |
+| 08 | [Generators](08_generators/) | yield, lazy evaluation, memory efficiency | Intermediate | 2 hrs | [ ] |
+| 09 | [Decorators](09_decorators/) | Function wrapping, @syntax, real-world patterns | Intermediate | 2 hrs | [ ] |
+| 10 | [OOP](10_oop/) | Classes, inheritance, MRO, properties, classmethods | Advanced | 4–5 hrs | [ ] |
+| 11 | [Exceptions](11_exceptions/) | try/except, custom exceptions, file handling | Intermediate | 2–3 hrs | [ ] |
+| 12 | [Threading & Multiprocessing](12_threads_concurrency/) | Threads, processes, GIL, locks, queues | Advanced | 3 hrs | [ ] |
+| 13 | [Async Python](13_async_python/) | asyncio, async/await, race conditions, deadlocks | Advanced | 3 hrs | [ ] |
+| 14 | [Pydantic](14_pydantic/) | Data validation, type enforcement, serialization | Advanced | 2–3 hrs | [ ] |
 
-### **2. Data Handling** (`challenges/02_data_handling/`)
-- CSV and JSON data processing
-- API data manipulation
-- Contact management system
-- Weather data analysis
+### Challenges (Apply Everything)
 
-### **3. Web Scraping** (`challenges/03_web_scraping/`)
-- Book data extraction from websites
-- Cryptocurrency price tracking
-- Hacker News top stories scraper
-- Image and PDF downloading
-
-### **4. Automation** (`challenges/04_automation/`)
-- File organization and management
-- Image processing and manipulation
-- Automated data collection
-
-### **5. Data Science** (`challenges/05_data_science/`)
-- Data analysis with pandas
-- Data visualization with matplotlib/seaborn
-- YouTube comments analysis
-- Salary vs experience correlation
-
-### **6. Web Application** (`challenges/06_url_shortner/`)
-- **Complete Flask Web App**
-- URL shortening service
-- Database integration (SQLite)
-- User interface with templates
-- Visit tracking and analytics
+| # | Project | Modules Required | Difficulty | Done |
+|---|---------|-----------------|------------|------|
+| C1 | [Utility Scripts](challenges/01_utilities/) | 00–05 | Beginner | [ ] |
+| C2 | [Data Handling](challenges/02_data_handling/) | 02, 05, 11 | Intermediate | [ ] |
+| C3 | [Web Scraping](challenges/03_web_scraping/) | 05, 11 + `requests`/`bs4` | Intermediate | [ ] |
+| C4 | [Automation](challenges/04_automation/) | 04, 05, 11 | Intermediate | [ ] |
+| C5 | [Data Science](challenges/05_data_science/) | 02, 05, 07 + `pandas`/`matplotlib` | Advanced | [ ] |
+| C6 | [URL Shortener (Flask App)](challenges/06_url_shortner/) | 05, 10, 11 + `Flask`/`SQLite` | Advanced | [ ] |
 
 ---
 
-## 🛠️ Technologies & Tools Covered
+## Curriculum Map
 
-- **Python 3.x** - Core programming language
-- **Flask** - Web framework for building applications
-- **SQLite** - Database management
-- **Pandas** - Data manipulation and analysis
-- **Matplotlib/Seaborn** - Data visualization
-- **Requests** - HTTP library for API calls
-- **Beautiful Soup** - Web scraping
-- **Threading/Multiprocessing** - Concurrency
-- **Asyncio** - Asynchronous programming
+```
+BEGINNER
+  00 Environment Setup
+       |
+  02 Data Types ──── strings, numbers, lists, tuples, dicts, sets
+       |
+  03 Conditionals ── if/elif/else, boolean logic
+       |
+  04 Loops ───────── for, while, break, continue, walrus
 
----
+INTERMEDIATE
+       |
+  05 Functions ───── parameters, scope, return, closures
+       |
+  06 App Structure ─ modules, packages (first real project)
+       |
+  07 Comprehensions ─ elegant one-liners
+       |
+  08 Generators ──── yield, lazy iteration
+       |
+  09 Decorators ──── @syntax, function wrapping
+       |
+  11 Exceptions ──── try/except, custom errors
 
-## 📋 Prerequisites
+ADVANCED
+       |
+  10 OOP ─────────── classes, inheritance, MRO, properties
+       |
+  12 Concurrency ─── threads, processes, GIL, locks
+       |
+  13 Async ─────────── asyncio, async/await, race conditions
+       |
+  14 Pydantic ──────── validation, type safety
 
-- Basic computer literacy
-- No prior programming experience required
-- Windows, macOS, or Linux operating system
-- Internet connection for downloading packages
-
----
-
-## 🎓 Learning Outcomes
-
-By the end of this course, you will be able to:
-
-✅ **Write clean, efficient Python code**  
-✅ **Build complete web applications**  
-✅ **Scrape and analyze data from the web**  
-✅ **Create automation scripts**  
-✅ **Work with databases and APIs**  
-✅ **Implement concurrent and asynchronous programs**  
-✅ **Apply object-oriented programming principles**  
-✅ **Handle errors and exceptions professionally**  
-✅ **Use advanced Python features effectively**  
-✅ **Deploy real-world Python applications**
-
----
-
-## 🏆 Course Highlights
-
-- **200+ Practical Examples** - Learn by doing with real code
-- **6 Complete Projects** - Build portfolio-worthy applications
-- **Progressive Difficulty** - From beginner to advanced concepts
-- **Industry Best Practices** - Learn professional coding standards
-- **Hands-On Challenges** - Daily exercises to reinforce learning
-- **Real-World Applications** - Solve actual problems with Python
+PROJECTS (use what you've learned)
+  C1 → C2 → C3 → C4 → C5 → C6
+```
 
 ---
 
-## 📖 How to Use This Repository
+## Module Summaries
 
-1. **Clone or download** this repository
-2. **Follow the folder structure** in numerical order
-3. **Complete exercises** in each chapter
-4. **Build projects** in the challenges section
-5. **Practice regularly** with the provided examples
+### Module 00 — Python Environment
+Verify Python is installed and understand the runtime. Short and sweet — just enough to get you moving.
+
+### Module 02 — Data Types
+The foundation. Python stores *everything* as an object with a type. This module teaches you what types exist, how Python handles memory (using `id()`), and how to manipulate each type.
+
+### Module 03 — Conditionals
+Programs make decisions. Conditionals let your code branch based on data — critical for any real application. Built around a chai shop pricing scenario.
+
+### Module 04 — Loops
+Repeating logic without repeating code. Learn `for`, `while`, `break`, `continue`, `for/else`, and the walrus operator (`:=`). Every program needs loops.
+
+### Module 05 — Functions
+The most important module. Functions are how you organize and reuse logic. Understanding scope, parameters, closures, and return values is non-negotiable for writing real software.
+
+### Module 06 — Application Structure
+Real projects are not single files. Learn how Python's module and package system works by building a structured chai business application.
+
+### Module 07 — Comprehensions
+Python's most loved feature. Write data transformation in one clean line instead of five messy ones. List, set, and dictionary comprehensions, plus generator expressions.
+
+### Module 08 — Generators
+Large datasets don't fit in memory. Generators produce values one at a time using `yield`, letting you process infinite sequences efficiently. Foundational for data pipelines.
+
+### Module 09 — Decorators
+Decorators wrap functions to add behavior (logging, auth, timing) without touching the function's code. Built on closures from Module 05. Used everywhere in production Python.
+
+### Module 10 — Object-Oriented Programming
+Model real-world entities as objects with state (attributes) and behavior (methods). Covers classes, `__init__`, inheritance, MRO, `@staticmethod`, `@classmethod`, and `@property`.
+
+### Module 11 — Exceptions
+Production code fails gracefully. Learn to handle errors with `try/except`, write custom exception classes, and manage file operations safely.
+
+### Module 12 — Threading & Multiprocessing
+Run multiple tasks simultaneously. Understand Python's GIL, when to use threads vs. processes, how to protect shared data with locks, and inter-process communication with queues.
+
+### Module 13 — Async Python
+The modern concurrency model. `asyncio` with `async/await` lets a single thread handle thousands of I/O operations concurrently. Also covers race conditions and deadlocks.
+
+### Module 14 — Pydantic
+Data coming from APIs, databases, and users is untrusted. Pydantic validates and parses data against type annotations, catching errors early. Standard in FastAPI and modern Python services.
 
 ---
 
-## 🎯 Target Audience
+## Setup
 
-- **Beginners** - No prior programming experience
-- **Students** - Learning Python for academic purposes
-- **Professionals** - Wanting to add Python to their skill set
-- **Career Changers** - Transitioning to software development
-- **Hobbyists** - Interested in automation and data analysis
+```bash
+# 1. Install Python 3.10+
+python3 --version
 
----
+# 2. Create a virtual environment (do this once per project)
+python3 -m venv venv
+source venv/bin/activate   # Mac/Linux
+# venv\Scripts\activate    # Windows
 
-## 📞 Support & Community
+# 3. Run any file
+python3 02_datatypes/chapter_1.py
 
-- **Course Platform**: [hitesh.ai](https://hitesh.ai)
-- **Instructor**: Hitesh Choudhary
-- **Community**: Join the course community for discussions and support
-
----
-
-## 📄 License
-
-This course material is provided for educational purposes. Please respect the instructor's intellectual property and course terms.
+# 4. Install challenge dependencies
+pip install requests beautifulsoup4 pandas matplotlib flask pydantic
+```
 
 ---
 
-**Ready to start your Python journey?** 🚀
+## Technologies Used
 
-*Begin with the basics in `00_python/` and work your way through to building complete applications!*
+| Technology | Used In |
+|-----------|---------|
+| Python 3.10+ | All modules |
+| Flask | Challenge 6 (URL Shortener) |
+| SQLite | Challenge 6 |
+| Pandas | Challenge 5 (Data Science) |
+| Matplotlib / Seaborn | Challenge 5 |
+| Requests | Challenge 3 (Web Scraping) |
+| BeautifulSoup4 | Challenge 3 |
+| Pydantic | Module 14 |
+| asyncio | Module 13 |
+| threading / multiprocessing | Module 12 |
+
+---
+
+## Tips for Effective Learning
+
+- **Run the code** — reading without running is not learning
+- **Break things intentionally** — comment out a line, change a value, see what error you get
+- **Type it out** — don't copy-paste; muscle memory matters
+- **One module per day** is a solid pace for beginners
+- **Challenge yourself** — once a module clicks, try extending the examples
+
+---
+
+## Repository Structure
+
+```
+01_python/
+├── readme.md                    ← You are here
+├── 00_python/                   ← Module 00: Environment
+├── 02_datatypes/                ← Module 02: Data Types
+├── 03_conditionals/             ← Module 03: Conditionals
+├── 04_loops/                    ← Module 04: Loops
+├── 05_functions/                ← Module 05: Functions
+├── 06_chai_business/            ← Module 06: App Structure
+├── 07_comprehensions/           ← Module 07: Comprehensions
+├── 08_generators/               ← Module 08: Generators
+├── 09_decorators/               ← Module 09: Decorators
+├── 10_oop/                      ← Module 10: OOP
+├── 11_exceptions/               ← Module 11: Exceptions
+├── 12_threads_concurrency/      ← Module 12: Threading
+├── 13_async_python/             ← Module 13: Async
+├── 14_pydantic/                 ← Module 14: Pydantic
+└── challenges/                  ← 6 hands-on projects
+    ├── 01_utilities/
+    ├── 02_data_handling/
+    ├── 03_web_scraping/
+    ├── 04_automation/
+    ├── 05_data_science/
+    └── 06_url_shortner/
+```
+
+---
+
+*Start with `00_python/README.md` and work forward. Each folder has its own README with detailed instructions.*
