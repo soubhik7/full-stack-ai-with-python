@@ -2,16 +2,23 @@
 
 ## What This Repo Is
 
-A mixed learning + project + demos repository for AI/ML work with Python.
-Four top-level sections with distinct purposes — do not conflate them.
+A **sequential learning curriculum** for AI/ML with Python.
+Ten numbered top-level chapters — students work through them 00 → 09 in order.
 
-| Section | Purpose |
+| Chapter | Content |
 |---------|---------|
-| `01_python/` | Structured curriculum — don't reorganise |
-| `research/` | Notebooks & exploration — no production code |
-| `projects/` | End-to-end self-directed ML projects |
-| `apps/` | Runnable applications (FastAPI, LangGraph, voice, etc.) |
-| `tools/` | Dev utility scripts (notebook fixes, SSL, image patching) |
+| `00_setup/` | Environment setup guide |
+| `01_python/` | Python fundamentals — chai-shop themed, 00–14 |
+| `02_math_for_ml/` | Coursera Math for ML (linear algebra, calculus, probability) |
+| `03_machine_learning/` | Regression → Classification → Clustering → RecSys |
+| `04_deep_learning/` | Perceptron → MLP → Libraries → NN from scratch → Coursera |
+| `05_nlp/` | Preprocessing → Tagging → Practice |
+| `06_large_language_models/` | HuggingFace → LLM from scratch → Fine-tuning |
+| `07_rag/` | 4-approach RAG learning path |
+| `08_ai_apps/` | 13 numbered runnable apps (01–13) |
+| `09_projects/` | 5 numbered capstone projects (01–05) |
+| `reference/` | External cloned reference repo — keep intact |
+| `tools/` | Dev utility scripts |
 
 ---
 
@@ -22,7 +29,6 @@ Four top-level sections with distinct purposes — do not conflate them.
 - **Jupyter kernel**: `KernelSoubhik` — registered at `~/Library/Jupyter/kernels/kernelsoubhik`
 - **Requirements**: `requirements.txt` at root covers all notebooks and apps
 
-To install all packages:
 ```bash
 source venv/bin/activate
 pip install -r requirements.txt
@@ -34,15 +40,18 @@ pip install -r requirements.txt
 
 - All directories: `lowercase_underscore` (no spaces, no `&`, no CamelCase, no dots)
 - Python files: `lowercase_underscore.py`
-- Notebooks: descriptive names are fine; avoid `&`, commas, and leading spaces
-- Each app in `apps/` is **independent** — don't share state across apps
+- Notebooks: `NN_descriptive_name.ipynb` (zero-padded number prefix)
+- Each app in `08_ai_apps/` is **independent** — don't share state across apps
 
 ---
 
 ## Do Not Touch
 
-- `research/comprehensive/` — external cloned reference repo; keep intact as-is
-- `01_python/` — well-structured curriculum with its own README; respect the numbering
+- `reference/` — external cloned reference repo (FraidoonOmarzai); keep intact
+- `01_python/` — well-structured curriculum; respect the numbering
+- `02_math_for_ml/` — Coursera official materials; do NOT rename internal files/folders
+- `04_deep_learning/05_coursera_assignments/W*/` — utility `.py` files imported by notebooks
+- `09_projects/04_made_with_ml/` — standalone sub-repo with own `pyproject.toml`
 - `venv/` — not committed (covered by `.gitignore`)
 
 ---
@@ -50,26 +59,24 @@ pip install -r requirements.txt
 ## Running Apps
 
 ```bash
-# Apps with Docker dependencies
-cd apps/<name>
+# Apps with Docker (05_langraph, 06_rag, 07_rag_queue, 09_mem_agent)
+cd 08_ai_apps/<name>
 docker-compose up -d
-python main.py          # or server.py
+python main.py          # or mem.py / server.py
 
-# Standalone apps (no Docker)
-cd apps/<name>
+# Standalone apps
+cd 08_ai_apps/<name>
 python main.py
 ```
-
-Apps that use Docker: `rag/`, `rag_queue/`, `langraph/`, `mem_agent/`
 
 ---
 
 ## Running Notebooks
 
-All 187 notebooks are pre-configured to use `KernelSoubhik`.
-Open any notebook in JupyterLab — the kernel is already selected.
+All notebooks are pre-configured to use `KernelSoubhik`.
 
 ```bash
+source venv/bin/activate
 jupyter lab        # then navigate to any .ipynb
 ```
 
@@ -79,25 +86,26 @@ jupyter lab        # then navigate to any .ipynb
 
 | What | Where |
 |------|-------|
-| All notebooks | `research/**/*.ipynb`, `projects/**/*.ipynb` |
-| ML basics (sklearn) | `research/machine_learning/` |
-| Deep learning from scratch | `research/deep_learning/` |
-| LLM from scratch (PyTorch) | `research/llm/01_llm_from_scratch_pytorch/` |
-| RAG learning path | `research/rag/` (4 approaches, 01–04) |
-| Complete reference curriculum | `research/comprehensive/` |
-| Coursera assignments | `research/deep_learning/coursera/`, `research/coursework/math_for_ml/` |
-| Gmail AI assistant | `projects/gmail_assistant/` |
-| Made With ML (MLOps) | `projects/made_with_ml/` |
-| Prompt examples | `apps/prompts/` |
+| Setup guide | `00_setup/README.md` |
+| Python curriculum | `01_python/` |
+| Math (Coursera) | `02_math_for_ml/` |
+| ML notebooks (sklearn) | `03_machine_learning/` |
+| Deep learning | `04_deep_learning/` |
+| NLP | `05_nlp/` |
+| LLMs + HuggingFace | `06_large_language_models/` |
+| RAG (4 approaches) | `07_rag/` |
+| Runnable AI apps | `08_ai_apps/` |
+| End-to-end projects | `09_projects/` |
+| Comprehensive reference | `reference/` |
 | Notebook tools | `tools/` |
 
 ---
 
 ## Git Conventions
 
-- Always use `git mv` (or OS rename + `git add -A`) to move files — never `cp` + `rm`
-- Branch from `main` for new features; use `feature/<name>` or `restructure/<name>`
-- Commit message format: `type: short description` (feat/fix/refactor/chore/docs)
+- Always use `os.rename()` + `git add -A` to move files — `git mv` fails on `&` in filenames
+- Branch from `main` for new features: `feature/<name>` or `restructure/<name>`
+- Commit format: `type: short description` (feat/fix/refactor/chore/docs)
 
 ---
 
