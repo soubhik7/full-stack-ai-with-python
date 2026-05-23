@@ -1,17 +1,48 @@
+# ── Environment variables ──────────────────────────────────────────────────────
 hello_world/.env
 **/.env
-.venv/*
-venv/
 
-# Hugging Face model checkpoints
+# ── Python virtual environments ────────────────────────────────────────────────
+.venv/
+venv/
+**/venv/
+**/.venv/
+
+# ── Python build/cache artifacts ───────────────────────────────────────────────
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.Python
+
+# ── Jupyter artifacts ──────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ── macOS junk ─────────────────────────────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+
+# ── Test & coverage artifacts ──────────────────────────────────────────────────
+.coverage
+.coverage.*
+coverage.xml
+.pytest_cache/
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# ── Hugging Face model checkpoints ────────────────────────────────────────────
 checkpoint-*/
 *.safetensors
 optimizer.pt
 scheduler.pt
 rng_state.pth
-Scikit_ML/SelfProject/5.rag-from-scratch/venv/*
-Scikit_ML/SelfProject/6.pure retrieval question answers local/venv/*
-__pycache__/*
-Scikit_ML/SelfProject/5.rag-from-scratch/app/__pycache__/*
-Scikit_ML/SelfProject/6.pure retrieval question answers local/app/__pycache__/*
+
+# ── Misc project-specific ignores ─────────────────────────────────────────────
 Scikit_ML/SelfLearn/python-math-for-ml/03. Probability and Statistics/Week 2/02. Probability Distributions with Multiple Variables/01. Labs/02.Exploratory Data/Rideshare_Project_Week2.ipynb
