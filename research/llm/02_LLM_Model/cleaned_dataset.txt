@@ -1,0 +1,11 @@
+OpenAI has recently launched its highly anticipated open-source GPT-OSS models, a moment that invites a minute of reflection on just how far
+we’ve come. Years back, even before ChatGPT, I remember reading an article on a GPT model, probably GPT-2, that writes its own essays and
+poems, and they were just experiments. Fast forward to today, it has already become an integral part of my daily life. And it all started with the
+landmark "Attention is All You Need" publication in 2017 by Google Research. The Transformer architecture was proposed, which soon powered
+the very first GPT — GPT-1 (Generative Pretrained Transformer) in 2018.
+In the eight years since, progress has been nothing short of extraordinary. Modern large language models now boast multimodal capabilities,
+advanced reasoning skills, and innovative architectural refinements. Yet, at their core, they still rely on the Transformer skeleton. For many
+developers today, the intricate brilliance of this underlying design often goes unnoticed, thanks to the accessibility of LLMs today through user-
+friendly frameworks and APIs.
+In this article, we will break apart the Transformer architecture and understand it piece by piece. By the end, you’ll have built your own LLM from
+scratch, which writes brand-new Coldplay songs (who knows, you might just start composing lyrics for Coldplay!).
