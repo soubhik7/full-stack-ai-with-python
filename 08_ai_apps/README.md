@@ -175,6 +175,53 @@ A simple todo app demonstrating how a classic web app is structured alongside AI
 
 ---
 
+### `14_mcp_server/` — MCP Server + Client
+**Pattern:** Model Context Protocol · Tools + Resources + Prompts
+
+```bash
+cd 08_ai_apps/14_mcp_server
+python server.py        # Terminal 1 — start server
+python client.py        # Terminal 2 — interactive client (GPT-4o)
+```
+
+Build a task manager MCP server and connect to it with a GPT-4o powered client.
+Covers all three MCP primitives: Tools, Resources, Prompts.
+
+---
+
+### `15_streaming/` — Streaming Responses
+**Pattern:** Real-time token streaming
+
+```bash
+python 08_ai_apps/15_streaming/main.py
+```
+
+All streaming patterns: basic, collect-while-streaming, callbacks, stream-to-file, parallel, early-stop.
+
+---
+
+### `16_structured_outputs/` — Pydantic + LLM
+**Pattern:** Type-safe structured output extraction
+
+```bash
+python 08_ai_apps/16_structured_outputs/main.py
+```
+
+Get reliable JSON from LLMs using Pydantic validation, enum constraints, nested models, and multi-step pipelines.
+
+---
+
+### `17_multi_agent/` — Multi-Agent Systems
+**Pattern:** Orchestrator + Workers · Sequential Pipeline · Debate Loop
+
+```bash
+python 08_ai_apps/17_multi_agent/main.py
+```
+
+Three foundational multi-agent patterns with no framework required — understand the patterns before using LangGraph or AutoGen.
+
+---
+
 ## Environment Summary
 
 | App | Docker service | Env vars needed |
@@ -192,9 +239,15 @@ A simple todo app demonstrating how a classic web app is structured alongside AI
 | 11 | — | — (HuggingFace local) |
 | 12 | — | `OPENAI_API_KEY` |
 | 13 | — | — |
+| 14 | — | `OPENAI_API_KEY` · `mcp` package |
+| 15 | — | `OPENAI_API_KEY` |
+| 16 | — | `OPENAI_API_KEY` |
+| 17 | — | `OPENAI_API_KEY` |
 
 ---
 
 ## Next Step
 
 Head to **[Chapter 09 — Projects](../09_projects/README.md)** →
+
+Or explore **[Chapter 10 — MCP](../10_mcp/README.md)** for a full deep-dive into Model Context Protocol →

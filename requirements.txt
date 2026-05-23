@@ -182,6 +182,15 @@ wrapt==2.0.1
 yarl==1.22.0
 zstandard==0.25.0
 
+# ── Chapter 10: MCP & Evaluation additions ────────────────────────────────────
+# MCP (Model Context Protocol) — server + client SDK
+mcp>=1.0.0
+# Anthropic SDK (for Claude API examples in 10_mcp/04_mcp_with_claude/)
+anthropic>=0.40.0
+# LLM Evaluation metrics
+rouge-score>=0.1.2
+bert-score>=0.3.13
+
 # Additional dependencies
 config==0.5.1
 clean-text==0.6.0

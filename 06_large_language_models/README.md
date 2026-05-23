@@ -18,6 +18,8 @@
 01_transformers_and_huggingface/   ← Use pre-trained models (pipelines)
 02_llm_from_scratch/               ← Build a GPT from first principles
 03_llm_fine_tuning/                ← Adapt a model to your own data
+04_prompt_engineering/             ← Master system prompts, CoT, structured output
+05_llm_evaluation/                 ← BLEU/ROUGE/BERTScore, LLM-as-judge, eval pipelines
 ```
 
 ---
@@ -92,6 +94,39 @@ Input tokens
       └─ Add & Norm
   → Language Model Head (Linear → Softmax)
   → Next-token probabilities
+```
+
+---
+
+---
+
+### `04_prompt_engineering/` — Advanced Prompt Engineering *(NEW)*
+
+Master the full prompt engineering toolkit used by professional AI engineers.
+
+| File | Technique |
+|------|-----------|
+| `01_system_prompts.py` | Persona, constraints, guard-rails |
+| `02_advanced_few_shot.py` | Static, format, dynamic, contrastive, CoT few-shot |
+| `03_chain_of_thought.py` | Zero-shot CoT, self-consistency, step-back, ReAct |
+| `04_structured_output.py` | JSON mode, Pydantic `.parse()`, nested schemas |
+| `05_prompt_chaining.py` | Linear chains, conditional routing, iterative refinement |
+
+---
+
+### `05_llm_evaluation/` — LLM Evaluation *(NEW)*
+
+Measure and compare LLM output quality systematically.
+
+| File | What it covers |
+|------|---------------|
+| `01_text_metrics.py` | BLEU, ROUGE-1, ROUGE-L, BERTScore — from scratch + libraries |
+| `02_llm_as_judge.py` | GPT-4 as evaluator: grading, pairwise, rubric, RAG faithfulness |
+| `03_eval_pipeline.py` | Full A/B pipeline: golden dataset → scores → report → comparison |
+
+```bash
+pip install rouge-score bert-score   # first-time only
+python 06_large_language_models/05_llm_evaluation/03_eval_pipeline.py
 ```
 
 ---

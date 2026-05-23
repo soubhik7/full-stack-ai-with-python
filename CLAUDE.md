@@ -3,7 +3,7 @@
 ## What This Repo Is
 
 A **sequential learning curriculum** for AI/ML with Python.
-Ten numbered top-level chapters — students work through them 00 → 09 in order.
+Eleven numbered top-level chapters — students work through them 00 → 10 in order.
 
 | Chapter | Content |
 |---------|---------|
@@ -13,12 +13,40 @@ Ten numbered top-level chapters — students work through them 00 → 09 in orde
 | `03_machine_learning/` | Regression → Classification → Clustering → RecSys |
 | `04_deep_learning/` | Perceptron → MLP → Libraries → NN from scratch → Coursera |
 | `05_nlp/` | Preprocessing → Tagging → Practice |
-| `06_large_language_models/` | HuggingFace → LLM from scratch → Fine-tuning |
+| `06_large_language_models/` | HuggingFace → LLM from scratch → Fine-tuning → **Prompt Engineering** → **Evaluation** |
 | `07_rag/` | 4-approach RAG learning path |
-| `08_ai_apps/` | 13 numbered runnable apps (01–13) |
+| `08_ai_apps/` | **17** numbered runnable apps (01–17): hello-world → **MCP server** → **streaming** → **structured outputs** → **multi-agent** |
 | `09_projects/` | 5 numbered capstone projects (01–05) |
+| `10_mcp/` | **Model Context Protocol** — concepts → server → client → Claude integration → labs |
 | `reference/` | External cloned reference repo — keep intact |
 | `tools/` | Dev utility scripts |
+
+### Chapter 06 Sub-chapters (updated)
+| Sub-chapter | Content |
+|-------------|---------|
+| `01_transformers_and_huggingface/` | Pre-trained pipelines, fine-tuning BERT |
+| `02_llm_from_scratch/` | GPT architecture in PyTorch |
+| `03_llm_fine_tuning/` | Adapt a model on custom data |
+| `04_prompt_engineering/` | **NEW** — System prompts, few-shot, CoT, structured output, chaining |
+| `05_llm_evaluation/` | **NEW** — BLEU, ROUGE, BERTScore, LLM-as-judge, eval pipelines |
+
+### Chapter 08 Apps (updated)
+| App | Pattern |
+|-----|---------|
+| 01–13 | Original apps (hello-world → todo) |
+| `14_mcp_server/` | **NEW** — Task manager MCP server + GPT-4o client |
+| `15_streaming/` | **NEW** — All streaming patterns (basic, callbacks, parallel, early-stop) |
+| `16_structured_outputs/` | **NEW** — Pydantic extraction, enums, nested models, pipelines |
+| `17_multi_agent/` | **NEW** — Orchestrator+workers, sequential pipeline, debate/critic loop |
+
+### Chapter 10 Sub-chapters
+| Sub-chapter | Content |
+|-------------|---------|
+| `01_mcp_concepts/` | Protocol architecture, transports, primitives |
+| `02_mcp_server/` | FastMCP servers: hello, calculator, resources+prompts |
+| `03_mcp_client/` | Basic client, OpenAI agentic loop client |
+| `04_mcp_with_claude/` | Claude Desktop config, OpenAI+MCP full app |
+| `05_labs/` | Weather, SQLite, Filesystem servers + multi-tool capstone |
 
 ---
 

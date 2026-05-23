@@ -1,0 +1,55 @@
+{
+  "_comment": "Claude Desktop MCP configuration — copy to ~/Library/Application Support/Claude/claude_desktop_config.json (macOS) or %APPDATA%\\Claude\\claude_desktop_config.json (Windows)",
+  "_instructions": "Update the 'command' to your venv Python path and 'args' to absolute paths on your machine.",
+
+  "mcpServers": {
+
+    "hello-server": {
+      "_description": "Minimal MCP server — greet and ping tools",
+      "command": "/Users/soubhik/AI/full-stack-ai-with-python/venv/bin/python",
+      "args": [
+        "/Users/soubhik/AI/full-stack-ai-with-python/10_mcp/02_mcp_server/01_hello_mcp.py"
+      ]
+    },
+
+    "calculator": {
+      "_description": "Math tools: add, subtract, multiply, divide, power, stats, unit conversion",
+      "command": "/Users/soubhik/AI/full-stack-ai-with-python/venv/bin/python",
+      "args": [
+        "/Users/soubhik/AI/full-stack-ai-with-python/10_mcp/02_mcp_server/02_calculator_server.py"
+      ]
+    },
+
+    "notes": {
+      "_description": "Note-taking server — tools + resources + prompts",
+      "command": "/Users/soubhik/AI/full-stack-ai-with-python/venv/bin/python",
+      "args": [
+        "/Users/soubhik/AI/full-stack-ai-with-python/10_mcp/02_mcp_server/03_resources_server.py"
+      ]
+    },
+
+    "weather-lab": {
+      "_description": "Weather MCP server from lab 01",
+      "command": "/Users/soubhik/AI/full-stack-ai-with-python/venv/bin/python",
+      "args": [
+        "/Users/soubhik/AI/full-stack-ai-with-python/10_mcp/05_labs/lab_01_weather_mcp_server.py"
+      ]
+    },
+
+    "sqlite-lab": {
+      "_description": "SQLite CRUD server from lab 02",
+      "command": "/Users/soubhik/AI/full-stack-ai-with-python/venv/bin/python",
+      "args": [
+        "/Users/soubhik/AI/full-stack-ai-with-python/10_mcp/05_labs/lab_02_sqlite_mcp_server.py"
+      ]
+    },
+
+    "filesystem-lab": {
+      "_description": "Safe file system tools from lab 03",
+      "command": "/Users/soubhik/AI/full-stack-ai-with-python/venv/bin/python",
+      "args": [
+        "/Users/soubhik/AI/full-stack-ai-with-python/10_mcp/05_labs/lab_03_filesystem_mcp_server.py"
+      ]
+    }
+  }
+}
