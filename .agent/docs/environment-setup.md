@@ -1,12 +1,13 @@
 # Centralized Environment Setup
 
-This project now uses a **unified virtual environment** and **single Jupyter kernel** for all Python work across the entire codebase.
+This project uses a **unified virtual environment** and a single Jupyter kernel
+(`KernelSoubhik`) for all Python work across the entire codebase.
 
 ## Virtual Environment
 
 ### Location
-- **Path**: `/Users/soubhik/AI/full-stack-ai-with-python/.venv`
-- **Python Version**: Python 3.14
+- **Path**: `venv/` at repo root
+- **Python Version**: Python 3.11.15 (`/opt/homebrew/bin/python3.11`)
 
 ### Activation
 
@@ -14,10 +15,10 @@ To activate the virtual environment:
 
 ```bash
 cd /Users/soubhik/AI/full-stack-ai-with-python
-source .venv/bin/activate
+source venv/bin/activate
 ```
 
-You should see `(.venv)` in your terminal prompt.
+You should see `(venv)` in your terminal prompt.
 
 ### Deactivation
 
@@ -32,28 +33,26 @@ deactivate
 ## Jupyter Kernel
 
 ### Kernel Name
-- **Kernel Name**: `KernelSoubhik01`
-- **Display Name**: "KernelSoubhik01"
+- **Kernel Name**: `KernelSoubhik`
+- **Display Name**: "KernelSoubhik"
+- **Registry**: `~/Library/Jupyter/kernels/kernelsoubhik/`
 
 ### Using the Kernel
 
 1. **In Jupyter Notebooks**:
    - Open any `.ipynb` file in the project
    - Click on the kernel selector (usually top-right corner)
-   - Select **"KernelSoubhik01"**
+   - Select **"KernelSoubhik"**
 
 2. **Verify Kernel**:
    ```bash
    jupyter kernelspec list
    ```
-   You should see `kernelsoubhik01` in the list.
+   You should see `kernelsoubhik` in the list.
 
 ### Available Kernels
 
-After cleanup, only the following kernels are available:
-- `kernelsoubhik01` - **Use this for all Python notebooks**
-- `bash` - For Bash notebooks
-- `javascript`, `jslab`, `tslab` - For JavaScript/TypeScript notebooks
+- `kernelsoubhik` - **Use this for all Python notebooks** (Python 3.11 + all project packages)
 - `python3` - System Python (avoid using this)
 
 ---
@@ -84,11 +83,13 @@ If you need to reinstall everything:
 
 ```bash
 cd /Users/soubhik/AI/full-stack-ai-with-python
-rm -rf .venv
-python3 -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip setuptools wheel
+rm -rf venv/
+/opt/homebrew/bin/python3.11 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip ipykernel
 pip install -r requirements.txt
+# Re-register kernel after recreating venv
+python -m ipykernel install --user --name KernelSoubhik --display-name "KernelSoubhik"
 ```
 
 ---
@@ -153,7 +154,7 @@ If you don't see the kernel in Jupyter:
 2. **Reinstall the kernel**:
    ```bash
    source .venv/bin/activate
-   python -m ipykernel install --user --name=KernelSoubhik01 --display-name="KernelSoubhik01"
+   python -m ipykernel install --user --name KernelSoubhik --display-name "KernelSoubhik"
    ```
 
 3. **Restart Jupyter**:
@@ -181,7 +182,7 @@ If you get `ModuleNotFoundError`:
    import sys
    print(sys.executable)
    ```
-   Should show: `/Users/soubhik/AI/full-stack-ai-with-python/.venv/bin/python`
+   Should show: `/Users/soubhik/AI/full-stack-ai-with-python/venv/bin/python`
 
 ### Dependency Conflicts
 

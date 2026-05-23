@@ -1,5 +1,5 @@
 # ── Environment variables ──────────────────────────────────────────────────────
-hello_world/.env
+apps/hello_world/.env
 **/.env
 
 # ── Python virtual environments ────────────────────────────────────────────────
@@ -45,4 +45,4 @@ scheduler.pt
 rng_state.pth
 
 # ── Misc project-specific ignores ─────────────────────────────────────────────
-Scikit_ML/SelfLearn/python-math-for-ml/03. Probability and Statistics/Week 2/02. Probability Distributions with Multiple Variables/01. Labs/02.Exploratory Data/Rideshare_Project_Week2.ipynb
+research/coursework/math_for_ml/03. Probability and Statistics/Week 2/02. Probability Distributions with Multiple Variables/01. Labs/02.Exploratory Data/Rideshare_Project_Week2.ipynb
