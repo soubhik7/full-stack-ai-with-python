@@ -27,10 +27,10 @@ App A, B, C  →  MCP  →  any server, any language, any tool
 ┌────────────────────────────────────────────────────────────┐
 │                      HOST PROCESS                          │
 │                                                            │
-│   ┌──────────────┐     JSON-RPC      ┌─────────────────┐  │
-│   │  MCP Client  │ ◄──────────────► │   MCP Server    │  │
-│   │  (your app)  │                   │  (your tools)   │  │
-│   └──────────────┘                   └─────────────────┘  │
+│   ┌──────────────┐     JSON-RPC      ┌─────────────────┐   │
+│   │  MCP Client  │ ◄──────────────► │   MCP Server     │   │
+│   │  (your app)  │                   │  (your tools)   │   │
+│   └──────────────┘                   └─────────────────┘   │
 │                                                            │
 │   The LLM sits inside the client side (or calls it)        │
 └────────────────────────────────────────────────────────────┘
