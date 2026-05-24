@@ -44,5 +44,8 @@ optimizer.pt
 scheduler.pt
 rng_state.pth
 
+# ── Large dataset files (>100 MB — GitHub limit) ──────────────────────────────
+03_machine_learning/data/training_data/ratings.csv
+
 # ── Misc project-specific ignores ─────────────────────────────────────────────
 02_math_for_ml/03. Probability and Statistics/Week 2/02. Probability Distributions with Multiple Variables/01. Labs/02.Exploratory Data/Rideshare_Project_Week2.ipynb
