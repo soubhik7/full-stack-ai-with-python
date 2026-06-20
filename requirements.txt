@@ -191,6 +191,14 @@ anthropic>=0.40.0
 rouge-score>=0.1.2
 bert-score>=0.3.13
 
+# ── Chapter 11: Azure AI Foundry ───────────────────────────────────────────────
+# Project/connection client (model catalog, deployments, get_openai_client)
+azure-ai-projects==2.2.0
+# Agent Service client (agents, threads, runs, tools, vector stores)
+azure-ai-agents==1.1.0
+# Entra ID auth (DefaultAzureCredential) — no API keys needed, uses `az login`
+azure-identity==1.25.3
+
 # Additional dependencies
 config==0.5.1
 clean-text==0.6.0
