@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What This Repo Is
 
 A **sequential learning curriculum** for AI/ML with Python.
-Numbered top-level chapters — students work through them 00 → 12 in order.
+Numbered top-level chapters — students work through them 00 → 13 in order.
 
 | Chapter | Content |
 |---------|---------|
@@ -22,6 +22,7 @@ Numbered top-level chapters — students work through them 00 → 12 in order.
 | `10_mcp/` | Model Context Protocol — concepts → server → client → Claude integration → labs |
 | `11_azure_ai_foundry/` | Azure AI Foundry study notes (PDF) + 8 runnable agent-service labs (00–07) |
 | `12_claude_code/` | Claude Code extensibility — rules/memory, subagents, skills, hooks, slash commands, settings/permissions, labs (00–07) |
+| `13_agentic_sdlc/` | Study notes for *The Agentic SDLC Handbook* (PDF) — PROSE framework, governance, team structures, multi-agent orchestration, anti-patterns, case studies (00–04) |
 | `reference/` | External cloned reference repo — keep intact |
 | `tools/` | Dev utility scripts |
 
@@ -92,6 +93,17 @@ Teaches Claude Code's own extensibility model — every example is grounded in t
 | `05_slash_commands/` | `.claude/commands/*.md` — explicit, user-invoked prompt templates |
 | `06_settings_and_permissions/` | `settings.json` schema — permission `allow`/`deny`/`ask`, env, model |
 | `07_labs/` | Install the guard hook, a subagent, and a skill into this repo for real |
+
+### Chapter 13 Sub-chapters (`13_agentic_sdlc/`)
+Study notes extracted from `The-Agentic-SDLC-Handbook.pdf` (Daniel Meppiel, v0.9.2), mirroring the book's own five-part structure. One notes file per book chapter; every concept inside is tagged **Very Important** or **Important**.
+
+| Sub-chapter | Content |
+|-------------|---------|
+| `00_foundation/` | Ch 1 — The Vibe Coding Cliff, why tools alone don't fix it, the five PROSE constraints |
+| `01_for_leaders/` | Ch 2–7 — market landscape, business case, reference architecture, governance, team structures, transition planning |
+| `02_for_practitioners/` | Ch 8–14 — practitioner mindset, instrumented codebase, the full PROSE spec, context engineering, multi-agent orchestration, execution meta-process, anti-pattern taxonomy |
+| `03_case_studies/` | Ch 15–18 — four real, worked executions of the methodology (the book's primary evidence) |
+| `04_closing/` | Ch 19 — three-horizon predictions, what won't change, when not to use agentic workflows |
 
 ---
 
@@ -200,6 +212,7 @@ Files elsewhere named `test_*.py` (e.g. `01_python/00_python/test_python.py`, th
 | End-to-end projects | `09_projects/` |
 | Azure AI Foundry labs | `11_azure_ai_foundry/` |
 | Claude Code extensibility | `12_claude_code/` |
+| Agentic SDLC Handbook notes | `13_agentic_sdlc/` |
 | Comprehensive reference | `reference/` |
 | Notebook tools | `tools/` |
 
