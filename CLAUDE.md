@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What This Repo Is
 
 A **sequential learning curriculum** for AI/ML with Python.
-Numbered top-level chapters — students work through them 00 → 11 in order.
+Numbered top-level chapters — students work through them 00 → 12 in order.
 
 | Chapter | Content |
 |---------|---------|
@@ -21,6 +21,7 @@ Numbered top-level chapters — students work through them 00 → 11 in order.
 | `09_projects/` | 5 numbered capstone projects (01–05) |
 | `10_mcp/` | Model Context Protocol — concepts → server → client → Claude integration → labs |
 | `11_azure_ai_foundry/` | Azure AI Foundry study notes (PDF) + 8 runnable agent-service labs (00–07) |
+| `12_claude_code/` | Claude Code extensibility — rules/memory, subagents, skills, hooks, slash commands, settings/permissions, labs (00–07) |
 | `reference/` | External cloned reference repo — keep intact |
 | `tools/` | Dev utility scripts |
 
@@ -77,6 +78,20 @@ Companion to `Azure_AI_Foundry_Study_Notes.pdf`. All 8 labs run against a real A
 | `07_knowledge_rag/` | Grounding answers in an uploaded doc via file search + vector store |
 
 Every lab deletes the agents/threads/vector stores/files it creates — nothing accumulates in the Foundry project across repeated runs. To find your own project's endpoint: `az rest --method get --url "https://management.azure.com/subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.CognitiveServices/accounts/<account>/projects?api-version=2025-04-01-preview"`.
+
+### Chapter 12 Sub-chapters (`12_claude_code/`)
+Teaches Claude Code's own extensibility model — every example is grounded in this repo's real conventions (e.g. its hook enforces this file's own "Do Not Touch" list). `02_subagents/` through `06_settings_and_permissions/` ship as reference copies, not live config; `07_labs/` is where you actually install something into this repo's `.claude/` directory.
+
+| Sub-chapter | Content |
+|-------------|---------|
+| `00_concepts/` | The four config mechanisms (memory, settings, capabilities, hooks) and their precedence |
+| `01_rules_and_memory/` | `CLAUDE.md` anatomy, project vs. user memory, import syntax |
+| `02_subagents/` | `.claude/agents/*.md` — restricted-tool sub-assistants |
+| `03_skills/` | `.claude/skills/*/SKILL.md` — model-discoverable procedures |
+| `04_hooks/` | `.claude/settings.json` hooks — deterministic guardrails (PreToolUse, PostToolUse, etc.) |
+| `05_slash_commands/` | `.claude/commands/*.md` — explicit, user-invoked prompt templates |
+| `06_settings_and_permissions/` | `settings.json` schema — permission `allow`/`deny`/`ask`, env, model |
+| `07_labs/` | Install the guard hook, a subagent, and a skill into this repo for real |
 
 ---
 
@@ -184,6 +199,7 @@ Files elsewhere named `test_*.py` (e.g. `01_python/00_python/test_python.py`, th
 | Runnable AI apps | `08_ai_apps/` |
 | End-to-end projects | `09_projects/` |
 | Azure AI Foundry labs | `11_azure_ai_foundry/` |
+| Claude Code extensibility | `12_claude_code/` |
 | Comprehensive reference | `reference/` |
 | Notebook tools | `tools/` |
 

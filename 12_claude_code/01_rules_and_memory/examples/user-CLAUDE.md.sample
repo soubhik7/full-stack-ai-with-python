@@ -1,0 +1,21 @@
+<!--
+  ANNOTATED EXAMPLE for ~/.claude/CLAUDE.md — applies to every project you open,
+  not just this one. Keep it about *you*, not about any single repo.
+-->
+
+# User Memory
+
+## Communication Style
+
+- Keep responses terse — no trailing "summary of what I did" unless I ask
+- Ask before any destructive git operation, even on a feature branch
+
+## Environment
+
+- I use zsh, Homebrew Python, and always activate a venv before running anything
+- I prefer `rg` output over raw `grep` when you show me search results
+
+## Recurring Preferences
+
+- When adding tests, match the existing framework in the repo — don't introduce
+  a second test runner even if you personally prefer it
