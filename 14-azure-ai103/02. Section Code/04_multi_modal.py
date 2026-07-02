@@ -1,19 +1,29 @@
 from openai import OpenAI
 import base64
+from pathlib import Path
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 
-endpoint = "https://foundry-dev-eus-01.services.ai.azure.com/openai/v1"
-deployment_name = "gpt-5.4"
-api_key = ""
+endpoint = "https://integration-pulse-found-resource.services.ai.azure.com/openai/v1"
+deployment_name = "gpt-4.1"
+token_provider = get_bearer_token_provider(DefaultAzureCredential(), "https://ai.azure.com/.default")
 
 client = OpenAI(
     base_url=endpoint,
-    api_key=api_key
+    api_key=token_provider
 )
 
-image_path = "Agent_types.png"
+
+script_dir = Path(__file__).resolve().parent
+image_path = script_dir / "Agent_types.png"
+
+if not image_path.exists():
+    raise FileNotFoundError(f"Image file not found: {image_path}")
+
+print(f"Loading image from: {image_path}")
 with open(image_path, "rb") as image_file:
     image_data = base64.b64encode(image_file.read()).decode("utf-8")
 
+print("Sending multimodal request to Azure OpenAI...")
 response = client.responses.create(
     model=deployment_name,
     instructions="You are a helpful assistant that reads and extracts information from images.",
