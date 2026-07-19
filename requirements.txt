@@ -261,3 +261,6 @@ langchain-text-splitters==1.0.0
 fastapi
 uvicorn
 transformers
+
+# tools/udemy_transcript_fetcher.py — browser automation for own logged-in session
+playwright==1.55.0

@@ -1,2 +1,9 @@
 https://developers.openai.com/api/reference/responses/overview
 https://developers.openai.com/api/docs/guides/tools
+https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/openapi?tabs=prompt-agents&pivots=python
+https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview
+https://www.langchain.com/
+https://learn.microsoft.com/en-us/azure/ai-services/content-safety/overview
+https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview
+https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/analyzer-reference
+https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/overview?view=doc-intel-4.0.0
