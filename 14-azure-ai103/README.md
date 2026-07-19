@@ -6,6 +6,8 @@ This chapter is a Udemy-style course ("Azure AI 103") on building production AI 
 
 The closest **official** certification covering this material is Microsoft **AI-102: Designing and Implementing a Microsoft Azure AI Solution** — notebooks frame "exam tips" around AI-102, not a fictitious "AI-103" exam.
 
+📝 **Exam prep:** [`EXAM_NOTES.md`](EXAM_NOTES.md) condenses all 151 exam tips from the chapter's 53 notebooks (plus the no-code labs) into quick-revision short notes with recap tables, mnemonics, and last-minute flash facts — and adds every official AI-102 syllabus topic the course itself doesn't cover (resource planning/containers/monitoring, Responsible AI, prompt flow & deployment types, the full computer-vision domain, CLU/custom QA/custom speech, and Azure AI Search internals), so it covers the complete exam blueprint.
+
 ---
 
 ## Prerequisites
