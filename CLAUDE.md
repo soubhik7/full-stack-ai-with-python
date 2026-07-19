@@ -23,6 +23,7 @@ Numbered top-level chapters — students work through them 00 → 13 in order.
 | `11_azure_ai_foundry/` | Azure AI Foundry study notes (PDF) + 8 runnable agent-service labs (00–07) |
 | `12_claude_code/` | Claude Code extensibility — rules/memory, subagents, skills, hooks, slash commands, settings/permissions, labs (00–07) |
 | `13_agentic_sdlc/` | Study notes for *The Agentic SDLC Handbook* (PDF) — PROSE framework, governance, team structures, multi-agent orchestration, anti-patterns, case studies (00–04) |
+| `14-azure-ai103/` | Udemy course "Azure AI 103" — Azure OpenAI/AI Foundry agents, Azure AI Search + RAG, LangChain/LangGraph, image generation, Content Safety, Azure AI Language, Azure AI Speech, Document Intelligence. Every course `.py` script (01–08 Section Code) has a paired teaching notebook — see `14-azure-ai103/README.md` |
 | `reference/` | External cloned reference repo — keep intact |
 | `tools/` | Dev utility scripts |
 
@@ -213,6 +214,7 @@ Files elsewhere named `test_*.py` (e.g. `01_python/00_python/test_python.py`, th
 | Azure AI Foundry labs | `11_azure_ai_foundry/` |
 | Claude Code extensibility | `12_claude_code/` |
 | Agentic SDLC Handbook notes | `13_agentic_sdlc/` |
+| Azure AI-103 course + notebooks | `14-azure-ai103/` |
 | Comprehensive reference | `reference/` |
 | Notebook tools | `tools/` |
 
