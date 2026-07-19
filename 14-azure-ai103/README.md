@@ -6,7 +6,7 @@ This chapter is a Udemy-style course ("Azure AI 103") on building production AI 
 
 **AI-103 is now a real Microsoft exam**: *AI-103 — Developing AI Apps and Agents on Azure* (skills measured as of April 16, 2026), which replaced the retired AI-102 (retired June 30, 2026) and awards the **Azure AI Apps and Agents Developer Associate** certification. The notebooks' inline "exam tips" were written against AI-102 (the current exam at the time of conversion); the concepts carry over directly.
 
-📝 **Exam prep:** [`EXAM_NOTES.md`](EXAM_NOTES.md) is a full AI-103 quick-revision guide: all 151 notebook exam tips condensed and reorganized under the official 5-domain AI-103 blueprint, plus every syllabus topic the course doesn't cover (Foundry IQ, Microsoft Agent Framework, A2A protocol, M365/Work IQ agent publishing, Voice Live, Sora 2 video generation, Language/Speech MCP servers, monitoring/security, responsible multimodal AI), with recap tables, mnemonics, and 55 flash facts.
+📝 **Exam prep:** [`EXAM_NOTES.md`](EXAM_NOTES.md) is a full AI-103 quick-revision guide: all 151 notebook exam tips condensed and reorganized under the official 5-domain AI-103 blueprint, plus every syllabus topic the course doesn't cover (Foundry IQ, Microsoft Agent Framework, A2A protocol, M365/Work IQ agent publishing, Voice Live, Sora 2 video generation, Language/Speech MCP servers, monitoring/security, responsible multimodal AI), with recap tables, mnemonics, and 55 flash facts. [`EXAM_PRACTICE_QUESTIONS.md`](EXAM_PRACTICE_QUESTIONS.md) adds 65 exam-style scenario questions (blueprint-weighted, with answers + explanations) for self-testing.
 
 ---
 

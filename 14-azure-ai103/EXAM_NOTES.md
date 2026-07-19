@@ -462,3 +462,5 @@ Request with tool schemas → model returns `function_call` (name + JSON args) a
 ---
 
 *Good luck — you've already built most of this in the course. The exam is recognizing these patterns dressed up as scenarios.* 🚀
+
+➡️ **Test yourself:** [`EXAM_PRACTICE_QUESTIONS.md`](EXAM_PRACTICE_QUESTIONS.md) — 65 exam-style scenario questions with answers and explanations, weighted by the official blueprint.
