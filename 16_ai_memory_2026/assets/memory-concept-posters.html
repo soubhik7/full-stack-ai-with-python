@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Memory Systems — Concept Posters</title>
+<style>
+  :root {
+    --bg: #eef0f6;
+    --panel: #ffffff;
+    --panel-2: #f7f7fb;
+    --line: #dcdbe9;
+    --line-strong: #c3c1dc;
+    --ink: #15141f;
+    --ink-soft: #514f68;
+    --ink-faint: #8987a3;
+    --accent: #4b32d9;
+    --accent-soft: #ece9fc;
+    --accent-ink: #382296;
+    --teal: #0f8f7e;
+    --teal-soft: #e2f5f1;
+    --ember: #b5540c;
+    --ember-soft: #fbeadb;
+    --code-bg: #1c1a2b;
+    --code-ink: #e7e5f7;
+    --code-key: #9c8cff;
+    --code-str: #7fd8c4;
+    --code-num: #f2b56b;
+    --shadow: 0 1px 2px rgba(20,16,60,0.04), 0 10px 30px -12px rgba(20,16,60,0.16);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f0e17;
+      --panel: #1a1826;
+      --panel-2: #201e30;
+      --line: #322f47;
+      --line-strong: #433f60;
+      --ink: #efeefb;
+      --ink-soft: #b9b7cf;
+      --ink-faint: #837f9c;
+      --accent: #9384ff;
+      --accent-soft: #2a2450;
+      --accent-ink: #cfc6ff;
+      --teal: #4fd9c3;
+      --teal-soft: #163632;
+      --ember: #ffab6b;
+      --ember-soft: #3a2413;
+      --code-bg: #100e1c;
+      --code-ink: #e7e5f7;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 20px 40px -16px rgba(0,0,0,0.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f0e17; --panel: #1a1826; --panel-2: #201e30; --line: #322f47; --line-strong: #433f60;
+    --ink: #efeefb; --ink-soft: #b9b7cf; --ink-faint: #837f9c;
+    --accent: #9384ff; --accent-soft: #2a2450; --accent-ink: #cfc6ff;
+    --teal: #4fd9c3; --teal-soft: #163632; --ember: #ffab6b; --ember-soft: #3a2413;
+    --code-bg: #100e1c; --code-ink: #e7e5f7;
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --bg: #eef0f6; --panel: #ffffff; --panel-2: #f7f7fb; --line: #dcdbe9; --line-strong: #c3c1dc;
+    --ink: #15141f; --ink-soft: #514f68; --ink-faint: #8987a3;
+    --accent: #4b32d9; --accent-soft: #ece9fc; --accent-ink: #382296;
+    --teal: #0f8f7e; --teal-soft: #e2f5f1; --ember: #b5540c; --ember-soft: #fbeadb;
+    --code-bg: #1c1a2b; --code-ink: #e7e5f7;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "Segoe UI", ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { padding: 28px 16px 80px; }
+
+  .toc {
+    max-width: 1220px;
+    margin: 0 auto 28px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .toc-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-right: 4px;
+  }
+  .toc a {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    background: var(--panel-2);
+    white-space: nowrap;
+  }
+  .toc a:hover, .toc a:focus-visible { color: var(--accent-ink); border-color: var(--accent); outline: none; }
+
+  .poster {
+    max-width: 1220px;
+    margin: 0 auto 40px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 40px 44px 34px;
+    scroll-margin-top: 90px;
+  }
+
+  .mark { display: inline-flex; align-items: center; gap: 9px; }
+  .mark svg { width: 22px; height: 22px; flex: none; }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin: 0 0 10px;
+  }
+  .eyebrow .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ember); }
+  h1.title {
+    font-size: clamp(26px, 3vw, 34px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    font-weight: 800;
+    margin: 0 0 8px;
+    text-wrap: balance;
+    max-width: 40ch;
+  }
+  p.dek {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0 0 28px;
+    max-width: 62ch;
+    line-height: 1.55;
+  }
+
+  /* ---- shared building blocks ---- */
+  .panel {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .panel-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 12px;
+  }
+  .panel-title svg { width: 15px; height: 15px; flex: none; color: var(--accent); }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 3px 9px;
+    border-radius: 100px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    white-space: nowrap;
+  }
+  .chip.teal { background: var(--teal-soft); color: var(--teal); }
+  .chip.ember { background: var(--ember-soft); color: var(--ember); }
+
+  code, .mono { font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace; }
+
+  .bubble {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .bubble .ts { display: block; font-size: 10.5px; color: var(--ink-faint); margin-top: 5px; }
+  .bubble.mem {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  }
+  .bubble.mem .txt { flex: 1; }
+  .bubble.mem .score { font-family: ui-monospace, monospace; font-size: 11px; color: var(--ink-faint); white-space: nowrap; }
+
+  .code-card {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-radius: 12px;
+    padding: 15px 16px;
+    font-size: 12.3px;
+    line-height: 1.65;
+    overflow-x: auto;
+    box-shadow: var(--shadow);
+  }
+  .code-card .k { color: var(--code-key); }
+  .code-card .s { color: var(--code-str); }
+  .code-card .n { color: var(--code-num); }
+  .code-card .c { color: #77748f; }
+
+  .arrow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 2px 0;
+  }
+  .arrow-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--ink-faint);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 3px 10px;
+    white-space: nowrap;
+  }
+  .arrow-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--line-strong), var(--line-strong));
+    position: relative;
+    min-width: 18px;
+  }
+  .arrow-line::after {
+    content: "";
+    position: absolute;
+    right: -1px; top: 50%;
+    width: 8px; height: 8px;
+    border-top: 2px solid var(--line-strong);
+    border-right: 2px solid var(--line-strong);
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .caption-band {
+    margin-top: 26px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .caption {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    border: 1px dashed var(--line-strong);
+    border-radius: 10px;
+    padding: 11px 13px;
+    background: var(--panel-2);
+  }
+  .caption svg { width: 15px; height: 15px; flex: none; margin-top: 2px; color: var(--accent); }
+  .caption .t { font-size: 12.5px; font-weight: 700; margin: 0 0 2px; }
+  .caption .d { font-size: 11.5px; color: var(--ink-soft); margin: 0; line-height: 1.4; }
+
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-flow { display: grid; grid-template-columns: 1.05fr 44px 1.15fr 44px 1fr; gap: 0; align-items: stretch; }
+  @media (max-width: 900px) {
+    .grid-flow { grid-template-columns: 1fr; }
+    .grid-flow .arrow-col { display: none; }
+    .grid3 { grid-template-columns: 1fr; }
+  }
+  .arrow-col { display: flex; align-items: center; justify-content: center; }
+  .arrow-col svg { width: 26px; height: 26px; color: var(--line-strong); }
+
+  .stack { display: flex; flex-direction: column; gap: 10px; }
+
+  /* Poster 3: vertical timeline */
+  .timeline { position: relative; padding-left: 34px; }
+  .timeline::before {
+    content: "";
+    position: absolute; left: 12px; top: 8px; bottom: 8px;
+    width: 2px; background: var(--line-strong);
+  }
+  .tstep { position: relative; margin-bottom: 18px; }
+  .tstep:last-child { margin-bottom: 0; }
+  .tstep .num {
+    position: absolute; left: -34px; top: 0;
+    width: 25px; height: 25px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800;
+    box-shadow: 0 0 0 4px var(--panel);
+  }
+  .tstep .head { font-size: 14.5px; font-weight: 700; margin: 2px 0 5px; }
+  .tstep .body { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+  .tstep .ex {
+    margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;
+  }
+
+  /* Poster 4: comparison table */
+  .compare { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+  .compare th, .compare td {
+    text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .compare thead th {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--ink-faint); font-weight: 700; border-bottom: 2px solid var(--line-strong);
+  }
+  .compare tbody th {
+    font-weight: 700; color: var(--ink-soft); white-space: nowrap; width: 15%;
+  }
+  .compare td b { color: var(--ink); }
+  .compare-scroll { overflow-x: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .compare-scroll .compare { min-width: 720px; }
+
+  .foot-note {
+    margin-top: 22px;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .foot-note .src { font-family: ui-monospace, monospace; }
+
+  footer.page-foot {
+    max-width: 1220px; margin: 0 auto; padding: 8px 4px 0;
+    font-size: 12px; color: var(--ink-faint); text-align: center;
+  }
+
+  @media print {
+    @page { size: 1360px 1400px; margin: 0; }
+    html, body { background: #fff; padding: 0; }
+    .toc { display: none; }
+    .poster {
+      box-shadow: none;
+      border: none;
+      border-radius: 0;
+      max-width: none;
+      width: 1360px;
+      min-height: 1400px;
+      margin: 0;
+      padding: 46px 54px 30px;
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .poster:last-of-type { page-break-after: auto; break-after: auto; }
+    footer.page-foot { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="toc" aria-label="Poster index">
+  <span class="toc-label">Jump to</span>
+  <a href="#p1">01 · remember() / recall()</a>
+  <a href="#p2">02 · Hybrid retrieval fusion</a>
+  <a href="#p3">03 · Sleep-phase consolidation</a>
+  <a href="#p4">04 · 2026 architecture spec sheet</a>
+</nav>
+
+<!-- ============ POSTER 1 ============ -->
+<section class="poster" id="p1">
+  <p class="eyebrow">
+    <span class="mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3c-3 0-4.5 2-4.5 4 0 1.3.6 2.1 1.3 2.8-.9.5-1.8 1.5-1.8 3.2 0 1.4.8 2.3 1.7 2.8-.5.5-.9 1.3-.9 2.2 0 2 1.9 3 3.7 3 1 0 1.9-.3 2.5-.9.6.6 1.5.9 2.5.9 1.8 0 3.5-1.1 3.5-3 0-1-.5-1.8-1.1-2.3.9-.5 1.6-1.4 1.6-2.7 0-1.6-.9-2.6-1.8-3.1.6-.7 1-1.5 1-2.7 0-2.3-2-4.2-4.4-4.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </span>
+    HippocampAI · Core Workflow
+    <span class="dot"></span>
+    15_hippocampus_ai
+  </p>
+  <h1 class="title">How remember() and recall() move a fact from conversation to ranked answer</h1>
+  <p class="dek">Alice mentions a coffee preference once. Weeks later, a different query about her habits still surfaces it — ranked, scored, and typed — without any conversation ID or session state carried by the caller.</p>
+
+  <div class="grid-flow">
+    <!-- col 1: actor -->
+    <div class="stack">
+      <div class="panel">
+        <p class="panel-title">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.6"/><path d="M5 20c1.2-3.8 4-5.6 7-5.6s5.8 1.8 7 5.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          user_id = "alice"
+        </p>
+        <div class="stack">
+          <div class="bubble mem"><span class="txt">"I prefer oat milk in my coffee"</span></div>
+          <div class="bubble mem"><span class="txt">"I work as a software engineer at TechCorp"</span></div>
+          <div class="bubble mem"><span class="txt">"I want to learn ML this year"</span></div>
+        </div>
+      </div>
+      <div class="code-card">
+<span class="c"># 01_basic_remember_recall.py</span>
+<span class="k">from</span> hippocampai <span class="k">import</span> MemoryClient
+client = MemoryClient()
+
+client.<span class="k">remember</span>(
+  text=<span class="s">"I prefer oat milk..."</span>,
+  user_id=<span class="s">"alice"</span>, type=<span class="s">"preference"</span>,
+  importance=<span class="n">8.0</span>,
+)</div>
+    </div>
+
+    <div class="arrow-col">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- col 2: service -->
+    <div class="panel" style="border-color:var(--line-strong)">
+      <p class="panel-title">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4" width="17" height="16" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 9h8M8 13h8M8 17h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        MemoryClient — write path
+      </p>
+      <div class="stack">
+        <div class="bubble"><b>1&nbsp;·&nbsp;Classify</b><br><span style="color:var(--ink-soft)">infer <code>type</code> if not given — fact / preference / goal / habit / event</span></div>
+        <div class="bubble"><b>2&nbsp;·&nbsp;Embed</b><br><span style="color:var(--ink-soft)"><code class="mono">BAAI/bge-small-en-v1.5</code> → 384-dim vector</span></div>
+        <div class="bubble"><b>3&nbsp;·&nbsp;Store</b><br><span style="color:var(--ink-soft)">write to Qdrant, tag <code>user_id</code> + <code>importance</code> + half-life</span></div>
+      </div>
+      <div class="arrow-row" style="margin-top:12px">
+        <span class="arrow-label">recall("coffee preferences")</span>
+      </div>
+      <div class="bubble" style="margin-top:8px;background:var(--accent-soft);border-color:var(--accent)">
+        <b style="color:var(--accent-ink)">Read path</b><br>
+        <span style="color:var(--accent-ink)">embed query → hybrid rank (see poster 02) → top‑k</span>
+      </div>
+    </div>
+
+    <div class="arrow-col">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- col 3: storage + output -->
+    <div class="stack">
+      <div class="panel">
+        <p class="panel-title">
+          <svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="7" ry="2.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 6v12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6" stroke="currentColor" stroke-width="1.6"/><path d="M5 12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6" stroke="currentColor" stroke-width="1.6"/></svg>
+          Qdrant vector store
+        </p>
+        <p style="font-size:12px;color:var(--ink-soft);margin:0 0 10px">Durable · scoped by <code class="mono">user_id</code> · no session or conversation ID required</p>
+        <span class="chip teal">persists across sessions</span>
+      </div>
+      <div class="panel">
+        <p class="panel-title">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H8l-4 4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Ranked recall — "How does Alice like her coffee?"
+        </p>
+        <div class="stack">
+          <div class="bubble mem" style="border-color:var(--accent)">
+            <span class="txt">"I prefer oat milk in my coffee"<br><span class="chip" style="margin-top:5px">preference</span></span>
+            <span class="score">score 0.91</span>
+          </div>
+          <div class="bubble mem">
+            <span class="txt">"I work as a software engineer..."<br><span class="chip ember">fact</span></span>
+            <span class="score">score 0.18</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-band">
+    <div class="caption">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div><p class="t">No conversation ID to thread</p><p class="d">Memory is keyed by <code class="mono">user_id</code>, not a session — it survives across every future conversation automatically.</p></div>
+    </div>
+    <div class="caption">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div><p class="t">Type-aware decay</p><p class="d">Preferences/goals decay over 90 days; events over 14 — see <code class="mono">15_hippocampus_ai/00_concepts</code>.</p></div>
+    </div>
+    <div class="caption">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+      <div><p class="t">Score, not just match</p><p class="d">Every result carries a breakdown of the signals that produced it — detailed in the next poster.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POSTER 2 ============ -->
+<section class="poster" id="p2">
+  <p class="eyebrow">
+    <span class="mark">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.6" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="6" r="2.6" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="18" r="2.6" stroke="currentColor" stroke-width="1.6"/><path d="M8.3 11l7.4-3.6M8.3 13l7.4 3.6" stroke="currentColor" stroke-width="1.4"/></svg>
+    </span>
+    Hybrid Retrieval · Score Fusion
+    <span class="dot"></span>
+    15_hippocampus_ai · 16_ai_memory_2026
+  </p>
+  <h1 class="title">Four signals, one ranked list: how recall() actually scores a memory</h1>
+  <p class="dek">A single embedding-similarity number is not enough to rank memories — recency and stated importance matter as much as semantic closeness. Every candidate is scored on all four signals before the list is returned.</p>
+
+  <div class="panel" style="background:var(--panel);border-color:var(--line-strong);padding:20px">
+    <p class="panel-title">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H8l-4 4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      query — "What are Carol's dietary restrictions?"
+    </p>
+    <div class="grid3" style="margin-top:6px">
+      <div class="panel">
+        <p class="panel-title" style="color:var(--accent)">vector similarity</p>
+        <p style="font-size:26px;font-weight:800;margin:0 0 4px;font-family:ui-monospace,monospace">×&nbsp;0.55</p>
+        <p style="font-size:12px;color:var(--ink-soft);margin:0">cosine match against the query embedding — top ~200 candidates from Qdrant</p>
+      </div>
+      <div class="panel">
+        <p class="panel-title" style="color:var(--accent)">cross-encoder rerank</p>
+        <p style="font-size:26px;font-weight:800;margin:0 0 4px;font-family:ui-monospace,monospace">×&nbsp;0.20</p>
+        <p style="font-size:12px;color:var(--ink-soft);margin:0"><code class="mono">ms-marco-MiniLM-L-6-v2</code> pairwise relevance, precision pass</p>
+      </div>
+      <div class="panel">
+        <p class="panel-title" style="color:var(--accent)">recency decay</p>
+        <p style="font-size:26px;font-weight:800;margin:0 0 4px;font-family:ui-monospace,monospace">×&nbsp;0.15</p>
+        <p style="font-size:12px;color:var(--ink-soft);margin:0">exp(&minus;&Delta;t&nbsp;/&nbsp;half-life) — type-specific decay rate</p>
+      </div>
+      <div class="panel">
+        <p class="panel-title" style="color:var(--accent)">stated importance</p>
+        <p style="font-size:26px;font-weight:800;margin:0 0 4px;font-family:ui-monospace,monospace">×&nbsp;0.10</p>
+        <p style="font-size:12px;color:var(--ink-soft);margin:0">the 0–10 score set at <code class="mono">remember()</code> time</p>
+      </div>
+    </div>
+
+    <div class="arrow-row" style="margin:18px 0">
+      <div class="arrow-line"></div>
+      <span class="arrow-label" style="background:var(--accent);color:#fff;border-color:var(--accent)">&Sigma; weighted fusion</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <div class="stack">
+      <div class="bubble mem" style="border-color:var(--accent)">
+        <span class="txt"><b>1.</b>&nbsp; "I am lactose intolerant" <span class="chip ember" style="margin-left:6px">fact · importance 9.0</span></span>
+        <span class="score">final <b>0.87</b> — sim .81 · rerank .93 · recency .77 · importance .90</span>
+      </div>
+      <div class="bubble mem">
+        <span class="txt"><b>2.</b>&nbsp; "I am allergic to peanuts" <span class="chip ember" style="margin-left:6px">fact · importance 10.0</span></span>
+        <span class="score">final <b>0.79</b> — sim .68 · rerank .84 · recency .64 · importance 1.0</span>
+      </div>
+      <div class="bubble mem">
+        <span class="txt"><b>3.</b>&nbsp; "I prefer vegetarian food and avoid meat" <span class="chip" style="margin-left:6px">preference · importance 8.0</span></span>
+        <span class="score">final <b>0.52</b> — sim .58 · rerank .41 · recency .70 · importance .80</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-band">
+    <div class="caption">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+      <div><p class="t">Similarity alone would rank differently</p><p class="d">Peanut allergy has the highest raw similarity to "dietary restrictions" — rerank and importance are what push lactose intolerance above it here.</p></div>
+    </div>
+    <div class="caption">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div><p class="t">BM25 runs in parallel, not shown</p><p class="d">A keyword pass catches exact-term matches embeddings under-rank; both feed reciprocal rank fusion before this stage.</p></div>
+    </div>
+    <div class="caption">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div><p class="t">Weights are configuration, not code</p><p class="d"><code class="mono">WEIGHT_SIM</code> / <code class="mono">WEIGHT_RERANK</code> / <code class="mono">WEIGHT_RECENCY</code> / <code class="mono">WEIGHT_IMPORTANCE</code> in <code class="mono">.env</code>.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POSTER 3 ============ -->
+<section class="poster" id="p3">
+  <p class="eyebrow">
+    <span class="mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z" stroke="currentColor" stroke-width="1.6"/><path d="M12 3c-2 2.5-2 15.5 0 18M12 3c2 2.5 2 15.5 0 18M3.5 9h17M3.5 15h17" stroke="currentColor" stroke-width="1.2"/></svg>
+    </span>
+    Sleep-Phase Consolidation
+    <span class="dot"></span>
+    nightly job · 03:00
+  </p>
+  <h1 class="title">What happens while the agent "sleeps": a night's memories, replayed and compressed</h1>
+  <p class="dek">The direct computational analogue of hippocampal replay — a nightly pass that decides what today's raw, redundant memories become tomorrow's durable knowledge.</p>
+
+  <div class="timeline">
+    <div class="tstep">
+      <div class="num">1</div>
+      <p class="head">Collect — last 24 hours, per user</p>
+      <p class="body">Query for <code class="mono">event</code> / <code class="mono">context</code> memories created or updated since the last run.</p>
+      <div class="ex">
+        <span class="bubble mem" style="padding:5px 10px;font-size:12px">"Had coffee at 9am"</span>
+        <span class="bubble mem" style="padding:5px 10px;font-size:12px">"Meeting at 10am"</span>
+        <span class="bubble mem" style="padding:5px 10px;font-size:12px">"Discussed Q4 roadmap"</span>
+      </div>
+    </div>
+    <div class="tstep">
+      <div class="num">2</div>
+      <p class="head">Cluster — group by session, time, and semantic proximity</p>
+      <p class="body">The three memories above collapse into one cluster: <code class="mono">"morning_routine"</code>.</p>
+    </div>
+    <div class="tstep">
+      <div class="num">3</div>
+      <p class="head">LLM review — one call per cluster</p>
+      <p class="body">The model reads the cluster and returns a structured verdict, not free text:</p>
+      <div class="code-card" style="margin-top:8px">
+{
+  <span class="k">"promoted_facts"</span>: [{ <span class="k">"id"</span>: <span class="s">"3"</span>, <span class="k">"reason"</span>: <span class="s">"strategic discussion"</span> }],
+  <span class="k">"low_value_memory_ids"</span>: [<span class="s">"1"</span>],
+  <span class="k">"synthetic_memories"</span>: [{
+    <span class="k">"text"</span>: <span class="s">"Morning: productive session, Q4 planning"</span>,
+    <span class="k">"importance"</span>: <span class="n">7.0</span>, <span class="k">"source_ids"</span>: [<span class="s">"2"</span>,<span class="s">"3"</span>]
+  }]
+}</div>
+    </div>
+    <div class="tstep">
+      <div class="num">4</div>
+      <p class="head">Apply decisions</p>
+      <p class="body">Low-value memories are archived, promoted facts get an importance bump, and the synthesized summary is written as a new, durable memory.</p>
+      <div class="ex">
+        <span class="chip ember">1 archived</span>
+        <span class="chip">1 promoted</span>
+        <span class="chip teal">1 synthesized</span>
+      </div>
+    </div>
+    <div class="tstep">
+      <div class="num">5</div>
+      <p class="head">Log the run</p>
+      <p class="body">A <code class="mono">ConsolidationRun</code> record and Prometheus metrics — this poster's row 4 outcome is exactly what gets logged, per user, per night.</p>
+    </div>
+  </div>
+
+  <div class="caption-band">
+    <div class="caption">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div><p class="t">Off by default in production</p><p class="d"><code class="mono">AUTO_CONSOLIDATION_ENABLED=false</code> — it costs one LLM call per cluster, per user, per night.</p></div>
+    </div>
+    <div class="caption">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div><p class="t">Nothing is deleted blind</p><p class="d">"Low value" memories are archived with provenance, not hard-deleted — the synthetic memory still cites its source IDs.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POSTER 4 ============ -->
+<section class="poster" id="p4">
+  <p class="eyebrow">
+    <span class="mark">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.5"/></svg>
+    </span>
+    2026 Memory Architecture Landscape
+    <span class="dot"></span>
+    16_ai_memory_2026
+  </p>
+  <h1 class="title">Three architecture families, side by side</h1>
+  <p class="dek">Not a ranking — a fit question. Each family optimizes a different production requirement, and the field's own mid-2026 guidance is to test against your workload rather than pick from a leaderboard.</p>
+
+  <div class="compare-scroll">
+    <table class="compare">
+      <thead>
+        <tr>
+          <th style="width:15%"></th>
+          <th>OS-inspired tiered<br><span style="font-weight:400;color:var(--ink-soft);text-transform:none;font-size:12px">Letta · MemGPT lineage</span></th>
+          <th>Temporal knowledge graph<br><span style="font-weight:400;color:var(--ink-soft);text-transform:none;font-size:12px">Zep · Graphiti</span></th>
+          <th>Hybrid vector + graph + KV<br><span style="font-weight:400;color:var(--ink-soft);text-transform:none;font-size:12px">Mem0 · HippocampAI</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Core unit</th>
+          <td>Core / recall / archival tiers — <b>agent</b> pages memory in and out, like an OS manages RAM/cache/disk</td>
+          <td>Bi-temporal graph edges with <code class="mono">t_valid</code> / <code class="mono">t_invalid</code> — facts are invalidated, never deleted</td>
+          <td>Short extracted facts across three complementary indexes, fused at query time</td>
+        </tr>
+        <tr>
+          <th>Manages memory</th>
+          <td><b>Agent-driven</b> — the model calls memory functions itself as part of its reasoning</td>
+          <td>Framework-driven — ingestion pipeline extracts and links automatically</td>
+          <td>Framework-driven — write/read path handled by the client library</td>
+        </tr>
+        <tr>
+          <th>Reported signal</th>
+          <td>Strong on long-horizon, multi-session continuity</td>
+          <td><b>63.8%</b> LongMemEval (GPT-4o) vs. 49.0% for a hybrid baseline — leading reported temporal-reasoning score; 94.8% vs. 93.4% (MemGPT) on Deep Memory Retrieval</td>
+          <td>Single-digit-ms write latency; fastest bolt-on time-to-value</td>
+        </tr>
+        <tr>
+          <th>Best fit</th>
+          <td>Long-running stateful agents that must reason about <i>why</i> they're forgetting something</td>
+          <td>Systems of record: "what was true when," contradiction resolution, relationship traversal</td>
+          <td>Fast personalization on an existing agent; full self-hosted control incl. consolidation</td>
+        </tr>
+        <tr>
+          <th>Everyday analogue</th>
+          <td>RAM (core) → L2/L3 cache (recall) → disk (archival)</td>
+          <td>A ledger that keeps every superseded entry, timestamped, instead of overwriting it</td>
+          <td>Three specialist indexes (semantic / relational / exact-match) voting on one ranked answer</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot-note">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    Benchmarks per vendor/framework self-reporting as of mid-2026 (LoCoMo, LongMemEval, BEAM) — independent production testing shows a real gap from these numbers; treat as directional, not a leaderboard. See <span class="src">16_ai_memory_2026/03_frameworks_comparison</span>.
+  </div>
+</section>
+
+<footer class="page-foot">Concept posters for <span class="mono" style="font-family:ui-monospace,monospace">15_hippocampus_ai</span> and <span class="mono" style="font-family:ui-monospace,monospace">16_ai_memory_2026</span> — generated as a visual companion, in the style of the Azure AI-103 course slide shared for reference.</footer>
+
+</body>
+</html>

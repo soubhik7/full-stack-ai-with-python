@@ -1,0 +1,8 @@
+# Isolated environment for 15_hippocampus_ai — do NOT merge into the root requirements.txt.
+# hippocampai pins sentence-transformers<3.0, which conflicts with the rest of this repo
+# (chapters 04-09 use sentence-transformers 5.x). See README.md#why-an-isolated-environment.
+hippocampai==0.5.1
+python-dotenv==1.0.1
+# hippocampai 0.5.1's core MemoryClient import chain reaches storage.user_store, which
+# imports duckdb even though duckdb is documented as a "saas"-extra-only dependency.
+duckdb>=1.0,<2.0
