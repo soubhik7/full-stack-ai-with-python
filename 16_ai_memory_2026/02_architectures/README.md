@@ -28,6 +28,8 @@ flowchart TB
     Recall <-->|agent issues a\nsearch/query call| Archival
 ```
 
+*Animated version: [`../assets/diagrams/02-os-tiered-memory.drawio`](../assets/diagrams/02-os-tiered-memory.drawio).*
+
 The distinguishing idea: the **agent itself** calls memory-management functions (page something
 out of core memory, search archival memory, edit a stored fact) as part of its own reasoning loop
 — memory isn't a black box the framework manages silently, it's something the model actively
@@ -56,6 +58,10 @@ sequenceDiagram
 
     Note over Graph: Query "where does the user live?"\nreturns Berlin (current)\nQuery "where did they live in March?"\nreturns Paris (time-travel)
 ```
+
+*Animated version: [`../assets/diagrams/02-temporal-knowledge-graph.drawio`](../assets/diagrams/02-temporal-knowledge-graph.drawio)
+— flattened to a flowchart (creates / invalidates / queries) since draw.io's animation applies to
+edges, not UML lifelines.*
 
 Old facts are **invalidated, not deleted** — this is what makes "what was true at time T"
 queries possible, and it's the direct answer to the knowledge-update failure mode from
@@ -88,6 +94,8 @@ flowchart LR
     K --> Fusion
     Fusion --> Ranked[Ranked, deduplicated\nmemory list]
 ```
+
+*Animated version: [`../assets/diagrams/02-hybrid-vector-graph-kv.drawio`](../assets/diagrams/02-hybrid-vector-graph-kv.drawio).*
 
 This is architecturally the closest of the three to what `15_hippocampus_ai/` teaches hands-on —
 HippocampAI's own retrieval stack (vector + BM25 + reranking + a real-time knowledge graph, see

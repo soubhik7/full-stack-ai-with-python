@@ -29,6 +29,9 @@ sequenceDiagram
     end
 ```
 
+*Animated version: [`../assets/diagrams/04-memory-poisoning-attack.drawio`](../assets/diagrams/04-memory-poisoning-attack.drawio)
+— flattened to a flowchart with an explicit "next session" loop-back edge.*
+
 Reported attack success rates against LLM-agent implementations in 2026 research range from ~80%
 to as high as 99.8% under specific conditions; one technique (AgentPoison) reported over 80%
 success at under 0.1% poison rate in RAG-based agents, with no model retraining required — meaning
@@ -57,6 +60,8 @@ flowchart LR
 
     Ingest --> Store --> Runtime
 ```
+
+*Animated version: [`../assets/diagrams/04-defense-layers.drawio`](../assets/diagrams/04-defense-layers.drawio).*
 
 **OWASP Agent Memory Guard**, released mid-2026, is the OWASP-sanctioned open-source reference
 implementation for ASI06 — a runtime guard layer that sits between an agent and its memory store,
@@ -95,6 +100,8 @@ flowchart TB
     A2A -.->|no shared memory\nformat yet| MemoryInterop
     ACP -.->|no shared memory\nformat yet| MemoryInterop
 ```
+
+*Animated version: [`../assets/diagrams/04-interop-protocol-stack.drawio`](../assets/diagrams/04-interop-protocol-stack.drawio).*
 
 Important nuance from Stanford's 2026 review of production agent limitations: MCP solves
 *tool connectivity*, one of four named constraints on production agents (memory, reliability,

@@ -1,0 +1,75 @@
+<mxfile host="app.diagrams.net" agent="claude-code" version="24.7.0">
+  <diagram id="mem-layer-flow" name="Memory layer — write path / read path">
+    <mxGraphModel dx="1200" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1120" pageHeight="420" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Memory layer: write path and read path" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=18;fontStyle=1;fontColor=#15141F;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="20" y="10" width="640" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="g1" value="RAW EVENT STREAM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#C3C1DC;strokeWidth=1;dashed=1;verticalAlign=top;fontColor=#8987A3;fontSize=11;fontStyle=1;align=left;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="20" y="60" width="200" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="User messages" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F7F7FB;strokeColor=#DCDBE9;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="35" y="100" width="170" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="Tool calls / results" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F7F7FB;strokeColor=#DCDBE9;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="35" y="175" width="170" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="Agent observations" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F7F7FB;strokeColor=#DCDBE9;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="35" y="250" width="170" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="g2" value="MEMORY LAYER — separate system" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#C3C1DC;strokeWidth=1;dashed=1;verticalAlign=top;fontColor=#8987A3;fontSize=11;fontStyle=1;align=left;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="250" y="60" width="580" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" value="Write path&lt;br&gt;extract &#8594; classify &#8594; embed &#8594; store" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ECE9FC;strokeColor=#4B32D9;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="270" y="155" width="170" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" value="Memory store&lt;br&gt;vector + graph + KV" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E2F5F1;strokeColor=#0F8F7E;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="470" y="155" width="170" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" value="Read path&lt;br&gt;retrieve &#8594; rank &#8594; assemble" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ECE9FC;strokeColor=#4B32D9;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="670" y="155" width="140" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="g3" value="MODEL CALL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#C3C1DC;strokeWidth=1;dashed=1;verticalAlign=top;fontColor=#8987A3;fontSize=11;fontStyle=1;align=left;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="860" y="60" width="220" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" value="Context window&lt;br&gt;for this turn only" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1C1A2B;strokeColor=#4B32D9;strokeWidth=2;fontColor=#FFFFFF;fontStyle=1;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="880" y="155" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge-e1w1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.3;" edge="1" parent="1" source="e1" target="w1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-e2w1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="e2" target="w1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-e3w1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.7;" edge="1" parent="1" source="e3" target="w1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-w1s1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#0F8F7E;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;" edge="1" parent="1" source="w1" target="s1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-s1r1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;" edge="1" parent="1" source="s1" target="r1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-r1c1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;" edge="1" parent="1" source="r1" target="c1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-c1e1" value="response" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#8987A3;strokeWidth=1.5;dashed=1;dashPattern=3 3;flowAnimation=1;endArrow=block;endFill=1;fontSize=10;fontColor=#8987A3;exitX=0.5;exitY=1;entryX=0.2;entryY=1;" edge="1" parent="1" source="c1" target="e1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="970" y="400" />
+              <mxPoint x="120" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

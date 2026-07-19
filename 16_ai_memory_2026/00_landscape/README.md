@@ -36,6 +36,9 @@ flowchart LR
     C -->|response| E1
 ```
 
+*Animated version: [`../assets/diagrams/00-memory-layer-flow.drawio`](../assets/diagrams/00-memory-layer-flow.drawio)
+(open in the [draw.io](https://app.diagrams.net) app or the VS Code Draw.io extension to see the flow animate).*
+
 This is the same write-path/read-path split taught for retrieval in
 [`15_hippocampus_ai/00_concepts/`](../../15_hippocampus_ai/00_concepts/README.md)'s
 `remember()`/`recall()` model — the 2026 consensus is that this split is the *general* pattern for
@@ -76,6 +79,8 @@ flowchart TD
     D --> E[5. Forget\nprune stale or low-value memories]
     E -.->|freed capacity, cleaner signal| B
 ```
+
+*Animated version: [`../assets/diagrams/00-five-memory-operations.drawio`](../assets/diagrams/00-five-memory-operations.drawio).*
 
 | Operation | What it does | Failure mode if skipped |
 |---|---|---|

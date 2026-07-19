@@ -28,6 +28,12 @@ same visual language as the `14-azure-ai103/Slides.pdf` course deck. Source at
 browser for the live version, or re-render the PDF with headless Chrome:
 `google-chrome --headless=new --print-to-pdf=out.pdf --no-pdf-header-footer assets/memory-concept-posters.html`.
 
+**Animated diagrams:** every Mermaid diagram in this chapter also has an editable, animated
+[draw.io](https://www.diagrams.net) twin under [`assets/diagrams/`](assets/diagrams/README.md) —
+flowing dashes show data direction, and each `.drawio` file opens in the draw.io app or the VS
+Code Draw.io extension. See that folder's `README.md` for the full index and how to export a
+static image from one.
+
 ## The one-paragraph version
 
 By mid-2026 the field stopped asking "how do I fit more history into the prompt?" and started

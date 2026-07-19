@@ -1,0 +1,70 @@
+<mxfile host="app.diagrams.net" agent="claude-code" version="24.7.0">
+  <diagram id="hybrid-fusion" name="Hybrid vector + graph + key-value (Mem0-style)">
+    <mxGraphModel dx="1200" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Hybrid vector + graph + key-value fusion" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=18;fontStyle=1;fontColor=#15141F;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="20" y="10" width="600" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="text1" value="Raw text /&lt;br&gt;conversation" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F7F7FB;strokeColor=#DCDBE9;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="30" y="150" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="extract" value="LLM fact extraction&lt;br&gt;+ type classification" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ECE9FC;strokeColor=#4B32D9;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="240" y="150" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="vec" value="Vector index&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#514F68&quot;&gt;semantic similarity&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E2F5F1;strokeColor=#0F8F7E;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="530" y="40" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="graph" value="Graph index&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#514F68&quot;&gt;entity relationships&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E2F5F1;strokeColor=#0F8F7E;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="530" y="150" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="kv" value="Key-value index&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#514F68&quot;&gt;exact attribute lookup&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E2F5F1;strokeColor=#0F8F7E;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="530" y="260" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="query" value="Query" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F7F7FB;strokeColor=#DCDBE9;strokeWidth=1.5;fontColor=#15141F;fontSize=12;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="30" y="390" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="fusion" value="Retrieval fusion" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1C1A2B;strokeColor=#4B32D9;strokeWidth=2;fontColor=#FFFFFF;fontStyle=1;fontSize=13;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="530" y="385" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ranked" value="Ranked, deduplicated&lt;br&gt;memory list" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ECE9FC;strokeColor=#4B32D9;strokeWidth=1.5;fontColor=#15141F;fontStyle=1;fontSize=13;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="780" y="385" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;" edge="1" parent="1" source="text1" target="extract">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#0F8F7E;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;exitX=1;exitY=0.3;" edge="1" parent="1" source="extract" target="vec">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#0F8F7E;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;" edge="1" parent="1" source="extract" target="graph">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#0F8F7E;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;exitX=1;exitY=0.7;" edge="1" parent="1" source="extract" target="kv">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.3;entryY=0;" edge="1" parent="1" source="vec" target="fusion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;" edge="1" parent="1" source="graph" target="fusion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.7;entryY=0;" edge="1" parent="1" source="kv" target="fusion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;" edge="1" parent="1" source="query" target="fusion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;endArrow=block;endFill=1;" edge="1" parent="1" source="fusion" target="ranked">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

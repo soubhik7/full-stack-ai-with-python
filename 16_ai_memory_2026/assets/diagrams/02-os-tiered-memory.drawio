@@ -1,0 +1,28 @@
+<mxfile host="65bd71144e">
+    <diagram id="os-tiered" name="OS-inspired tiered memory (Letta / MemGPT)">
+        <mxGraphModel dx="1010" dy="752" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="320" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="OS-inspired tiered memory — Letta / MemGPT lineage" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=18;fontStyle=1;fontColor=#15141F;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="10" width="700" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="core" value="CORE MEMORY&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal;color:#514F68&quot;&gt;like RAM — always in-context, small, fast, always visible to the LLM on every turn&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1C1A2B;strokeColor=#4B32D9;strokeWidth=2;fontColor=#FFFFFF;fontStyle=1;fontSize=13;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="100" width="270" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="recall" value="RECALL MEMORY&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal;color:#514F68&quot;&gt;like L2/L3 cache — recent conversation history, stored outside context, searchable, not always visible&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ECE9FC;strokeColor=#4B32D9;strokeWidth=1.5;fontColor=#15141F;fontStyle=1;fontSize=13;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="180" width="270" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="archival" value="ARCHIVAL MEMORY&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal;color:#514F68&quot;&gt;like disk — unbounded external store, queried on demand (vector search over everything)&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E2F5F1;strokeColor=#0F8F7E;strokeWidth=1.5;fontColor=#15141F;fontStyle=1;fontSize=13;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="100" width="270" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="e-core-recall" value="agent decides what to page in/out" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4B32D9;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;startArrow=block;startFill=1;endArrow=block;endFill=1;fontSize=10;fontColor=#514F68;" parent="1" source="core" target="recall" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e-recall-archival" value="agent issues a search/query call" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#0F8F7E;strokeWidth=2;dashed=1;dashPattern=4 4;flowAnimation=1;startArrow=block;startFill=1;endArrow=block;endFill=1;fontSize=10;fontColor=#514F68;" parent="1" source="recall" target="archival" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -23,6 +23,8 @@ flowchart TB
     PROC -->|executing a skill\ngenerates new episodes| EP
 ```
 
+*Animated version: [`../assets/diagrams/01-memory-taxonomy-cycle.drawio`](../assets/diagrams/01-memory-taxonomy-cycle.drawio).*
+
 | Type | Cognitive-science analogue | Agent-system example | Where you've already seen this in this repo |
 |---|---|---|---|
 | **Episodic** | "I remember going hiking last weekend" | A session transcript, a tool-call log, a `Memory(type="event")` record | `15_hippocampus_ai/01_core_client/02_conversation_extraction.py` extracting per-turn events |

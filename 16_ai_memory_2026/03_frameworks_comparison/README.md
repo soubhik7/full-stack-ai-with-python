@@ -24,6 +24,9 @@ quadrantChart
     Letta/MemGPT: [0.5, 0.8]
 ```
 
+*Animated version: [`../assets/diagrams/03-architecture-quadrant.drawio`](../assets/diagrams/03-architecture-quadrant.drawio)
+— the axis arrows animate; the four framework positions are plotted the same as above.*
+
 **Independent testing caveat:** vendor-reported benchmark numbers disagree across sources, and the
 field's own guidance in 2026 is consistent: "pick on persistence model, temporal accuracy,
 latency, and compliance, not on stars" — run evals against your own workload using the standard
@@ -41,6 +44,8 @@ flowchart TD
     Q3 -->|Yes| Hippo[HippocampAI]
     Q3 -->|No| Mem0[Mem0]
 ```
+
+*Animated version: [`../assets/diagrams/03-decision-path.drawio`](../assets/diagrams/03-decision-path.drawio).*
 
 A commonly repeated 2026 pattern for teams shipping a chat product: **start with Mem0** (or an
 equivalent hybrid store) **plus a separate task tracker, and migrate to Letta or Zep once you
