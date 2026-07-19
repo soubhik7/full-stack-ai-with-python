@@ -4,9 +4,9 @@
 
 This chapter is a Udemy-style course ("Azure AI 103") on building production AI solutions on Azure: Azure OpenAI / AI Foundry agents, Azure AI Search + RAG, LangChain/LangGraph orchestration, image generation & editing, Content Safety, Azure AI Language, Azure AI Speech, and Azure AI Document Intelligence. The original `.py` scripts (companion to `Slides.pdf`) are untouched — every script now has a sibling `.ipynb` notebook that teaches it.
 
-The closest **official** certification covering this material is Microsoft **AI-102: Designing and Implementing a Microsoft Azure AI Solution** — notebooks frame "exam tips" around AI-102, not a fictitious "AI-103" exam.
+**AI-103 is now a real Microsoft exam**: *AI-103 — Developing AI Apps and Agents on Azure* (skills measured as of April 16, 2026), which replaced the retired AI-102 (retired June 30, 2026) and awards the **Azure AI Apps and Agents Developer Associate** certification. The notebooks' inline "exam tips" were written against AI-102 (the current exam at the time of conversion); the concepts carry over directly.
 
-📝 **Exam prep:** [`EXAM_NOTES.md`](EXAM_NOTES.md) condenses all 151 exam tips from the chapter's 53 notebooks (plus the no-code labs) into quick-revision short notes with recap tables, mnemonics, and last-minute flash facts — and adds every official AI-102 syllabus topic the course itself doesn't cover (resource planning/containers/monitoring, Responsible AI, prompt flow & deployment types, the full computer-vision domain, CLU/custom QA/custom speech, and Azure AI Search internals), so it covers the complete exam blueprint.
+📝 **Exam prep:** [`EXAM_NOTES.md`](EXAM_NOTES.md) is a full AI-103 quick-revision guide: all 151 notebook exam tips condensed and reorganized under the official 5-domain AI-103 blueprint, plus every syllabus topic the course doesn't cover (Foundry IQ, Microsoft Agent Framework, A2A protocol, M365/Work IQ agent publishing, Voice Live, Sora 2 video generation, Language/Speech MCP servers, monitoring/security, responsible multimodal AI), with recap tables, mnemonics, and 55 flash facts.
 
 ---
 
