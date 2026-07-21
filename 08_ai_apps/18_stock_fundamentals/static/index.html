@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stock Fundamentals Fetcher</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <h1>Stock Fundamentals Fetcher</h1>
+    <p class="subtitle">
+      Search NSE-listed companies live, pick the ones you want, and export
+      price + fundamentals (EPS, ROE, cash flow, ...) to CSV.
+    </p>
+
+    <section class="search-box">
+      <input type="text" id="search-input" placeholder="Type a company name or symbol (e.g. Reliance, TCS)" autocomplete="off" />
+      <ul id="suggestions"></ul>
+    </section>
+
+    <section class="selected-box">
+      <h2>Selected companies (<span id="selected-count">0</span>)</h2>
+      <div id="selected-chips" class="chips"></div>
+      <button id="fetch-btn" disabled>Fetch data &amp; save to CSV</button>
+      <span id="status"></span>
+    </section>
+
+    <section class="results-box" id="results-box" hidden>
+      <h2>Fetched data</h2>
+      <a id="download-link" href="#" download>Download CSV</a>
+      <div class="table-wrap">
+        <table id="results-table">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

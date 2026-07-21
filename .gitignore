@@ -55,3 +55,6 @@ rng_state.pth
 
 # ── Misc project-specific ignores ─────────────────────────────────────────────
 02_math_for_ml/03. Probability and Statistics/Week 2/02. Probability Distributions with Multiple Variables/01. Labs/02.Exploratory Data/Rideshare_Project_Week2.ipynb
+
+# Stock Fundamentals Fetcher — generated CSVs and cached instrument list
+08_ai_apps/18_stock_fundamentals/data/*.csv

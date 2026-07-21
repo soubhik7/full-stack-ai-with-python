@@ -221,6 +221,11 @@ ipywidgets>=8
 numpyencoder==0.3.0
 snorkel==0.9.9
 
+# ── Chapter 08 App 18: Stock Fundamentals Fetcher ──────────────────────────────
+# Company fundamentals (EPS, ROE, cash flow, ...) — Groww's Trade API doesn't
+# expose these, so yfinance fills that gap
+yfinance>=0.2.40
+
 # Notebook
 cleanlab==2.3.1
 lime==0.2.0.1
