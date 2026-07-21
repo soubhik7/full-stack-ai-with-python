@@ -22,7 +22,14 @@
     <section class="selected-box">
       <h2>Selected companies (<span id="selected-count">0</span>)</h2>
       <div id="selected-chips" class="chips"></div>
-      <button id="fetch-btn" disabled>Fetch data &amp; save to CSV</button>
+      <div class="button-row">
+        <button id="fetch-btn" disabled>Fetch data &amp; save to CSV</button>
+        <button id="save-watchlist-btn" disabled>Save as watchlist</button>
+      </div>
+      <p class="hint">
+        Your watchlist is what the daily automation (GitHub Actions) fetches
+        and emails a digest for — see the app's README.
+      </p>
       <span id="status"></span>
     </section>
 

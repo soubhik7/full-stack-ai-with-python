@@ -102,19 +102,44 @@ h1 {
   color: #888;
 }
 
-#fetch-btn {
+.button-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+#fetch-btn,
+#save-watchlist-btn {
   padding: 0.6rem 1.25rem;
   font-size: 1rem;
   border: none;
   border-radius: 8px;
-  background: var(--accent);
-  color: white;
   cursor: pointer;
 }
 
-#fetch-btn:disabled {
+#fetch-btn {
+  background: var(--accent);
+  color: white;
+}
+
+#save-watchlist-btn {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+#fetch-btn:disabled,
+#save-watchlist-btn:disabled {
   background: #aac4ec;
+  border-color: #aac4ec;
+  color: white;
   cursor: not-allowed;
+}
+
+.hint {
+  color: #888;
+  font-size: 0.85rem;
+  margin: 0.5rem 0 0;
 }
 
 #status {

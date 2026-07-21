@@ -7,10 +7,12 @@ a broad research snapshot — valuation, growth, profitability, financial
 health, dividends, ownership, analyst targets, and price technicals — into a
 timestamped CSV under `data/`.
 
-> **Not investment advice.** This tool surfaces raw public data (Groww's own
-> market data, plus Yahoo Finance fundamentals/analyst coverage via
-> yfinance) so you can do your own research. It doesn't generate buy/sell
-> recommendations.
+> **Not investment advice.** The interactive app (this section) surfaces raw
+> public data so you can do your own research — it doesn't generate buy/sell
+> recommendations. The optional [daily automation](#daily-automation-github-actions)
+> below *does* generate an LLM narrative recommendation, by explicit choice
+> when this was built — see that section for what that means and its risks
+> before enabling it.
 
 ## Why two data sources
 
@@ -79,6 +81,106 @@ uvicorn server:app --reload
 Open http://127.0.0.1:8000 — type a company name or symbol, click matches to
 select them, then **Fetch data & save to CSV**. The CSV is written to
 `data/companies_fundamentals_<timestamp>.csv` and offered as a download link.
+Click **Save as watchlist** to persist your current selection to
+`watchlist.json` — that's the file the daily automation below reads.
+
+## Daily automation (GitHub Actions)
+
+`run_daily.py` is a headless script — no server needed — that: fetches every
+company in `watchlist.json`, writes a dated CSV snapshot, upserts each
+company into a committed vector store, and emails you an LLM-written digest.
+`.github/workflows/stock-watchlist-daily.yml` runs it on a cron schedule
+(default: 08:00 IST, Mon–Fri) and commits the new data back to the repo.
+
+**This is off by default.** The workflow file exists in the repo, but it only
+runs once you add the secrets below in your GitHub repo's Settings → Secrets
+and variables → Actions. Test it manually first via the Actions tab → "Daily
+Stock Watchlist Digest" → **Run workflow**, before trusting the schedule.
+
+### 1. Build a watchlist
+
+Either use **Save as watchlist** in the running app, or edit
+`watchlist.json` directly:
+
+```json
+{ "symbols": ["RELIANCE", "TCS", "INFY"] }
+```
+
+Symbols are Groww trading symbols (same ones `/api/search` returns).
+
+### 2. Add repo secrets
+
+| Secret | Required? | Where to get it |
+|--------|-----------|------------------|
+| `GOOGLE_API_KEY` | Yes | [Google AI Studio](https://aistudio.google.com/apikey) — powers both the vector store embeddings and the LLM narrative (Gemini) |
+| `EMAIL_FROM` | Yes | A Gmail address you control |
+| `EMAIL_APP_PASSWORD` | Yes | [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords) — a 16-character App Password, **not** your normal Gmail password (needs 2-Step Verification enabled on that account) |
+| `EMAIL_TO` | Yes | Where the digest gets sent — can be the same as `EMAIL_FROM` |
+| `GROWW_ACCESS_TOKEN` | No | Live quotes + official candles. **Expires daily at 6 AM IST** — a token secret you set once will go stale; the API Key + Secret flow below is the only one that keeps working unattended |
+| `GROWW_API_KEY` / `GROWW_API_SECRET` | No | Auto-refreshes daily, so this is the one that actually works for an unattended schedule. Still needs manual daily approval on the Groww Cloud API Keys page — read Groww's docs on what that approval step means for automation before relying on it |
+
+Without any Groww secret, the workflow still runs fully — quote columns
+(price, bid, circuit limits) are blank, and technicals fall back to Yahoo
+Finance price history, exactly like the interactive app.
+
+### 3. What gets committed back to the repo, daily
+
+- `data/daily/<YYYY-MM-DD>.csv` — that day's full snapshot (append-only archive)
+- `data/watchlist_latest.csv` — always overwritten with the latest snapshot
+- `vector_store/` — Chroma's persisted files (SQLite + data), **upserted** per
+  company (not appended) — see below
+
+**Repo growth**: `vector_store/`'s files change every run, and git doesn't
+diff binary SQLite files efficiently — the repo's `.git` history will grow
+daily and won't shrink on its own. Fine for a personal/learning repo over
+normal timeframes; if it matters long-term, periodically squash history or
+move the vector store to an external DB instead of committing it.
+
+### How the vector store lifecycle works ("update/add/refine/delete")
+
+One document per company, keyed by trading symbol, in `vector_store.py`:
+
+- **Add / update / refine** — every run, each watchlisted company's document
+  is **upserted** (`vector_store.upsert_company`): re-embedded with that
+  day's numbers, replacing the old vector. There's one current document per
+  company, not a growing pile of daily snapshots — the *history* of changes
+  lives in the dated CSVs, not in the vector store.
+- **Delete** — `vector_store.reconcile()` runs after every fetch and deletes
+  any company whose vector exists but is no longer in `watchlist.json` — so
+  removing a symbol from your watchlist and re-running cleans it up
+  automatically.
+
+This is a Chroma collection, not RAG wired into anything yet — `vector_store.query()`
+is there for you (or a future app) to build semantic search / RAG over the
+watchlist later, per your original ask about feeding this into an LLM.
+
+### About the recommendation email
+
+You explicitly chose an LLM-written narrative over a plain data digest when
+this was built, so `emailer.py` calls Gemini with the day's full watchlist
+snapshot and a system prompt that requires it to cite specific numbers from
+the data, forbids inventing figures or promising profit, and asks it to flag
+internally-inconsistent data rather than gloss over it. A disclaimer banner
+is hard-coded into the email template — it always appears regardless of what
+the model writes.
+
+None of that makes it reliable. It's a language model's synthesis of data
+that — per the yfinance-accuracy note below — is itself sometimes wrong. Read
+the digest as "here's what an AI noticed in today's numbers," not as
+research from a professional analyst, and definitely not as a guarantee. If
+the LLM call fails for any reason, the email still sends with just the raw
+data table and a note that the narrative was unavailable — see `run_daily.py`.
+
+### Testing it without waiting for the cron
+
+```bash
+cd 08_ai_apps/18_stock_fundamentals
+python run_daily.py
+```
+
+Runs the exact same code the workflow runs, using your local `.env` (this
+app's own `.env` first, then the repo-root `.env` for any shared keys).
+Sends a real email if `EMAIL_*` secrets are set — expect that.
 
 ## What's in the CSV
 
@@ -139,4 +241,13 @@ select them, then **Fetch data & save to CSV**. The CSV is written to
   signal on its own.
 - The Google News RSS feed is, per Google's own terms on the feed, for
   "personal, non-commercial use" — fine for this research tool.
-- `data/*.csv` is gitignored — each fetch produces a fresh, local file.
+- `data/*.csv` is gitignored for ad-hoc UI fetches (each one produces a fresh
+  local file); the daily automation's own outputs are deliberately tracked —
+  see [Daily automation](#daily-automation-github-actions) above.
+- **Secrets security**: GitHub Actions secrets are encrypted and redacted
+  from logs automatically — the workflow YAML itself (visible if the repo is
+  public) never contains a credential value, only secret *names*. If you use
+  the Groww API Key + Secret flow, be aware that's a live trading-account
+  credential sitting in your GitHub repo's secret store; use whatever scope
+  restriction Groww's dashboard offers and treat repo/org access control
+  accordingly.

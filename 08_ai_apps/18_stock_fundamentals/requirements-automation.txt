@@ -1,0 +1,10 @@
+# Deps for run_daily.py (headless automation, e.g. GitHub Actions).
+# Deliberately scoped to just this app — the root requirements.txt pulls in
+# the whole curriculum's ML/DL stack (torch, ray, ...), which would make
+# every scheduled run slow to install for no benefit here.
+pandas==2.3.3
+requests==2.32.5
+yfinance>=0.2.40
+python-dotenv==1.2.1
+chromadb
+google-genai

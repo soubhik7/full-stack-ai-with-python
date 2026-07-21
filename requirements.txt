@@ -225,6 +225,9 @@ snorkel==0.9.9
 # Company fundamentals (EPS, ROE, cash flow, ...) — Groww's Trade API doesn't
 # expose these, so yfinance fills that gap
 yfinance>=0.2.40
+# Daily automation (run_daily.py): committed vector store + Gemini narrative/embeddings
+chromadb
+google-genai
 
 # Notebook
 cleanlab==2.3.1

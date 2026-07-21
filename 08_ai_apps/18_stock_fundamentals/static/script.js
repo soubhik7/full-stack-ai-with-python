@@ -3,6 +3,7 @@ const suggestionsEl = document.getElementById("suggestions");
 const selectedChipsEl = document.getElementById("selected-chips");
 const selectedCountEl = document.getElementById("selected-count");
 const fetchBtn = document.getElementById("fetch-btn");
+const saveWatchlistBtn = document.getElementById("save-watchlist-btn");
 const statusEl = document.getElementById("status");
 const resultsBox = document.getElementById("results-box");
 const downloadLink = document.getElementById("download-link");
@@ -67,6 +68,36 @@ function renderSelected() {
   }
   selectedCountEl.textContent = selected.size;
   fetchBtn.disabled = selected.size === 0;
+  saveWatchlistBtn.disabled = selected.size === 0;
+}
+
+async function loadWatchlist() {
+  const res = await fetch("/api/watchlist");
+  if (!res.ok) return;
+  const items = await res.json();
+  for (const item of items) {
+    selected.set(item.trading_symbol, item);
+  }
+  renderSelected();
+}
+
+async function saveWatchlist() {
+  const previousLabel = saveWatchlistBtn.textContent;
+  saveWatchlistBtn.disabled = true;
+  try {
+    const res = await fetch("/api/watchlist", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ symbols: Array.from(selected.keys()) }),
+    });
+    if (!res.ok) throw new Error("Save failed");
+    saveWatchlistBtn.textContent = "Saved!";
+    setTimeout(() => (saveWatchlistBtn.textContent = previousLabel), 1500);
+  } catch (e) {
+    statusEl.textContent = `Error: ${e.message}`;
+  } finally {
+    saveWatchlistBtn.disabled = selected.size === 0;
+  }
 }
 
 async function fetchData() {
@@ -123,3 +154,5 @@ function renderTable(rows) {
 
 searchInput.addEventListener("input", debounce((e) => runSearch(e.target.value), 250));
 fetchBtn.addEventListener("click", fetchData);
+saveWatchlistBtn.addEventListener("click", saveWatchlist);
+loadWatchlist();

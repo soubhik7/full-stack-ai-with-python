@@ -56,5 +56,8 @@ rng_state.pth
 # ── Misc project-specific ignores ─────────────────────────────────────────────
 02_math_for_ml/03. Probability and Statistics/Week 2/02. Probability Distributions with Multiple Variables/01. Labs/02.Exploratory Data/Rideshare_Project_Week2.ipynb
 
-# Stock Fundamentals Fetcher — generated CSVs and cached instrument list
+# Stock Fundamentals Fetcher — ad-hoc UI fetches and cached instrument list
+# are NOT tracked; the daily automation's own outputs (data/daily/*.csv,
+# data/watchlist_latest.csv, vector_store/) ARE tracked — see that app's README.
 08_ai_apps/18_stock_fundamentals/data/*.csv
+!08_ai_apps/18_stock_fundamentals/data/watchlist_latest.csv

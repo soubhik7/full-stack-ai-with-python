@@ -1,0 +1,61 @@
+name: Daily Stock Watchlist Digest
+
+# Fetches every company in 08_ai_apps/18_stock_fundamentals/watchlist.json,
+# snapshots the data to CSV, upserts the vector store, and emails a digest.
+# See that app's README for full setup (required secrets, watchlist
+# management, security notes) before enabling this on a schedule.
+on:
+  schedule:
+    # 02:30 UTC = 08:00 IST, Mon–Fri (NSE trading days). Adjust to taste.
+    - cron: "30 2 * * 1-5"
+  workflow_dispatch: {} # manual "Run workflow" button, for testing
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    working-directory: 08_ai_apps/18_stock_fundamentals
+
+jobs:
+  fetch-and-notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: 08_ai_apps/18_stock_fundamentals/requirements-automation.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-automation.txt
+
+      - name: Run daily fetch, vector store update, and email digest
+        env:
+          # Groww auth (optional — omit both for yfinance-only technicals/no live quotes)
+          GROWW_ACCESS_TOKEN: ${{ secrets.GROWW_ACCESS_TOKEN }}
+          GROWW_API_KEY: ${{ secrets.GROWW_API_KEY }}
+          GROWW_API_SECRET: ${{ secrets.GROWW_API_SECRET }}
+          # Required for the vector store embeddings and the LLM narrative
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          # Required to send the digest email
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: python run_daily.py
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/daily data/watchlist_latest.csv vector_store
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "chore: daily stock watchlist data refresh ($(date -u +%Y-%m-%d))"
+            git push
+          fi
