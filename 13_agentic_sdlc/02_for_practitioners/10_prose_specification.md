@@ -207,7 +207,7 @@ The chapter closes by framing the five constraints as **the specification**; the
 ## Important
 
 ### One Implementation of PROSE Scaffolding
-`pip install apm-cli && apm init` — the author's own open-source APM tool scaffolds PROSE-compliant primitives directly. The primitives in this chapter can equally be created manually following the file templates given throughout (instruction files with `applyTo` frontmatter, agent configs with explicit `tools` lists, `AGENTS.md` hierarchies, etc.) — the tooling is a shortcut, not a requirement.
+`pip3 install apm-cli && apm init` — the author's own open-source APM tool scaffolds PROSE-compliant primitives directly. The primitives in this chapter can equally be created manually following the file templates given throughout (instruction files with `applyTo` frontmatter, agent configs with explicit `tools` lists, `AGENTS.md` hierarchies, etc.) — the tooling is a shortcut, not a requirement.
 
 ### The Footnote on Specification vs. Formal Methods
 A closing footnote draws an explicit parallel: the shift from human-readable to machine-readable specifications mirrors the historical evolution from informal requirements documents to formal methods in safety-critical systems engineering. The stated difference is that agentic specifications must be **both** — readable by the human reviewer **and** parseable by the agent consumer — simultaneously, which is part of why file format and structure (frontmatter, glob scoping, link-based references) matter as much as content.

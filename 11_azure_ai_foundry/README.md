@@ -19,7 +19,7 @@ Companion to `Azure_AI_Foundry_Study_Notes.pdf` (194 pages, 4 modules). The note
   ```bash
   az rest --method get --url "https://management.azure.com/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.CognitiveServices/accounts/<account>/projects?api-version=2025-04-01-preview"
   ```
-- `pip install -r requirements.txt` (installs `azure-ai-projects`, `azure-ai-agents`, `azure-identity`)
+- `pip3 install -r requirements.txt` (installs `azure-ai-projects`, `azure-ai-agents`, `azure-identity`)
 
 ---
 

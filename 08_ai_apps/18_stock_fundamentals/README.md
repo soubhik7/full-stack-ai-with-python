@@ -52,7 +52,7 @@ Run from the repo root (`full-stack-ai-with-python/`):
 
 ```bash
 source venv/bin/activate
-pip install -r requirements.txt   # fastapi, uvicorn, pandas, requests, yfinance
+pip3 install -r requirements.txt   # fastapi, uvicorn, pandas, requests, yfinance
 cd 08_ai_apps/18_stock_fundamentals
 cp .env.example .env
 ```

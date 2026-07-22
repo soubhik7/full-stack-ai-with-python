@@ -32,7 +32,7 @@ jobs:
           cache-dependency-path: 08_ai_apps/18_stock_fundamentals/requirements-automation.txt
 
       - name: Install dependencies
-        run: pip install -r requirements-automation.txt
+        run: pip3 install -r requirements-automation.txt
 
       - name: Run daily fetch, vector store update, and email digest
         env:

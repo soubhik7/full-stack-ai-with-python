@@ -158,7 +158,7 @@ source venv/bin/activate   # Mac/Linux
 python3 02_datatypes/chapter_1.py
 
 # 4. Install challenge dependencies
-pip install requests beautifulsoup4 pandas matplotlib flask pydantic
+pip3 install requests beautifulsoup4 pandas matplotlib flask pydantic
 ```
 
 ---

@@ -44,7 +44,7 @@ Gmail_AI_Assistant_withOwnTrainedModel/
 ## Install
 
 ```bash
-pip install -r requirements.gmail_custom_model.txt
+pip3 install -r requirements.gmail_custom_model.txt
 ```
 
 ## Configuration

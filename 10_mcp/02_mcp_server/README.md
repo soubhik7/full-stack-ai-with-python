@@ -8,7 +8,7 @@
 
 ```bash
 source venv/bin/activate
-pip install mcp
+pip3 install mcp
 ```
 
 ---
@@ -30,7 +30,7 @@ But you can test with the MCP CLI dev tool:
 
 ```bash
 # Install the MCP CLI
-pip install "mcp[cli]"
+pip3 install "mcp[cli]"
 
 # Inspect your server (opens an interactive inspector)
 mcp dev 02_mcp_server/01_hello_mcp.py

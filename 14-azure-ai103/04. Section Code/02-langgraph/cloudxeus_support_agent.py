@@ -1,5 +1,5 @@
-# pip install langchain-community faiss-cpu pypdf
-# pip install langchain-text-splitters
+# pip3 install langchain-community faiss-cpu pypdf
+# pip3 install langchain-text-splitters
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_openai import ChatOpenAI
 from langchain_openai import ChatOpenAI,OpenAIEmbeddings

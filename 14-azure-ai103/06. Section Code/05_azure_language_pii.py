@@ -1,4 +1,4 @@
-# pip install azure.ai.textanalytics
+# pip3 install azure.ai.textanalytics
 from azure.ai.textanalytics import TextAnalyticsClient
 from azure.core.credentials import AzureKeyCredential
 

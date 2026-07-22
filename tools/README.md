@@ -14,7 +14,7 @@ your own logged-in browser session (no private API, no auth bypass).
 ```bash
 cd /Users/soubhik/AI/full-stack-ai-with-python
 source venv/bin/activate
-pip install -r requirements.txt   # installs playwright
+pip3 install -r requirements.txt   # installs playwright
 python -m playwright install chromium
 ```
 

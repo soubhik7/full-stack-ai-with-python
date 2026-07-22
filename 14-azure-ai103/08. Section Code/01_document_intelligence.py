@@ -1,4 +1,4 @@
-# pip install azure.ai.documentintelligence
+# pip3 install azure.ai.documentintelligence
 from azure.ai.documentintelligence import DocumentIntelligenceClient
 from azure.ai.documentintelligence.models import AnalyzeDocumentRequest
 from azure.core.credentials import AzureKeyCredential

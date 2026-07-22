@@ -81,7 +81,7 @@ Or add to `.claude/settings.json` in your project:
 ## Option C — Anthropic SDK (Python Code)
 
 ```bash
-pip install anthropic mcp
+pip3 install anthropic mcp
 ```
 
 The pattern: list MCP tools → pass to Claude → loop on `tool_use` blocks.

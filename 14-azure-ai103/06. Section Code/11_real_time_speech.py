@@ -1,4 +1,4 @@
-# pip install azure.cognitiveservices.speech
+# pip3 install azure.cognitiveservices.speech
 import azure.cognitiveservices.speech as speechsdk
 import time
 

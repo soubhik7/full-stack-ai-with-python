@@ -24,7 +24,7 @@ Numbered top-level chapters — students work through them 00 → 13 in order.
 | `12_claude_code/` | Claude Code extensibility — rules/memory, subagents, skills, hooks, slash commands, settings/permissions, labs (00–07) |
 | `13_agentic_sdlc/` | Study notes for *The Agentic SDLC Handbook* (PDF) — PROSE framework, governance, team structures, multi-agent orchestration, anti-patterns, case studies (00–04) |
 | `14-azure-ai103/` | Udemy course "Azure AI 103" — Azure OpenAI/AI Foundry agents, Azure AI Search + RAG, LangChain/LangGraph, image generation, Content Safety, Azure AI Language, Azure AI Speech, Document Intelligence. Every course `.py` script (01–08 Section Code) has a paired teaching notebook — see `14-azure-ai103/README.md` |
-| `15_hippocampus_ai/` | Study of [HippocampAI](https://github.com/rexdivakar/HippocampAI) (external OSS project, `pip install hippocampai`) — a hippocampus-inspired long-term memory engine for LLM agents: memory types, hybrid retrieval scoring, sleep-phase consolidation, 3 runnable core-client scripts. Has its **own isolated venv** — see `15_hippocampus_ai/README.md` |
+| `15_hippocampus_ai/` | Study of [HippocampAI](https://github.com/rexdivakar/HippocampAI) (external OSS project, `pip3 install hippocampai`) — a hippocampus-inspired long-term memory engine for LLM agents: memory types, hybrid retrieval scoring, sleep-phase consolidation, 3 runnable core-client scripts. Has its **own isolated venv** — see `15_hippocampus_ai/README.md` |
 | `16_ai_memory_2026/` | Industry-wide study notes (web-research-grounded, mid-2026 snapshot) on AI agent memory management: the 5 universal memory operations, episodic/semantic/procedural taxonomy, 3 dominant architectures (OS-inspired tiered, temporal knowledge graph, hybrid vector+graph+KV), Mem0/Zep/Letta/native-provider-memory comparison, memory poisoning (OWASP ASI06) and interoperability standards (MCP/A2A/ACP). Mermaid diagrams throughout; no runnable code — pairs with `15_hippocampus_ai/` |
 | `reference/` | External cloned reference repo — keep intact |
 | `tools/` | Dev utility scripts |
@@ -120,7 +120,7 @@ Study notes extracted from `The-Agentic-SDLC-Handbook.pdf` (Daniel Meppiel, v0.9
 
 ```bash
 source venv/bin/activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 There is no root-level test/lint config — most chapters are notebooks or one-off scripts with no automated tests. `09_projects/04_made_with_ml/` is the one exception with real tooling (see Testing & Linting).

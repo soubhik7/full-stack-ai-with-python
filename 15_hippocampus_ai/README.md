@@ -6,7 +6,7 @@ chapter studies [HippocampAI](https://github.com/rexdivakar/HippocampAI), an ope
 the brain's hippocampus encodes, consolidates, and recalls experience.
 
 This is a study of a real, external open-source project (Apache 2.0), not an original curriculum
-build. Source: `/Users/soubhik/hippocamp-ai/HippocampAI` (`pip install hippocampai`, PyPI package
+build. Source: `/Users/soubhik/hippocamp-ai/HippocampAI` (`pip3 install hippocampai`, PyPI package
 `hippocampai==0.5.1`).
 
 | Sub-chapter | Content |
@@ -26,7 +26,7 @@ newer `sentence-transformers` (5.x) for chapters 04–09. Installing `hippocampa
 cd 15_hippocampus_ai
 python3.11 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Prerequisites to actually run the scripts

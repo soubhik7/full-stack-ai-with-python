@@ -9,7 +9,7 @@
 - [Chapter 08 — AI Applications](../08_ai_apps/README.md) *(agents, tool use)*
 - [Chapter 06 — LLMs](../06_large_language_models/README.md) *(how LLMs work)*
 - Packages: `mcp`, `anthropic`, `openai`, `httpx`, `pydantic`
-- Install: `pip install mcp anthropic`
+- Install: `pip3 install mcp anthropic`
 
 ---
 
@@ -148,7 +148,7 @@ async with stdio_client(StdioServerParameters(command="python", args=["server.py
 # activate your venv first
 source venv/bin/activate
 
-pip install mcp anthropic
+pip3 install mcp anthropic
 ```
 
 ---

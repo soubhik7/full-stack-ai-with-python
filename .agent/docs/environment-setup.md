@@ -69,12 +69,12 @@ deactivate
 2. **Install the package**:
    ```bash
    source .venv/bin/activate
-   pip install package-name
+   pip3 install package-name
    ```
 
 3. **Update `requirements.txt` with exact versions**:
    ```bash
-   pip freeze > requirements.txt
+   pip3 freeze > requirements.txt
    ```
 
 ### Reinstalling All Dependencies
@@ -86,8 +86,8 @@ cd /Users/soubhik/AI/full-stack-ai-with-python
 rm -rf venv/
 /opt/homebrew/bin/python3.11 -m venv venv
 source venv/bin/activate
-pip install --upgrade pip ipykernel
-pip install -r requirements.txt
+pip3 install --upgrade pip3 ipykernel
+pip3 install -r requirements.txt
 # Re-register kernel after recreating venv
 python -m ipykernel install --user --name KernelSoubhik --display-name "KernelSoubhik"
 ```
@@ -168,12 +168,12 @@ If you get `ModuleNotFoundError`:
 1. **Check if package is installed**:
    ```bash
    source .venv/bin/activate
-   pip list | grep package-name
+   pip3 list | grep package-name
    ```
 
 2. **Install missing package**:
    ```bash
-   pip install package-name
+   pip3 install package-name
    ```
 
 3. **Verify kernel is using correct Python**:
@@ -191,7 +191,7 @@ If you encounter version conflicts:
 1. **Check conflicting packages**:
    ```bash
    source .venv/bin/activate
-   pip check
+   pip3 check
    ```
 
 2. **Review `requirements.txt`** for duplicate entries

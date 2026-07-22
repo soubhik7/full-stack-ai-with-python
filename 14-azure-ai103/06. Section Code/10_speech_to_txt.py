@@ -1,4 +1,4 @@
-# pip install azure.ai.transcription
+# pip3 install azure.ai.transcription
 from azure.ai.transcription import TranscriptionClient
 from azure.core.credentials import AzureKeyCredential
 from azure.ai.transcription.models import TranscriptionContent, TranscriptionOptions

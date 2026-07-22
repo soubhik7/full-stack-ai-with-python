@@ -169,7 +169,7 @@ llm = ChatGroq(model_name="llama3-8b-8192")
 
 2. Install requirements:
    ```bash
-   pip install -r requirements.rag_langchain.txt
+   pip3 install -r requirements.rag_langchain.txt
    ```
 
 3. Add `.env` file:

@@ -17,7 +17,7 @@ An end-to-end toolkit on building a sentiment prediction model with a Jupyer not
 * Create a virtual environment
   * install virtual environment
  
-        pip install virtualenv
+        pip3 install virtualenv
         
   * create virtual environment by the name ENV
         
@@ -29,7 +29,7 @@ An end-to-end toolkit on building a sentiment prediction model with a Jupyer not
         
 * Install project dependencies
 
-      pip install -r .\requirements.sentiment_sklearn_pipeline.txt
+      pip3 install -r .\requirements.sentiment_sklearn_pipeline.txt
       
 * Run the project
 
@@ -52,7 +52,7 @@ An end-to-end toolkit on building a sentiment prediction model with a Jupyer not
 * Create a virtual environment
   * install virtual environment
 
-        pip install virtualenv
+        pip3 install virtualenv
         
   * create virtual environment by the name ENV
   
@@ -62,7 +62,7 @@ An end-to-end toolkit on building a sentiment prediction model with a Jupyer not
         source ENV/bin/activate
 * Install project dependencies
 
-      pip install -r requirements.sentiment_sklearn_pipeline.txt  
+      pip3 install -r requirements.sentiment_sklearn_pipeline.txt  
 * Run the project
 
       python app.py

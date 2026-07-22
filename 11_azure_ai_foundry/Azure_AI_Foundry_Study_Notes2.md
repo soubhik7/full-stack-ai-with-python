@@ -3292,7 +3292,7 @@ def emergency_escalator_route(req: func.HttpRequest) -> func.HttpResponse:
 
 ```python
 # drug_lookup.py (starter)
-# Requires: pip install requests
+# Requires: pip3 install requests
 import requests
 
 URL = "https://api.fda.gov/drug/label.json"

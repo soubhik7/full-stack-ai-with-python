@@ -69,7 +69,7 @@ Production ML system following the [Made With ML](https://madewithml.com) curric
 
 ```bash
 cd 09_projects/04_made_with_ml
-pip install -r requirements.txt   # project-local deps
+pip3 install -r requirements.txt   # project-local deps
 make train                         # train with Ray
 make evaluate
 make serve

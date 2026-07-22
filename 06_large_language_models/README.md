@@ -125,7 +125,7 @@ Measure and compare LLM output quality systematically.
 | `03_eval_pipeline.py` | Full A/B pipeline: golden dataset → scores → report → comparison |
 
 ```bash
-pip install rouge-score bert-score   # first-time only
+pip3 install rouge-score bert-score   # first-time only
 python 06_large_language_models/05_llm_evaluation/03_eval_pipeline.py
 ```
 

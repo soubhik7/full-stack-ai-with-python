@@ -1,4 +1,4 @@
-# pip install azure.ai.contentunderstanding
+# pip3 install azure.ai.contentunderstanding
 from azure.core.credentials import AzureKeyCredential
 from azure.ai.contentunderstanding import ContentUnderstandingClient
 

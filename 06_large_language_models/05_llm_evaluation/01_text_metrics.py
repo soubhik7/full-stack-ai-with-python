@@ -7,7 +7,7 @@ reference-based metrics for evaluating text generation.
 Understanding when each is useful and what its scores mean.
 
 Install first:
-    pip install rouge-score bert-score nltk
+    pip3 install rouge-score bert-score nltk
 
 Run: python 06_large_language_models/05_llm_evaluation/01_text_metrics.py
 """
@@ -182,7 +182,7 @@ try:
         print(f"  {name:<30} R1={r1_f:.3f}  R2={r2_f:.3f}  RL={rl_f:.3f}")
 
 except ImportError:
-    print("  (rouge-score not installed — run: pip install rouge-score)")
+    print("  (rouge-score not installed — run: pip3 install rouge-score)")
 
 
 # ── BERTScore ─────────────────────────────────────────────────────────────────
@@ -203,7 +203,7 @@ try:
         print(f"  {name:<30} BERTScore-F1 = {F1[i].item():.3f}")
 
 except ImportError:
-    print("  (bert-score not installed — run: pip install bert-score)")
+    print("  (bert-score not installed — run: pip3 install bert-score)")
     print("  BERTScore would capture semantic similarity even for paraphrases.")
 
 

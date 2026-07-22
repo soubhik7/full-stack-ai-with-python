@@ -1,4 +1,4 @@
-# pip install mcp
+# pip3 install mcp
 import asyncio
 import httpx
 

@@ -1,4 +1,4 @@
-# pip install langchain langchain-openai
+# pip3 install langchain langchain-openai
 from langchain_openai import ChatOpenAI
 
 endpoint="https://foundry-dev-eus-01.services.ai.azure.com/openai/v1"

@@ -81,7 +81,7 @@ Real humans rate outputs on specific dimensions:
 
 ```bash
 source venv/bin/activate
-pip install rouge-score bert-score   # first time only
+pip3 install rouge-score bert-score   # first time only
 python 06_large_language_models/05_llm_evaluation/01_text_metrics.py
 python 06_large_language_models/05_llm_evaluation/02_llm_as_judge.py
 python 06_large_language_models/05_llm_evaluation/03_eval_pipeline.py

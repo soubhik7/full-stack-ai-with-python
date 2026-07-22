@@ -14,7 +14,7 @@ HOW TO RUN:
     3. Open your browser and go to: http://127.0.0.1:5000
 
 REQUIREMENTS:
-    pip install flask scikit-learn spacy joblib
+    pip3 install flask scikit-learn spacy joblib
     python -m spacy download en_core_web_sm
 """
 

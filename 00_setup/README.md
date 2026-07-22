@@ -42,10 +42,10 @@ cd /path/to/full-stack-ai-with-python
 source venv/bin/activate
 
 # Upgrade pip
-pip install --upgrade pip
+pip3 install --upgrade pip
 
 # Install all dependencies
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 You should see `(venv)` in your prompt. To deactivate: `deactivate`.
@@ -59,7 +59,7 @@ Register the project venv as a named Jupyter kernel so every notebook uses the r
 ```bash
 source venv/bin/activate
 
-pip install ipykernel
+pip3 install ipykernel
 
 python -m ipykernel install \
   --user \
@@ -153,7 +153,7 @@ python -m ipykernel install --user --name KernelSoubhik --display-name "KernelSo
 **`ModuleNotFoundError` in a notebook?**
 ```bash
 source venv/bin/activate
-pip install <package-name>
+pip3 install <package-name>
 # Re-run the cell
 ```
 

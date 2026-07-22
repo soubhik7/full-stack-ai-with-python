@@ -10,7 +10,7 @@ and pattern before creating anything.
 
 Create:
 - `08_ai_apps/$1_$2/main.py` — a minimal runnable entry point, not a stub. It
-  should actually run with `python main.py` after `pip install -r requirements.txt`.
+  should actually run with `python main.py` after `pip3 install -r requirements.txt`.
 - `08_ai_apps/$1_$2/README.md` — what the app demonstrates: $3
 
 Then update the "Chapter 08 Apps" table in the root `CLAUDE.md` with the new

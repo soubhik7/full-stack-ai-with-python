@@ -1,4 +1,4 @@
-# pip install azure.ai.contentsafety
+# pip3 install azure.ai.contentsafety
 from azure.identity import DefaultAzureCredential
 from azure.ai.projects import AIProjectClient
 
