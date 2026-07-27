@@ -36,6 +36,12 @@ Each `NN_name.py` has a sibling `NN_name.ipynb` in the same folder. Notebook cel
 
 ---
 
+## Hands-On Labs (`Labs/`)
+
+A second, complementary set of materials from the same course — 21 lab exercise scripts (not notebooks) covering the same ground as `01–08. Section Code/`: Azure OpenAI chat basics, Foundry Agent Service (function calling, MCP tools, Microsoft Agent Framework), Azure AI Language, and Azure AI Speech (including a real-time voice agent). Unlike `Section Code`, a few of these are intentionally unfinished "fill in the blank" exercises and several expect local sample data not included in this repo. See [`Labs/README.md`](Labs/README.md) for a full beginner-friendly breakdown of every file.
+
+---
+
 ## Previous Chapter
 
 ← [Chapter 13 — Agentic SDLC](../13_agentic_sdlc/)
