@@ -13,17 +13,24 @@
 # Lab 10 - not in the root requirements.txt).
 #
 # Prerequisites: Azure AI Foundry project + `az login` + .env with
-# AZURE_AI_PROJECT_ENDPOINT and AZURE_AI_MODEL_DEPLOYMENT_NAME.
-# ⚠️ Note the exact names: this repo's root .env (see CLAUDE.md) already
-# defines AZURE_AI_PROJECT_ENDPOINT and AZURE_AI_MODEL_DEPLOYMENT (no
-# "_NAME" suffix) for chapter 11's labs - this script expects the "_NAME"
-# variant, so you may need to add that extra variable.
+# AZURE_AI_PROJECT_ENDPOINT and AZURE_AI_MODEL_DEPLOYMENT (or MODEL_DEPLOYMENT_NAME).
+# Credentials are now sourced from the shared 14-azure-ai103/azure_config.py
+# module (config.project_endpoint / config.model_deployment), which already
+# accepts either naming variant - no separate "_NAME"-suffixed var needed.
 # =============================================================================
 
 import asyncio                     # Agent Framework is async end-to-end
-import os                          # Env vars
+import sys
+from pathlib import Path
 from typing import cast            # Pure type-hinting helper (tells the type checker "trust me, this is a list[Message]") - no runtime effect
-from dotenv import load_dotenv      # Loads .env file variables into the environment
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config                    # Centralized Azure credential/config module
 
 # Add references
 # Add references
@@ -31,8 +38,6 @@ from agent_framework import Message                              # The type repr
 from agent_framework.foundry import FoundryChatClient             # Connects Agent Framework to your Foundry project/model
 from agent_framework.orchestrations import SequentialBuilder      # Builds a pipeline that runs multiple agents one after another
 from azure.identity import AzureCliCredential                      # Authenticates via your `az login` session
-
-load_dotenv()
 
 async def main():
     # Agent instructions
@@ -66,8 +71,8 @@ async def main():
     credential = AzureCliCredential()
     chat_client = FoundryChatClient(
         credential=credential,
-        project_endpoint=os.getenv("AZURE_AI_PROJECT_ENDPOINT"),
-        model=os.getenv("AZURE_AI_MODEL_DEPLOYMENT_NAME"),
+        project_endpoint=config.project_endpoint,
+        model=config.model_deployment,
     )
 
     # Create agents

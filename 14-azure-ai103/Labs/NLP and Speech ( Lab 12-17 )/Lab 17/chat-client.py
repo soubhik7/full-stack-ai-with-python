@@ -21,10 +21,11 @@
 # =============================================================================
 
 import os                          # Env vars, clear-screen command
+import sys
+from pathlib import Path
 import asyncio                     # VoiceLive streams events continuously, so this whole script is async
 import base64                      # Encodes/decodes raw audio bytes as base64 text for the WebSocket protocol
 import queue                       # A thread-safe queue.Queue buffers incoming audio between the network callback and the audio-playback callback
-from dotenv import load_dotenv      # Loads .env file variables into the environment
 import pyaudio                      # Cross-platform library for microphone input / speaker output
 
 # import namespaces
@@ -43,6 +44,14 @@ from azure.ai.voicelive.models import (
     AgentConfig                     # Identifies WHICH Foundry agent this VoiceLive session should talk to
 )
 
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
+
 
 def main():
     """Main entry point."""
@@ -52,10 +61,9 @@ def main():
         os.system('cls' if os.name == 'nt' else 'clear')
 
         # Get required configuration from environment variables
-        load_dotenv()
-        endpoint = os.environ.get("AZURE_VOICELIVE_ENDPOINT")
-        agent_name = os.environ.get("AZURE_VOICELIVE_AGENT_ID")
-        project_name = os.environ.get("AZURE_VOICELIVE_PROJECT_NAME")
+        endpoint = config.voicelive_endpoint
+        agent_name = config.voicelive_agent_id
+        project_name = config.voicelive_project_name
         # Tells VoiceLive which portal-created agent (and which Foundry
         # project it lives in) should power this conversation.
         agent_config = AgentConfig({ "agent_name": agent_name, "project_name": project_name })

@@ -9,13 +9,22 @@
 # first, then set FOUNDRY_ENDPOINT and AGENT_NAME in your .env to match it.
 # =============================================================================
 
-from dotenv import load_dotenv  # Loads .env file variables into the environment
 import os                       # Env vars, clear-screen command
+import sys
+from pathlib import Path
 
 # Import namespaces
 # import namespaces
 from azure.identity import DefaultAzureCredential   # Authenticates using your `az login` session
 from azure.ai.projects import AIProjectClient        # Talks to your Foundry project
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 
 def main():
@@ -24,9 +33,8 @@ def main():
         os.system('cls' if os.name == 'nt' else 'clear')
 
         # Get Configuration Settings
-        load_dotenv()
-        foundry_endpoint = os.getenv('FOUNDRY_ENDPOINT')
-        agent_name = os.getenv('AGENT_NAME')
+        foundry_endpoint = config.project_endpoint
+        agent_name = config.agent_name("text-agent")
 
         # Get project client
         # Get project client

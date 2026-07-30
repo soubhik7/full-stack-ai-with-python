@@ -14,14 +14,22 @@
 # =============================================================================
 
 import os                              # Env vars, clear-screen command
+import sys
 from pathlib import Path               # Cross-platform file path handling
 from playsound3 import playsound       # Plays an audio file through your system's default speakers
-from dotenv import load_dotenv          # Loads .env file variables into the environment
 
 # Import namespaces
 # import namespaces
 from openai import AzureOpenAI                                              # The Azure-specific OpenAI SDK client (handles Azure's URL/versioning conventions)
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider  # Entra ID auth helpers (no API key needed)
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 
 def main():
@@ -30,9 +38,8 @@ def main():
         os.system('cls' if os.name == 'nt' else 'clear')
 
         # Get Configuration Settings
-        load_dotenv()
-        endpoint=os.getenv("MODEL_ENDPOINT")
-        model_deployment=os.getenv("MODEL_NAME")
+        endpoint = config.openai_endpoint
+        model_deployment = config.audio_deployment
         # Path(__file__).parent = this script's own folder, so the output
         # file always lands next to the script regardless of your current
         # working directory.

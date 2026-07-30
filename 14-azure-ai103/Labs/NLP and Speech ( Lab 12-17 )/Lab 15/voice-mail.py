@@ -15,14 +15,23 @@
 # is in the root requirements.txt).
 # =============================================================================
 
-from dotenv import load_dotenv          # Loads .env file variables into the environment
 import os                               # Env vars, clear-screen command, folder listing
+import sys
+from pathlib import Path
 from playsound3 import playsound        # Plays a .wav file through your speakers
 
 # Import namespaces
 # import namespaces
 from azure.identity import DefaultAzureCredential          # Authenticates using your `az login` session
 import azure.cognitiveservices.speech as speech_sdk          # The dedicated Azure AI Speech SDK
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 
 def main():
@@ -31,9 +40,7 @@ def main():
         os.system('cls' if os.name == 'nt' else 'clear')
 
         # Get Configuration Settings
-        load_dotenv()
-        foundry_endpoint = os.getenv('FOUNDRY_ENDPOINT')
-        foundry_key = os.getenv('FOUNDRY_KEY')  # loaded but not passed to SpeechConfig below - this build uses Entra ID auth instead of a key (a leftover variable from an older, key-based version of this lab)
+        foundry_endpoint = config.speech_endpoint
 
         # Create speech_config using Entra ID authentication
         # Create speech_config using Entra ID authentication

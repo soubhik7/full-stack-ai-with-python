@@ -30,10 +30,19 @@
 # =============================================================================
 
 import os
-from dotenv import load_dotenv
+import sys
+from pathlib import Path
 
 from azure.ai.projects import AIProjectClient
 from azure.identity import DefaultAzureCredential
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 # --- Best-effort, unverified import — CONFIRM against current docs first ---
 try:
@@ -58,13 +67,12 @@ def main():
         print_concept_explanation()
         return
 
-    load_dotenv()
-    project_endpoint = os.getenv("PROJECT_ENDPOINT")
-    model_deployment = os.getenv("MODEL_DEPLOYMENT_NAME")
+    project_endpoint = config.project_endpoint
+    model_deployment = config.model_deployment
     # A knowledge source you've already registered in the Foundry portal
     # (e.g. pointing at an ingested Azure AI Search index) - conceptually
     # the Foundry IQ equivalent of this chapter's AGENT_NAME env var.
-    knowledge_source_name = os.getenv("KNOWLEDGE_SOURCE_NAME")
+    knowledge_source_name = config.knowledge_source_name
 
     project_client = AIProjectClient(
         endpoint=project_endpoint,
@@ -123,7 +131,7 @@ Foundry IQ, conceptually:
 
 Compare this to the RAG patterns proven elsewhere in this chapter:
   - Lab 4 (file-search vector store) - scoped to ONE agent's files.
-  - `02. Section Code/10_customer_rag_client.py` - "bring your own
+  - `02_foundry_agent_service/10_customer_rag_client.py` - "bring your own
     retrieval": the CLIENT code queries Azure AI Search directly and
     manually stuffs results into the prompt, agent by agent.
 Foundry IQ's pitch is to replace both of those with one shared,

@@ -7,7 +7,7 @@
 # this repo actually uses for "evaluation": an **LLM-as-judge** critique loop,
 # not the `azure-ai-evaluation` SDK (that package isn't used anywhere in this
 # repo - the real, working pattern, found in
-# `03. Section Code/03_response_completeness.py`, is a second plain model
+# `03_conversations_and_evaluation/03_response_completeness.py`, is a second plain model
 # call that grades the first one's answer).
 #
 # Fine-tuning is intentionally NOT included here: it's a long-running,
@@ -21,7 +21,16 @@
 # =============================================================================
 
 import os                      # Env vars, clear-screen command
-from dotenv import load_dotenv  # Loads .env file variables into the environment
+import sys
+from pathlib import Path
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config                    # Centralized Azure credential/config module
 
 from azure.ai.projects import AIProjectClient       # Talks to your Foundry project
 from azure.identity import DefaultAzureCredential   # Authenticates using your `az login` session
@@ -72,7 +81,7 @@ def draft_then_judge(openai_client, model_deployment, question):
     completeness, and regenerate once if the judge says it's incomplete.
 
     This is the exact pattern used in this repo's real, working
-    `03. Section Code/03_response_completeness.py` - adapted here to work
+    `03_conversations_and_evaluation/03_response_completeness.py` - adapted here to work
     against a plain model deployment (no pre-existing agent required),
     so this lab has no extra portal setup prerequisites.
     """
@@ -125,9 +134,8 @@ def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
     try:
-        load_dotenv()
-        project_endpoint = os.getenv("PROJECT_ENDPOINT")
-        model_deployment = os.getenv("MODEL_DEPLOYMENT_NAME")
+        project_endpoint = config.project_endpoint
+        model_deployment = config.model_deployment
 
         project_client = AIProjectClient(
             endpoint=project_endpoint,

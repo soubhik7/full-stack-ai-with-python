@@ -2,9 +2,9 @@
 
 > Beginner-friendly guide to every `.py` file in this folder: what it teaches, what it needs to run, and how the code works.
 
-This `Labs/` folder is a second, complementary set of materials for the "Azure AI 103" course (the main [`14-azure-ai103/`](../README.md) chapter). It's different in nature from the `NN. Section Code/` folders next door:
+This `Labs/` folder is a second, complementary set of materials for the "Azure AI 103" course (the main [`14-azure-ai103/`](../README.md) chapter). It's different in nature from the numbered Section Code folders next door (`01_responses_api_basics/` … `08_document_intelligence_capstone/`):
 
-| | `01–08. Section Code/` | `Labs/` (this folder) |
+| | Section Code (`01_responses_api_basics/` … `08_document_intelligence_capstone/`) | `Labs/` (this folder) |
 |---|---|---|
 | Style | Instructor walkthrough scripts | Hands-on lab exercises |
 | Completeness | All complete, all paired with a teaching notebook | **Mostly complete**, but a few are intentionally unfinished "fill in the blank" exercises (called out below) |
@@ -29,18 +29,18 @@ The original course mirror (Labs 3–4, 6–17) only exercised two of AI-103's f
 
 | Gap (per `EXAM_NOTES.md`'s course map) | Filled by | Confidence |
 |---|---|---|
-| Model catalog / Foundry SDK chat setup / prompt optimization & evaluation | Lab 1, 2, 5 | ✅ Proven — adapted from real working code in this repo (`11_azure_ai_foundry/00_setup/`, `03. Section Code/03_response_completeness.py`) |
+| Model catalog / Foundry SDK chat setup / prompt optimization & evaluation | Lab 1, 2, 5 | ✅ Proven — adapted from real working code in this repo (`11_azure_ai_foundry/00_setup/`, `03_conversations_and_evaluation/03_response_completeness.py`) |
 | Multi-agent delegation (`ConnectedAgentTool`) | Lab 18 | ✅ Proven — ported from `11_azure_ai_foundry/06_connected_agents/` |
 | Foundry IQ (shared knowledge platform) | Lab 19 | ⚠️ Best-effort/preview — no verified SDK found anywhere; illustrative only |
 | Microsoft 365 / Work IQ agent publishing | Lab 20 | ⚠️ Best-effort/preview — mostly a portal/admin-center workflow, not a single SDK call |
 | A2A protocol (agent-to-agent) | Lab 21 | ⚠️ Best-effort/preview — modeled on the public A2A spec, package name unconfirmed |
-| Image generation & editing | Lab 22 | ✅ Proven — adapted from `05. Section Code/` |
-| Content Safety (dedicated client) | Lab 23 | ✅ Proven — adapted from `05.`/`08. Section Code/` |
+| Image generation & editing | Lab 22 | ✅ Proven — adapted from `05_image_generation_and_safety/` |
+| Content Safety (dedicated client) | Lab 23 | ✅ Proven — adapted from `05.`/`08_document_intelligence_capstone/` |
 | Content Understanding | Lab 24 | ⚠️ Unverified SDK — the package isn't installed/resolvable in this repo; see the file's header |
-| Document Intelligence | Lab 25 | ✅ Proven — adapted from `08. Section Code/01_document_intelligence.py` |
-| Azure AI Search (RAG / knowledge mining) | Lab 26 | ✅ Proven — adapted from `02. Section Code/08_ai_search.py` + `10_customer_rag_client.py` |
+| Document Intelligence | Lab 25 | ✅ Proven — adapted from `08_document_intelligence_capstone/01_document_intelligence.py` |
+| Azure AI Search (RAG / knowledge mining) | Lab 26 | ✅ Proven — adapted from `02_foundry_agent_service/08_ai_search.py` + `10_customer_rag_client.py` |
 | Sora 2 video generation | Lab 27 | ⚠️ Best-effort/preview — no video-generation code exists anywhere else in this repo to port from |
-| Translation | Lab 28 | ✅ Proven — adapted from `06. Section Code/04_text_translation.py` + `09_text_translation.py` |
+| Translation | Lab 28 | ✅ Proven — adapted from `06_language_and_speech/04_text_translation.py` + `09_text_translation.py` |
 
 Every "⚠️ Best-effort/preview" lab still runs — each has a graceful fallback that explains the concept instead of crashing uninformatively if the guessed API surface turns out to be wrong on your SDK version. Read that file's top-of-file comment block before trusting any of its specific class/method names.
 
@@ -124,7 +124,7 @@ python <script>.py
 
 ## Generative AI (Lab-1-5)
 
-Azure OpenAI basics — same Azure OpenAI resource as chapter `01. Section Code/`, but focused on the difference between the older **Chat Completions API** and the newer **Responses API** (which tracks conversation state for you server-side via `previous_response_id`).
+Azure OpenAI basics — same Azure OpenAI resource as chapter `01_responses_api_basics/`, but focused on the difference between the older **Chat Completions API** and the newer **Responses API** (which tracks conversation state for you server-side via `previous_response_id`).
 
 ### Lab 1 — `verify_connection.py` (NEW — connection smoke test)
 
@@ -176,7 +176,7 @@ python chat-app-chatcompletion.py      # or any of the other 3
 
 The course map's "optimize" module. Two parts in one script:
 1. **Few-shot prompt engineering** — `few_shot_classify()` classifies review sentiment using a prompt with worked examples baked in, instead of a bare zero-shot question, for a far more consistent one-word answer format.
-2. **LLM-as-judge evaluation** — `draft_then_judge()` reproduces the exact pattern this repo's real `03. Section Code/03_response_completeness.py` uses: draft an answer, have a SECOND model call grade it ("reply with only COMPLETE or MISSING"), and only pay for a third regeneration call if the judge actually flagged a gap. Note this repo doesn't use the `azure-ai-evaluation` SDK anywhere — "evaluation" here means this hand-rolled critique pattern, not a dedicated evaluation package.
+2. **LLM-as-judge evaluation** — `draft_then_judge()` reproduces the exact pattern this repo's real `03_conversations_and_evaluation/03_response_completeness.py` uses: draft an answer, have a SECOND model call grade it ("reply with only COMPLETE or MISSING"), and only pay for a third regeneration call if the judge actually flagged a gap. Note this repo doesn't use the `azure-ai-evaluation` SDK anywhere — "evaluation" here means this hand-rolled critique pattern, not a dedicated evaluation package.
 
 Fine-tuning (the third named "optimize" topic) is intentionally NOT covered — it's a long-running async training job that doesn't fit an interactive lab; see `06_large_language_models/03_llm_fine_tuning/` elsewhere in this repo instead.
 
@@ -262,7 +262,7 @@ Azure AI **Language** (text analytics) and **Speech** services — some labs cal
 
 ### Lab 12 — `text-analysis.py`
 
-Calls **Azure AI Language** directly via `azure.ai.textanalytics.TextAnalyticsClient` (same service as `06. Section Code/` in the main chapter, but the dedicated-SDK approach rather than an LLM prompt).
+Calls **Azure AI Language** directly via `azure.ai.textanalytics.TextAnalyticsClient` (same service as `06_language_and_speech/` in the main chapter, but the dedicated-SDK approach rather than an LLM prompt).
 
 - **Needs a `reviews/` folder in the same directory** containing `.txt` files (not included) — the script iterates every file in it.
 - For each review file, it prints: detected language (`detect_language`), named entities (`recognize_entities`), and PII entities plus a redacted version of the text (`recognize_pii_entities` → `.redacted_text`).
@@ -339,29 +339,29 @@ Illustrates A2A (Agent2Agent) — an open, cross-vendor protocol for agents to d
 
 ### Lab 22 — `image_generation_and_editing.py` (proven)
 
-Three steps in one script: generate an image from a text prompt, edit an existing image with a text instruction, and masked edit/inpainting (only a masked region changes). Adapted from `05. Section Code/02-04`. Needs your own `input_image.png` (and optionally `mask.png`) in this folder for steps 2-3 — step 1 runs standalone.
+Three steps in one script: generate an image from a text prompt, edit an existing image with a text instruction, and masked edit/inpainting (only a masked region changes). Adapted from `05_image_generation_and_safety/02-04`. Needs your own `input_image.png` (and optionally `mask.png`) in this folder for steps 2-3 — step 1 runs standalone.
 
 **Run:** `python image_generation_and_editing.py` from `Lab 22/`.
 
 ### Lab 23 — `content_safety.py` (proven)
 
-The dedicated `ContentSafetyClient` (key-based auth) — moderates text and image content, printing a 0-7 severity score per harm category (Hate/SelfHarm/Sexual/Violence) rather than a single pass/fail flag. Contrast with the "read `content_filters` off an agent's response" pattern shown in `05. Section Code/05-06` (passive moderation vs. this lab's active, dedicated-client moderation).
+The dedicated `ContentSafetyClient` (key-based auth) — moderates text and image content, printing a 0-7 severity score per harm category (Hate/SelfHarm/Sexual/Violence) rather than a single pass/fail flag. Contrast with the "read `content_filters` off an agent's response" pattern shown in `05_image_generation_and_safety/05-06` (passive moderation vs. this lab's active, dedicated-client moderation).
 
 **Run:** `python content_safety.py` from `Lab 23/`.
 
 ### Lab 24 — `content_understanding.py` ⚠️ (unverified SDK)
 
-Adapted from `08. Section Code/03_cloudxeus_invoice_agent.py`'s `begin_analyze` + `AnalysisInput` shape. Flagged unverified because the `azure-ai-contentunderstanding` package isn't installed/resolvable in this repo's environment, and the two Section Code files that use it call **different method names** for the same operation (`begin_analyze_binary` vs `begin_analyze`) — a sign this SDK was still moving when they were written. The script's import is wrapped in try/except so it explains the concept instead of crashing if the package isn't installed. Needs a `sample_invoice.pdf` in this folder.
+Adapted from `08_document_intelligence_capstone/03_cloudxeus_invoice_agent.py`'s `begin_analyze` + `AnalysisInput` shape. Flagged unverified because the `azure-ai-contentunderstanding` package isn't installed/resolvable in this repo's environment, and the two Section Code files that use it call **different method names** for the same operation (`begin_analyze_binary` vs `begin_analyze`) — a sign this SDK was still moving when they were written. The script's import is wrapped in try/except so it explains the concept instead of crashing if the package isn't installed. Needs a `sample_invoice.pdf` in this folder.
 
 ### Lab 25 — `document_intelligence.py` (proven)
 
-The dedicated `DocumentIntelligenceClient`, adapted directly from `08. Section Code/01_document_intelligence.py` — unlike Content Understanding, this is a long-established, stable SDK. Runs a `prebuilt-layout` analysis (extracts text + tables as Markdown) against a public sample PDF URL by default — no setup needed to try it, though you can point `SAMPLE_DOCUMENT_URL` at your own document.
+The dedicated `DocumentIntelligenceClient`, adapted directly from `08_document_intelligence_capstone/01_document_intelligence.py` — unlike Content Understanding, this is a long-established, stable SDK. Runs a `prebuilt-layout` analysis (extracts text + tables as Markdown) against a public sample PDF URL by default — no setup needed to try it, though you can point `SAMPLE_DOCUMENT_URL` at your own document.
 
 **Run:** `python document_intelligence.py` from `Lab 25/`.
 
 ### Lab 26 — `azure_ai_search_rag.py` (proven)
 
-"Bring your own retrieval" RAG — queries `SearchClient` directly (hybrid keyword + vector search via `VectorizableTextQuery`, merged server-side via RRF) and manually stuffs the results into a grounding prompt, adapted from `02. Section Code/08_ai_search.py` + `10_customer_rag_client.py`. Note: `AzureAISearchTool` (a Foundry-native "search as an agent tool" class some docs mention) is never actually called anywhere in this repo — this client-side pattern is the only proven-working Search-as-RAG example here (Lab 8's MCP-based search-knowledge-base tool is the only proven example of search wired in as a native agent *tool*, via a different mechanism). Needs an Azure AI Search index that's already created and populated.
+"Bring your own retrieval" RAG — queries `SearchClient` directly (hybrid keyword + vector search via `VectorizableTextQuery`, merged server-side via RRF) and manually stuffs the results into a grounding prompt, adapted from `02_foundry_agent_service/08_ai_search.py` + `10_customer_rag_client.py`. Note: `AzureAISearchTool` (a Foundry-native "search as an agent tool" class some docs mention) is never actually called anywhere in this repo — this client-side pattern is the only proven-working Search-as-RAG example here (Lab 8's MCP-based search-knowledge-base tool is the only proven example of search wired in as a native agent *tool*, via a different mechanism). Needs an Azure AI Search index that's already created and populated.
 
 **Run:** `python azure_ai_search_rag.py` from `Lab 26/`.
 
@@ -371,7 +371,7 @@ Illustrates video generation as an async submit-then-poll job (`client.videos.cr
 
 ### Lab 28 — `translation.py` (proven)
 
-Two approaches side by side, exactly the trade-off AI-103 tests: **LLM-prompted translation** (one prompt per target language, flexible instructions) vs. **Azure AI Translator** (a single REST call — no dedicated Python SDK package, just `requests` + an `Ocp-Apim-Subscription-Key` header — that can translate into MANY target languages at once via a `targets` array). Adapted from `06. Section Code/04_text_translation.py` + `09_text_translation.py`. Each half runs independently depending on which `.env` variables you've set.
+Two approaches side by side, exactly the trade-off AI-103 tests: **LLM-prompted translation** (one prompt per target language, flexible instructions) vs. **Azure AI Translator** (a single REST call — no dedicated Python SDK package, just `requests` + an `Ocp-Apim-Subscription-Key` header — that can translate into MANY target languages at once via a `targets` array). Adapted from `06_language_and_speech/04_text_translation.py` + `09_text_translation.py`. Each half runs independently depending on which `.env` variables you've set.
 
 **Run:** `python translation.py` from `Lab 28/`.
 

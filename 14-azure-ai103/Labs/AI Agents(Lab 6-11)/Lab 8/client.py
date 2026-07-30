@@ -16,9 +16,10 @@
 # =============================================================================
 
 import os                          # Env vars, clear-screen command
+import sys
 import asyncio                     # Everything here is async because MCP communication is I/O-bound (subprocess pipes)
 import json                        # Parses the model's function-call arguments
-from dotenv import load_dotenv      # Loads .env file variables into the environment
+from pathlib import Path
 from contextlib import AsyncExitStack  # Manages multiple async context managers (server connection, MCP session) and closes them all together on shutdown
 from azure.ai.projects import AIProjectClient                       # Talks to your Foundry project
 from azure.ai.projects.models import FunctionTool                   # Describes a callable tool to the agent
@@ -31,13 +32,20 @@ from openai.types.responses.response_input_param import FunctionCallOutput, Resp
 from mcp import ClientSession, StdioServerParameters   # Core MCP client classes: a session (talks the MCP protocol) and server launch parameters
 from mcp.client.stdio import stdio_client                # Starts an MCP server as a subprocess and connects to it over stdin/stdout
 
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config                    # Centralized Azure credential/config module
+
 # Clear the console
 os.system('cls' if os.name=='nt' else 'clear')
 
-# Load environment variables from .env file
-load_dotenv()
-project_endpoint = os.getenv("PROJECT_ENDPOINT")
-model_deployment = os.getenv("MODEL_DEPLOYMENT_NAME")
+# Load configuration from the centralized azure_config module
+project_endpoint = config.project_endpoint
+model_deployment = config.model_deployment
 
 async def connect_to_server(exit_stack: AsyncExitStack):
     # Describes HOW to launch the MCP server: run `python server.py` with no

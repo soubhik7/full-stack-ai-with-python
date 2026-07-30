@@ -12,7 +12,16 @@
 # =============================================================================
 
 import os                      # Standard library: env vars, clear-screen command
-from dotenv import load_dotenv  # Loads .env file variables into the environment
+import sys
+from pathlib import Path
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config                    # Centralized Azure credential/config module
 
 # import namespaces
 # import namespaces
@@ -26,9 +35,8 @@ def main():
 
     try:
         # Get configuration settings
-        load_dotenv()
-        azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
-        model_deployment = os.getenv("MODEL_DEPLOYMENT")
+        azure_openai_endpoint = config.openai_endpoint
+        model_deployment = config.openai_deployment
 
         # Initialize the OpenAI client
         # Initialize the OpenAI client

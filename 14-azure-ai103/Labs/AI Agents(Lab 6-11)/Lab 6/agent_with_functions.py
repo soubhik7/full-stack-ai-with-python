@@ -16,12 +16,19 @@
 # =============================================================================
 
 import base64                      # Decodes base64 text back into raw image bytes
-import os                          # Env vars
+import sys
 from pathlib import Path           # Cross-platform, object-oriented file path handling
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config                     # Centralized Azure credential/config module
 
 from azure.ai.projects import AIProjectClient       # Talks to your Foundry project (agents, conversations, etc.)
 from azure.identity import DefaultAzureCredential   # Authenticates using your `az login` session
-from dotenv import load_dotenv                      # Loads .env file variables into the environment
 
 
 OUTPUT_DIR = Path("agent_outputs")  # Every file the agent generates gets saved into this local folder
@@ -143,9 +150,8 @@ def format_output_text(content_item, openai_client, downloaded_files):
 
 def main():
     # Initialize the project client
-    load_dotenv()
-    project_endpoint = os.environ.get("PROJECT_ENDPOINT")
-    agent_name = os.environ.get("AGENT_NAME", "it-support-agent")  # falls back to this default if AGENT_NAME isn't set in .env
+    project_endpoint = config.project_endpoint
+    agent_name = config.agent_name("it-support-agent")  # falls back to this default if not set in .env
 
     if not project_endpoint:
         print("Error: PROJECT_ENDPOINT environment variable not set")

@@ -28,18 +28,26 @@
 # =============================================================================
 
 import os
-from dotenv import load_dotenv
+import sys
+from pathlib import Path
 
 from azure.ai.projects import AIProjectClient
 from azure.identity import DefaultAzureCredential
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-    load_dotenv()
-    project_endpoint = os.getenv("PROJECT_ENDPOINT")
-    agent_name = os.getenv("AGENT_NAME")
+    project_endpoint = config.project_endpoint
+    agent_name = config.agent_name("published-agent")
 
     project_client = AIProjectClient(
         endpoint=project_endpoint,

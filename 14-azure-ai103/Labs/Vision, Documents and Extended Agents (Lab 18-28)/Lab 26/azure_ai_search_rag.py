@@ -2,7 +2,7 @@
 # LAB 26 (NEW — added to fill an AI-103 syllabus gap, not an original course
 # file): AZURE AI SEARCH — "bring your own retrieval" RAG, Domain 5's
 # "knowledge mining" topic. Adapted from this repo's own real, working
-# `02. Section Code/08_ai_search.py` and `10_customer_rag_client.py`.
+# `02_foundry_agent_service/08_ai_search.py` and `10_customer_rag_client.py`.
 #
 # Worth knowing going in: `AzureAISearchTool` (a Foundry-native "search as a
 # tool" class some docs describe) is never actually called in ANY .py file
@@ -24,12 +24,21 @@
 # =============================================================================
 
 import os                      # Env vars, clear-screen command
-from dotenv import load_dotenv  # Loads .env file variables into the environment
+import sys
+from pathlib import Path
 
 from azure.identity import DefaultAzureCredential           # Authenticates using your `az login` session — same credential for both Search and Foundry
 from azure.search.documents import SearchClient               # The Azure AI Search query client
 from azure.search.documents.models import VectorizableTextQuery  # Lets Search embed your query text for you server-side ("integrated vectorization")
 from azure.ai.projects import AIProjectClient                 # Talks to your Foundry project, for the final answer-generation call
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 
 def retrieve_context(search_client, question, top=3):
@@ -69,11 +78,10 @@ def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
     try:
-        load_dotenv()
-        search_endpoint = os.getenv("AZURE_SEARCH_ENDPOINT")
-        index_name = os.getenv("AZURE_SEARCH_INDEX_NAME")
-        project_endpoint = os.getenv("PROJECT_ENDPOINT")
-        model_deployment = os.getenv("MODEL_DEPLOYMENT_NAME")
+        search_endpoint = config.search_endpoint
+        index_name = config.search_index_name
+        project_endpoint = config.project_endpoint
+        model_deployment = config.model_deployment
 
         credential = DefaultAzureCredential()
 

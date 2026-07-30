@@ -5,8 +5,8 @@
 # ⚠️ PREVIEW / UNVERIFIED SDK ⚠️
 # Azure AI Content Understanding IS a real Azure service (see
 # `links.txt`'s Microsoft Learn links in this chapter), and this repo's own
-# `07. Section Code/01_invoice_analysis.py` and
-# `08. Section Code/03_cloudxeus_invoice_agent.py` both already use a
+# `07_content_understanding/01_invoice_analysis.py` and
+# `08_document_intelligence_capstone/03_cloudxeus_invoice_agent.py` both already use a
 # `ContentUnderstandingClient` from `azure.ai.contentunderstanding` - BUT:
 #   - that package is NOT installed in this repo's environment and NOT
 #     listed in the root `requirements.txt` (confirmed: `import
@@ -17,7 +17,7 @@
 #     this SDK's surface was still moving/preview when those files were
 #     written.
 # This lab reproduces the MORE RECENT-looking of the two shapes
-# (`begin_analyze` + `AnalysisInput`, from `08. Section Code/`), but treat
+# (`begin_analyze` + `AnalysisInput`, from `08_document_intelligence_capstone/`), but treat
 # it as a best-effort snapshot, not a guaranteed-stable contract - `pip
 # install` the package fresh and check its current docs/changelog before
 # depending on this in real work.
@@ -31,19 +31,26 @@
 # =============================================================================
 
 import os
+import sys
 import json
 from pathlib import Path
-from dotenv import load_dotenv
 
 from azure.core.credentials import AzureKeyCredential
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-    load_dotenv()
-    endpoint = os.getenv("CONTENT_UNDERSTANDING_ENDPOINT")
-    key = os.getenv("CONTENT_UNDERSTANDING_KEY")
+    endpoint = config.content_understanding_endpoint
+    key = config.content_understanding_key  # optional - None falls back to DefaultAzureCredential in principle, but this lab's client construction below still expects a key
     invoice_path = Path(__file__).parent / "sample_invoice.pdf"
 
     try:

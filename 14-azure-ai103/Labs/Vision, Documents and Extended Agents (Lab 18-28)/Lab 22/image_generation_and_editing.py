@@ -4,7 +4,7 @@
 # exam blueprint ("Implement computer vision solutions"), specifically the
 # "image generation" and "video generation" module. This chapter's
 # `Labs/` folder previously had zero vision coverage even though
-# `05. Section Code/` already implements this for real - this lab adapts
+# `05_image_generation_and_safety/` already implements this for real - this lab adapts
 # that proven pattern (generate -> edit -> masked edit/inpaint) into one
 # runnable script, using this folder's auth conventions (bearer token via
 # `az login`, not a hardcoded key like the Section Code original).
@@ -18,12 +18,20 @@
 # =============================================================================
 
 import os                       # Env vars, clear-screen command
+import sys
 import base64                   # Decodes the generated image's base64 payload back into raw bytes
 from pathlib import Path        # Cross-platform file path handling
-from dotenv import load_dotenv   # Loads .env file variables into the environment
 
 from openai import OpenAI                                                    # The OpenAI-compatible client, pointed at Azure via base_url (same pattern as Lab 3)
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider  # Entra ID auth helpers
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 
 def save_generated_image(response, output_path):
@@ -43,9 +51,8 @@ def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
     try:
-        load_dotenv()
-        azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
-        image_deployment = os.getenv("IMAGE_DEPLOYMENT_NAME", "gpt-image-2")
+        azure_openai_endpoint = config.image_endpoint
+        image_deployment = config.image_deployment
 
         # Same auth pattern as every other lab: a bearer token derived from
         # your `az login` session, no API key stored anywhere.

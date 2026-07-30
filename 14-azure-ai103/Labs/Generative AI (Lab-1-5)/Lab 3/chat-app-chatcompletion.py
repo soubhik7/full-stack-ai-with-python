@@ -17,7 +17,16 @@
 # =============================================================================
 
 import os                      # Standard library: read environment variables, run OS commands (clear screen)
-from dotenv import load_dotenv  # Reads key=value pairs from a .env file into the environment
+import sys
+from pathlib import Path
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config                    # Centralized Azure credential/config module
 
 # import namespaces
 # import namespaces
@@ -32,10 +41,8 @@ def main():
 
     try:
         # Get configuration settings
-        # load_dotenv() searches for a .env file and loads its variables into os.environ
-        load_dotenv()
-        azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")  # e.g. https://<your-resource>.openai.azure.com/openai/v1
-        model_deployment = os.getenv("MODEL_DEPLOYMENT")            # e.g. "gpt-4o" - must match a deployment name in your Foundry project
+        azure_openai_endpoint = config.openai_endpoint  # e.g. https://<your-resource>.openai.azure.com/openai/v1
+        model_deployment = config.openai_deployment      # e.g. "gpt-4o" - must match a deployment name in your Foundry project
 
         # Initialize the OpenAI client
         # Initialize the OpenAI client

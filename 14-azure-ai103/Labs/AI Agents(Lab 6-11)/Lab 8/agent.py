@@ -16,8 +16,16 @@
 # PROJECT_ENDPOINT and MODEL_DEPLOYMENT_NAME.
 # =============================================================================
 
-import os                      # Env vars
-from dotenv import load_dotenv  # Loads .env file variables into the environment
+import sys
+from pathlib import Path
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config                    # Centralized Azure credential/config module
 
 # Add references
 # Add references
@@ -26,10 +34,9 @@ from azure.ai.projects import AIProjectClient                      # Talks to yo
 from azure.ai.projects.models import PromptAgentDefinition, MCPTool  # MCPTool describes a remote MCP server as an agent tool
 from openai.types.responses.response_input_param import McpApprovalResponse, ResponseInputParam  # Typed shape for approving/denying an MCP tool call
 
-# Load environment variables from .env file
-load_dotenv()
-project_endpoint = os.getenv("PROJECT_ENDPOINT")
-model_deployment = os.getenv("MODEL_DEPLOYMENT_NAME")
+# Load configuration from the centralized azure_config module
+project_endpoint = config.project_endpoint
+model_deployment = config.model_deployment
 
 # Connect to the agents client
 # Connect to the agents client

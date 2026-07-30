@@ -2,8 +2,8 @@
 # LAB 23 (NEW — added to fill an AI-103 syllabus gap, not an original course
 # file): AZURE AI CONTENT SAFETY — the dedicated moderation SERVICE, not the
 # "read content_filters off an agent's response" pattern. Both approaches are
-# real and used side-by-side in this chapter's `05. Section Code/` and
-# `08. Section Code/` folders; this lab covers the dedicated-client half
+# real and used side-by-side in this chapter's `05_image_generation_and_safety/` and
+# `08_document_intelligence_capstone/` folders; this lab covers the dedicated-client half
 # (Responsible AI is a Domain-1 objective AND a theme across the whole
 # AI-103 exam).
 #
@@ -14,11 +14,20 @@
 # =============================================================================
 
 import os                      # Env vars, clear-screen command
-from dotenv import load_dotenv  # Loads .env file variables into the environment
+import sys
+from pathlib import Path
 
 from azure.core.credentials import AzureKeyCredential                          # Content Safety authenticates with a subscription key, not az login
 from azure.ai.contentsafety import ContentSafetyClient                          # The dedicated Content Safety SDK client
 from azure.ai.contentsafety.models import AnalyzeTextOptions, AnalyzeImageOptions, ImageData  # Request shapes for text vs. image moderation
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 
 def analyze_text(client, text):
@@ -63,9 +72,8 @@ def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
     try:
-        load_dotenv()
-        endpoint = os.getenv("CONTENT_SAFETY_ENDPOINT")
-        key = os.getenv("CONTENT_SAFETY_KEY")
+        endpoint = config.content_safety_endpoint
+        key = config.content_safety_key
 
         client = ContentSafetyClient(
             endpoint=endpoint,

@@ -7,7 +7,7 @@
 # submit-then-poll job (see "12 · Image & video generation": *"text prompt
 # (+ reference media) -> video; async job (submit-then-poll)"*). No video-
 # generation code exists anywhere in this repo (only image generation, in
-# `05. Section Code/` and this folder's Lab 22). The call shape below
+# `05_image_generation_and_safety/` and this folder's Lab 22). The call shape below
 # (`client.videos.create(...)` / `client.videos.retrieve(...)` /
 # `client.videos.download_content(...)`) is this lab's best-effort guess,
 # modeled on OpenAI's public video-generation API pattern extended to an
@@ -23,20 +23,27 @@
 # =============================================================================
 
 import os
+import sys
 import time
 from pathlib import Path
-from dotenv import load_dotenv
 
 from openai import OpenAI
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-    load_dotenv()
-    azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
-    video_deployment = os.getenv("VIDEO_DEPLOYMENT_NAME", "sora-2")
+    azure_openai_endpoint = config.openai_endpoint
+    video_deployment = config.video_deployment
 
     token_provider = get_bearer_token_provider(
         DefaultAzureCredential(), "https://ai.azure.com/.default"

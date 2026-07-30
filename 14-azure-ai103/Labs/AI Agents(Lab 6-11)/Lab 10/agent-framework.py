@@ -23,9 +23,17 @@
 # =============================================================================
 
 import os                          # Env vars, clear-screen command
+import sys
 import asyncio                     # Agent Framework is async end-to-end
 from pathlib import Path           # Cross-platform file path handling
-from dotenv import load_dotenv      # Loads .env file variables into the environment
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config                    # Centralized Azure credential/config module
 
 # Add references
 # Add references
@@ -34,8 +42,6 @@ from agent_framework.foundry import FoundryChatClient    # Connects Agent Framew
 from azure.identity import AzureCliCredential            # Authenticates specifically via your `az login` session
 from pydantic import Field                                # Used to attach descriptions to tool parameters
 from typing import Annotated                               # Lets us attach that Field metadata to a type hint
-
-load_dotenv()
 
 async def main():
     # Clear the console
@@ -65,8 +71,8 @@ async def process_expenses_data(prompt, expenses_data):
     # get_openai_client() combined - one object that knows how to talk to
     # your Foundry project's deployed model.
     client = FoundryChatClient(
-        project_endpoint=os.getenv("PROJECT_ENDPOINT"),
-        model=os.getenv("MODEL_DEPLOYMENT_NAME"),
+        project_endpoint=config.project_endpoint,
+        model=config.model_deployment,
         credential=AzureCliCredential()
     )
 

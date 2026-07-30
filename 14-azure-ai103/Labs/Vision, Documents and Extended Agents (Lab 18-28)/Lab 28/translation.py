@@ -3,7 +3,7 @@
 # file): TRANSLATION — the last topic named in the "Develop natural language
 # solutions" learning path ("...translate text & speech") that had no lab
 # anywhere in this folder. Adapted from this repo's own real, working
-# `06. Section Code/04_text_translation.py` and `09_text_translation.py`,
+# `06_language_and_speech/04_text_translation.py` and `09_text_translation.py`,
 # which demonstrate BOTH approaches side by side - exactly the trade-off
 # AI-103 tests (Domain 4: "know when to reach for an LLM prompt vs. a
 # dedicated service").
@@ -15,11 +15,20 @@
 # =============================================================================
 
 import os                      # Env vars, clear-screen command
+import sys
+from pathlib import Path
 import requests                # Plain HTTP calls - the Translator service is called via REST, not a dedicated Python SDK package
-from dotenv import load_dotenv  # Loads .env file variables into the environment
 
 from azure.ai.projects import AIProjectClient       # Talks to your Foundry project (LLM-prompted translation half)
 from azure.identity import DefaultAzureCredential   # Authenticates using your `az login` session
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config, MissingCredentialError
 
 
 # ----------------------------------------------------------------------------
@@ -75,13 +84,14 @@ def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
     try:
-        load_dotenv()
-
         text = "Could you please confirm my reservation for tomorrow evening?"
 
         # --- Approach 1: LLM-prompted ---
-        project_endpoint = os.getenv("PROJECT_ENDPOINT")
-        model_deployment = os.getenv("MODEL_DEPLOYMENT_NAME")
+        try:
+            project_endpoint = config.project_endpoint
+            model_deployment = config.model_deployment
+        except MissingCredentialError:
+            project_endpoint = model_deployment = None
         if project_endpoint and model_deployment:
             print("=" * 60)
             print("APPROACH 1: LLM-prompted translation")
@@ -96,8 +106,11 @@ def main():
             print("Skipping Approach 1 - set PROJECT_ENDPOINT and MODEL_DEPLOYMENT_NAME to try it.")
 
         # --- Approach 2: dedicated Translator service ---
-        translator_endpoint = os.getenv("AZURE_TRANSLATOR_ENDPOINT")
-        translator_key = os.getenv("AZURE_TRANSLATOR_KEY")
+        try:
+            translator_endpoint = config.translator_endpoint
+            translator_key = config.translator_key
+        except MissingCredentialError:
+            translator_endpoint = translator_key = None
         if translator_endpoint and translator_key:
             print("\n" + "=" * 60)
             print("APPROACH 2: Azure AI Translator (dedicated service, REST)")

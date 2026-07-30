@@ -16,14 +16,22 @@
 # =============================================================================
 
 import os                              # Env vars, clear-screen command
+import sys
 from pathlib import Path               # Cross-platform file path handling
 from playsound3 import playsound       # Plays the audio file so you can hear what's being transcribed
-from dotenv import load_dotenv          # Loads .env file variables into the environment
 
 # Import namespaces
 # import namespaces
 from openai import AzureOpenAI                                              # The Azure-specific OpenAI SDK client
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider  # Entra ID auth helpers
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 
 def main():
@@ -32,9 +40,8 @@ def main():
         os.system('cls' if os.name == 'nt' else 'clear')
 
         # Get Configuration Settings
-        load_dotenv()
-        endpoint = os.getenv("MODEL_ENDPOINT")
-        model_deployment = os.getenv("MODEL_NAME")
+        endpoint = config.openai_endpoint
+        model_deployment = config.audio_deployment
         # Looks for "speech.wav" in this script's own folder.
         file_path = Path(__file__).parent / "speech.wav"
 

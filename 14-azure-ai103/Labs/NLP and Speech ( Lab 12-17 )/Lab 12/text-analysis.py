@@ -15,13 +15,22 @@
 # Requires: pip install azure-ai-textanalytics (not in the root requirements.txt).
 # =============================================================================
 
-from dotenv import load_dotenv  # Loads .env file variables into the environment
 import os                       # Env vars, clear-screen command, folder listing
+import sys
+from pathlib import Path
 
 # Import namespaces
 # import namespaces
 from azure.identity import DefaultAzureCredential           # Authenticates using your `az login` session
 from azure.ai.textanalytics import TextAnalyticsClient       # The dedicated Azure AI Language SDK client
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 def main():
     try:
@@ -29,8 +38,7 @@ def main():
         os.system('cls' if os.name == 'nt' else 'clear')
 
         # Get Configuration Settings
-        load_dotenv()
-        foundry_endpoint = os.getenv('FOUNDRY_ENDPOINT')
+        foundry_endpoint = config.language_endpoint
 
 
         # Create client using endpoint

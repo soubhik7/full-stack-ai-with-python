@@ -4,7 +4,7 @@
 # blueprint ("Implement information extraction solutions"). Unlike Content
 # Understanding (Lab 24), this is a long-established, stable, real Azure SDK
 # package - adapted directly from the proven, working
-# `08. Section Code/01_document_intelligence.py`.
+# `08_document_intelligence_capstone/01_document_intelligence.py`.
 #
 # Prerequisites: an Azure AI Document Intelligence resource + .env with
 # DOCUMENT_INTELLIGENCE_ENDPOINT and DOCUMENT_INTELLIGENCE_KEY (same
@@ -14,11 +14,20 @@
 # =============================================================================
 
 import os                      # Env vars, clear-screen command
-from dotenv import load_dotenv  # Loads .env file variables into the environment
+import sys
+from pathlib import Path
 
 from azure.ai.documentintelligence import DocumentIntelligenceClient        # The dedicated Document Intelligence SDK client
 from azure.ai.documentintelligence.models import AnalyzeDocumentRequest      # Wraps the document source (a URL, here) for the analyze call
 from azure.core.credentials import AzureKeyCredential                        # Document Intelligence authenticates with a subscription key
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config
 
 
 def main():
@@ -26,9 +35,8 @@ def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
     try:
-        load_dotenv()
-        endpoint = os.getenv("DOCUMENT_INTELLIGENCE_ENDPOINT")
-        key = os.getenv("DOCUMENT_INTELLIGENCE_KEY")
+        endpoint = config.document_intelligence_endpoint
+        key = config.document_intelligence_key
         # A publicly-readable sample document URL, so this lab runs with
         # zero setup - swap in your own document's URL to analyze something
         # real. (Document Intelligence needs a fetchable URL or raw bytes,

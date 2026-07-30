@@ -39,8 +39,17 @@
 # =============================================================================
 
 import os                      # Standard library: env vars, clear-screen command
-from dotenv import load_dotenv  # Loads .env file variables into the environment
+import sys
+from pathlib import Path
 import glob                     # Pattern-matches files on disk (e.g. glob.glob("*.pdf")) - imported for use when uploading a folder of files, but not yet used below
+
+_start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+for _parent in [_start, *_start.parents]:
+    if (_parent / "azure_config.py").exists():
+        sys.path.insert(0, str(_parent))
+        break
+
+from azure_config import config                    # Centralized Azure credential/config module
 
 # Import namespaces
 # TODO: import the OpenAI SDK client and the Azure auth helpers here, e.g.:
@@ -55,9 +64,8 @@ def main():
 
     try:
         # Get configuration settings
-        load_dotenv()
-        azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")  # your Azure OpenAI / Foundry endpoint
-        model_deployment = os.getenv("MODEL_DEPLOYMENT")            # your deployed chat model's name
+        azure_openai_endpoint = config.openai_endpoint  # your Azure OpenAI / Foundry endpoint
+        model_deployment = config.openai_deployment      # your deployed chat model's name
 
         # Initialize the OpenAI client
         # TODO: build the token_provider + OpenAI(base_url=..., api_key=...)
