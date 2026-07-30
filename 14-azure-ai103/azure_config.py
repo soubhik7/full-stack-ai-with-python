@@ -159,6 +159,11 @@ class AzureConfig:
         return _env("AZURE_SEARCH_INDEX_NAME", default="rag-1782198581571")
 
     @property
+    def search_api_key(self) -> str | None:
+        """Optional — prefer Entra ID (DefaultAzureCredential) when this is unset."""
+        return _env("AZURE_SEARCH_API_KEY")
+
+    @property
     def search_knowledge_base_name(self) -> str:
         return _env("AZURE_SEARCH_KNOWLEDGE_BASE_NAME", default="kb-cloudxeus-course-products")
 

@@ -199,6 +199,8 @@ azure-ai-projects==2.2.0
 azure-ai-agents==1.1.0
 # Entra ID auth (DefaultAzureCredential) — no API keys needed, uses `az login`
 azure-identity==1.25.3
+# Chapter 14: Azure AI Search client (used in 14-azure-ai103 RAG labs)
+azure-search-documents==12.0.0
 
 # Additional dependencies
 config==0.5.1
