@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "_04_demo_functionapp_mcp": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7148",
+      "launchBrowser": false
+    }
+  }
+}

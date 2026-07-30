@@ -2,5 +2,12 @@
     "python-envs.defaultEnvManager": "ms-python.python:system",
     "python.analysis.extraPaths": [
         "./R&D/Deep Learning/Coursera/W2A1"
-    ]
+    ],
+    "azureFunctions.projectSubpath": "14-azure-ai103/04. Section Code/04-demo-functionapp-mcp",
+    "azureFunctions.deploySubpath": "14-azure-ai103/04. Section Code/04-demo-functionapp-mcp/bin/Release/net10.0/publish",
+    "azureFunctions.projectLanguage": "C#",
+    "azureFunctions.projectRuntime": "~4",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.preDeployTask": "publish (functions)",
+    "azureFunctions.mcpProjectType": "McpExtensionServer"
 }
