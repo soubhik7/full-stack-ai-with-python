@@ -123,6 +123,9 @@ class AzureConfig:
     @property
     def openai_deployment(self) -> str:
         return _env("AZURE_OPENAI_DEPLOYMENT", default="gpt-4.1")
+    @property
+    def openai_deployment2(self) -> str:
+        return _env("AZURE_OPENAI_DEPLOYMENT2", default="gpt-5.1")
 
     # ---- Azure OpenAI image generation deployment (Ch05, Lab 22) ----
     @property
