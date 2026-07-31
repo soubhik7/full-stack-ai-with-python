@@ -250,4 +250,4 @@ Files elsewhere named `test_*.py` (e.g. `01_python/00_python/test_python.py`, th
 
 ## Known Gotchas
 
-- `.github/workflows/gmail-ai.yml` and `gmail-ai-custom.yml` still reference the pre-restructure path `Scikit_ML/SelfProject/Gmail_AI_Assistant_*`, which no longer exists — the code now lives at `09_projects/03_gmail_assistant/{builtin_model,custom_model}/`. These workflows are stale; don't use them as a template for current paths, and fix the `working-directory` if re-enabling them.
+- `.github/workflows/gmail-ai.yml` and `gmail-ai-custom.yml` were fixed (2026-07-31) to point at the post-restructure paths `09_projects/03_gmail_assistant/{builtin_model,custom_model}/` — they previously referenced the removed `Scikit_ML/SelfProject/Gmail_AI_Assistant_*` path and failed CI.
