@@ -201,6 +201,8 @@ azure-ai-agents==1.1.0
 azure-identity==1.25.3
 # Chapter 14: Azure AI Search client (used in 14-azure-ai103 RAG labs)
 azure-search-documents==12.0.0
+# Chapter 14: Azure AI Content Safety client (used in 14-azure-ai103/05_image_generation_and_safety/07_content_safety)
+azure-ai-contentsafety==1.0.0
 
 # Additional dependencies
 config==0.5.1
