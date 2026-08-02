@@ -203,6 +203,14 @@ azure-identity==1.25.3
 azure-search-documents==12.0.0
 # Chapter 14: Azure AI Content Safety client (used in 14-azure-ai103/05_image_generation_and_safety/07_content_safety)
 azure-ai-contentsafety==1.0.0
+# Chapter 14: Azure AI Language client (used in 14-azure-ai103/Labs Lab 12)
+azure-ai-textanalytics==5.4.0
+# Chapter 14: Azure AI Document Intelligence client (used in 14-azure-ai103 Lab 25 / 08_document_intelligence_capstone)
+azure-ai-documentintelligence==1.0.2
+# Chapter 14: dedicated Azure AI Speech SDK (used in 14-azure-ai103/Labs Lab 15)
+azure-cognitiveservices-speech==1.51.1
+# Chapter 14: local MCP server framework (used in 14-azure-ai103/Labs Lab 8)
+fastmcp==3.4.5
 
 # Additional dependencies
 config==0.5.1
