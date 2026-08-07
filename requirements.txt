@@ -209,6 +209,8 @@ azure-ai-textanalytics==5.4.0
 azure-ai-documentintelligence==1.0.2
 # Chapter 14: dedicated Azure AI Speech SDK (used in 14-azure-ai103/Labs Lab 15)
 azure-cognitiveservices-speech==1.51.1
+# Chapter 14: Azure AI Content Understanding client (used in 14-azure-ai103/07_content_understanding)
+azure-ai-contentunderstanding==1.1.0
 # Chapter 14: local MCP server framework (used in 14-azure-ai103/Labs Lab 8)
 fastmcp==3.4.5
 
