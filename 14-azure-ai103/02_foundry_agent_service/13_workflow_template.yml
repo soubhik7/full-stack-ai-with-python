@@ -1,0 +1,227 @@
+# ============================================================================
+# STANDARD TEMPLATE — Azure AI Foundry Agent Service "Workflow"
+# ============================================================================
+#
+# WHAT THIS FILE IS
+#   A generic, copy-and-adapt skeleton for a Foundry Agent Service *workflow*:
+#   the declarative, node-based orchestration layer that sits on top of one or
+#   more Foundry agents. A workflow is NOT the agent itself — it is the
+#   control flow that decides which agent(s) get called, in what order, with
+#   what input, and what happens with the output (branch, ask the user,
+#   escalate, end).
+#
+#   This is the same schema Foundry's visual workflow designer generates and
+#   exports as YAML (this repo's worked example lives at
+#   ../08_document_intelligence_capstone/06_workflow.yml — a concrete
+#   human-in-the-loop invoice-approval workflow built from these exact node
+#   kinds). Use *this* file as the annotated reference for what every field
+#   means and when to reach for it; copy the node(s) you need into your own
+#   `actions:` list and delete the rest. Companion concept notes with
+#   diagrams and exam tips: `Foundry_Workflows_Concept_Notes.md`.
+#
+#   Each `# ---` section below is its own valid YAML document (this file
+#   parses as multiple documents via `---`, exactly like the one worked
+#   example in this repo) so every node kind here is syntactically real
+#   YAML you can lift as-is, not pseudo-code.
+#
+# WHY A WORKFLOW INSTEAD OF JUST CALLING AN AGENT DIRECTLY
+#   A single agent call is fine for "ask a question, get an answer." A
+#   workflow earns its keep the moment you need any of:
+#     - a DETERMINISTIC sequence of steps (classify -> look up -> draft -> send)
+#     - CONDITIONAL branching on what a previous step produced
+#     - SHARED STATE (variables) carried across multiple agent calls
+#     - a HUMAN-IN-THE-LOOP checkpoint (approve / reject before continuing)
+#     - routing between SEVERAL specialized agents instead of one generalist
+#   All of the above, declared here, instead of hand-coded in application
+#   logic. See EXAM_NOTES.md Section 9, "Workflows, multi-agent, Agent
+#   Framework, A2A".
+#
+# EXAM TIP (AI-103): if a scenario says "deterministic order," "shared
+#    state between steps," or "conditional branching, minimal custom code" ->
+#    the answer is a Foundry **workflow**, not raw threads/runs glued together
+#    in application code, and not a free-form multi-agent group chat (group
+#    chat is for open-ended conversation, not a controlled pipeline).
+#
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# DOCUMENT 1 — workflow skeleton: metadata + trigger + (empty) action list.
+# This is the part every workflow file has exactly once, at the top.
+# ----------------------------------------------------------------------------
+kind: workflow                      # Always "workflow" for this asset type.
+name: <your-workflow-name>          # kebab-case, unique within the project.
+description: >-
+  <One or two sentences describing what this workflow does, what triggers
+  it, and what the possible end states are.>
+
+# TRIGGER — how a run of this workflow starts.
+#   OnConversationStart : fires the moment a new conversation/thread begins
+#                          with the workflow (most common trigger — used in
+#                          the invoice-approval example).
+#   OnMessageReceived    : fires on every inbound user message in an
+#                          already-open conversation.
+#   OnRecognizedIntent   : fires when a connected recognizer/router matches a
+#                          specific intent to this workflow (used when one
+#                          "front door" agent triages and hands off to
+#                          several specialist workflows by intent).
+trigger:
+  kind: OnConversationStart
+  id: trigger_wf                    # Every node needs a unique `id` — the
+  actions:                          # designer diagrams the workflow as a DAG
+    # Paste node(s) from the catalog below, in execution order. Example:
+    - kind: InvokeAzureAgent
+      id: node-invoke-agent
+      agent:
+        name: <registered-agent-name>
+      conversationId: =System.ConversationId
+      input:
+        messages: "<prompt for this step>"
+      output:
+        autoSend: true
+        messages: Local.AgentReply
+    - kind: EndConversation
+      id: node-end
+
+# ============================================================================
+# ACTION NODE CATALOG — reference for every node kind, one per YAML document
+# below. Copy the node (drop the leading `---`) into your own `actions:`
+# list wherever you need that behavior.
+# ============================================================================
+
+---
+# 1) InvokeAzureAgent — call a Foundry agent as one step of the workflow.
+#    This is the node that actually does the "AI work"; everything else in
+#    a workflow is plumbing around one or more of these calls.
+- kind: InvokeAzureAgent
+  id: node-invoke-agent
+  agent:
+    name: <registered-agent-name>   # Must already exist as a published
+                                     # Foundry agent in this project.
+  conversationId: =System.ConversationId   # `=` prefixes a Power Fx
+                                            # expression — System.* exposes
+                                            # the running conversation.
+  input:
+    messages: |-
+      <The prompt / instructions sent to the agent for this step. Can
+      reference variables captured earlier, e.g. {Local.SomeVariable}.>
+  output:
+    autoSend: true                  # true = show the agent's reply to the
+                                     # user automatically; false = capture it
+                                     # silently for the workflow to use.
+    messages: Local.AgentReply      # Free-text reply -> stored in this
+                                     # variable.
+    # responseObject: Local.AgentJson  # If the agent is configured to return
+    #                                    STRUCTURED output (a JSON schema),
+    #                                    capture it here instead of/alongside
+    #                                    `messages` so a ConditionGroup can
+    #                                    branch on a real field rather than
+    #                                    parsing free text.
+    #                                    EXAM TIP: "capture agent output as
+    #                                    structured data to route on it" =>
+    #                                    responseObject.
+
+---
+# 2) Question — pause the workflow and ask the user for input (or wait for
+#    a human reviewer's decision). This is the human-in-the-loop primitive.
+- kind: Question
+  id: node-ask-question
+  variable: Local.UserAnswer         # Where the reply is stored.
+  entity: StringPrebuiltEntity       # Prebuilt entity type to validate/parse
+                                      # the answer against (string here;
+                                      # Foundry also ships number/boolean/
+                                      # date-time/etc. prebuilt entities).
+  skipQuestionMode: SkipOnFirstExecutionIfVariableHasValue   # Lets a rerun
+                                      # skip re-asking if the variable is
+                                      # already populated.
+  prompt: |-
+    Please review the analysis below:
+
+    {Local.AgentReply}
+
+    Reply Approved or Rejected.
+
+---
+# 3) SetVariable — assign/compute a value without calling an agent or
+#    asking the user. Useful for constants, defaults, or Power Fx
+#    transformations of an earlier variable.
+- kind: SetVariable
+  id: node-set-variable
+  variable: Local.Status
+  value: ="Pending"                  # `=` again marks a Power Fx expression;
+                                      # a bare literal is also valid.
+
+---
+# 4) ConditionGroup — branch the workflow. Each `condition` is a Power Fx
+#    boolean expression evaluated top-to-bottom (first match wins); if none
+#    match, `elseActions` runs. Conditions and their action lists can nest
+#    any other node kind, including another ConditionGroup.
+- kind: ConditionGroup
+  id: node-branch
+  conditions:
+    - id: condition-approved
+      condition: =Upper(Trim(Local.UserAnswer)) = "APPROVED"
+      actions:
+        - kind: SendActivity
+          id: node-say-approved
+          activity: |-
+            Status: {Upper(Local.UserAnswer)} — continuing the workflow.
+        # ... more nodes for the "approved" branch ...
+  elseActions:
+    - kind: SendActivity
+      id: node-say-rejected
+      activity: |-
+        Status: {Upper(Local.UserAnswer)} — workflow stopped, no further
+        action was taken.
+    - kind: EndConversation
+      id: node-end-rejected
+
+---
+# 5) SendActivity — send a message to the user without invoking an agent
+#    (status updates, confirmations, error messages).
+- kind: SendActivity
+  id: node-send-activity
+  activity: |-
+    <Message text. Interpolate variables with {Local.VariableName}.>
+
+---
+# 6) EndConversation — terminate the workflow run. Always the last node on
+#    any branch that has nothing more to do — a workflow with a dangling
+#    branch (no EndConversation and no further nodes) is a design smell.
+- kind: EndConversation
+  id: node-end
+
+# ============================================================================
+# VARIABLE SCOPES (Power Fx) — what `Local.`, `System.`, `Global.` mean
+# ============================================================================
+#   Local.<name>   Scoped to this single workflow run. The default scope for
+#                  anything a node captures (Question answers, SetVariable
+#                  values, InvokeAzureAgent output).
+#   System.<name>  Built-in runtime values the platform provides for you —
+#                  e.g. System.ConversationId. Read-only.
+#   Global.<name>  Shared across the whole session/environment rather than
+#                  one workflow run — reach for this only when a value must
+#                  outlive or cross multiple workflow invocations.
+#   Local. and System. cover the overwhelming majority of real usage inside
+#   a single workflow file.
+#
+# EXAM TIP (AI-103): a Power Fx condition that should proceed only when a
+#    question WAS answered is `Not(IsBlank(Local.MyVar))` — NOT `IsBlank(...)`
+#    (inverted) and NOT `IsEmpty(...)` (that's for tables/collections, not a
+#    scalar text variable). Echoing a variable back to the user in a message
+#    uses `{...}` interpolation, e.g. `{Upper(Local.MyVar)}`.
+#
+# ============================================================================
+# DESIGN CHECKLIST before you ship a workflow
+# ============================================================================
+#   [ ] Every branch of every ConditionGroup ends in EndConversation (or
+#       flows into a node that eventually does) — no dangling paths.
+#   [ ] Agent output that a later node branches on is captured via
+#       `responseObject` (structured), not parsed out of free-text
+#       `messages` with brittle string logic.
+#   [ ] Any step with real-world side effects (approve a refund, send an
+#       email, close a ticket) sits behind a Question/human-approval node —
+#       this is the "safeguard" Microsoft's guidance calls for on autonomous
+#       or semi-autonomous workflows.
+#   [ ] Node `id`s are unique and stable — the designer's diagram and any
+#       trace/observability tooling key off them.
+# ============================================================================

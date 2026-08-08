@@ -25,7 +25,7 @@ This chapter is a Udemy-style course ("Azure AI 103") on building production AI 
 | Section | Files | Topic |
 |---|---|---|
 | `01_responses_api_basics/` | 6 | Azure OpenAI Responses API basics — first call, model behavior, reasoning effort, multimodal input, web search tool, code interpreter tool |
-| `02_foundry_agent_service/` | 12 | Azure AI Foundry Agent Service — prompt agents, function tools, IT helpdesk agent, Azure AI Search, RAG agent, two Azure Functions apps as agent tool backends |
+| `02_foundry_agent_service/` | 14 | Azure AI Foundry Agent Service — prompt agents, function tools, IT helpdesk agent, Azure AI Search, RAG agent, two Azure Functions apps as agent tool backends. Concept notes: [`Foundry_Workflows_Concept_Notes.md`](02_foundry_agent_service/Foundry_Workflows_Concept_Notes.md) + [`13_workflow_template.yml`](02_foundry_agent_service/13_workflow_template.yml) (annotated standard template for declarative Foundry workflows — triggers, node kinds, Power Fx, human-in-the-loop) |
 | `03_conversations_and_evaluation/` | 2 | Foundry conversations API + LLM-as-judge response-completeness evaluation (companion no-code labs: CloudXeus agents, structured output, conditional workflow) |
 | `04_agent_frameworks/` | 5 | Agent frameworks on Azure — LangChain, LangChain + OpenTelemetry tracing, LangGraph, an MCP-backed Azure Function |
 | `05_image_generation_and_safety/` | 7 | Azure OpenAI image generation & editing (prompt edit, masked inpainting) + Content Safety (text/image moderation) |
